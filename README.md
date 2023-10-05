@@ -7,6 +7,6 @@ The second team-project at Codam with a max. of 2 students. This project is an i
 git clone https://github.com/WriteSomeStuff/MiniRT.git
 cd MiniRT
 make
-
+./miniRT
 ```
 
