@@ -6,11 +6,12 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2023/10/05 17:58:42 by cschabra      ########   odam.nl          #
+#    Updated: 2023/10/23 15:47:42 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= miniRT
+CC= cc
 CFLAGS= -Wall -Wextra -Werror $(HEADERS) #-Ofast
 
 LIBFT= 42lib/libft
