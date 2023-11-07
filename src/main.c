@@ -6,17 +6,15 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2023/11/06 18:47:07 by cschabra      ########   odam.nl         */
+/*   Updated: 2023/11/07 16:32:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-#define WIDTH 512
-#define HEIGHT 512
 #define RADIUS 16
 
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -35,9 +33,9 @@ void	draw_something(t_data *data)
 		{
 			d = sqrt(pow(x - (WIDTH / 2 - 1), 2) + pow(y - (HEIGHT / 2 - 1), 2));
 			if (d <= pow(RADIUS, 2))
-				mlx_put_pixel(data->image, x, y, (uint32_t)ft_pixel(100, 0, 255, 255));
+				mlx_put_pixel(data->image, x, y, ft_pixel(100, 0, 255, 255));
 			else
-				mlx_put_pixel(data->image, x, y, (uint32_t)ft_pixel(0, 0, 0, 0xFF));
+				mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
 			y++;
 		}
 		x++;
@@ -63,7 +61,7 @@ void	ft_hook(void *param)
 
 void	initialize_data(t_data *data)
 {
-	data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	data->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (data->mlx == NULL)
 	{
 		printf("%s\n", mlx_strerror(mlx_errno));

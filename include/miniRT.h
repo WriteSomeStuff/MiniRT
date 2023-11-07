@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2023/11/06 18:09:26 by cschabra      ########   odam.nl         */
+/*   Updated: 2023/11/07 18:29:35 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,23 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
+# define WIDTH 512
+# define HEIGHT 512
+
 typedef struct s_quat
 {
+	int32_t	real;
 	int32_t	i;
 	int32_t	j;
 	int32_t	k;
-	int32_t	real;
 }	t_quat;
+
+/* typedef struct s_window
+{
+	uint32_t	width;
+	uint32_t	height;
+}	t_window; */
+
 typedef struct	s_data
 {
 	mlx_image_t	*image;
