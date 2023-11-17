@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2023/11/07 16:32:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/17 15:42:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,21 @@ void	initialize_data(t_data *data)
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data	data;
+	t_complex	start, end, center;
 
 	(void) argc;
 	(void) argv;
+	start.x = 0; start.y = 0;
+	end.x = 511; end.y = 511;
+	center.x = WIDTH / 2; center.y = HEIGHT / 2;
 	initialize_data(&data);
-	draw_something(&data);
+	draw_background(&data);
+	draw_cube(&data, center);
+	draw_rectangle(&data, 300, 100, center);
+	draw_line(&data, start, end);
+	start.x = 511; start.y = 0;
+	end.x = 0; end.y = 511;
+	draw_line(&data, start, end);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
