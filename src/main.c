@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2023/11/17 15:42:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/22 17:36:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define RADIUS 16
 
-uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+/* uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -82,9 +82,9 @@ void	initialize_data(t_data *data)
 		printf("%s\n", mlx_strerror(mlx_errno));
 		exit(EXIT_FAILURE);
 	}
-}
+} */
 
-int32_t	main(int32_t argc, char **argv)
+/* int32_t	main(int32_t argc, char **argv)
 {
 	t_data	data;
 	t_complex	start, end, center;
@@ -106,4 +106,22 @@ int32_t	main(int32_t argc, char **argv)
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	return (EXIT_SUCCESS);
+} */
+
+int32_t	main(int32_t argc, char **argv)
+{
+	t_data	data;
+	t_input	*tmp;
+
+	(void)argc;
+	read_file(&data, argv[1]);
+	tmp = data.input;
+	while (data.input != NULL)
+	{
+		printf("%s\n", data.input->line);
+		data.input = data.input->next;
+	}
+	data.input = tmp;
+	clean_up(&data);
+	return (0);
 }

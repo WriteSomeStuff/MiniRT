@@ -6,13 +6,13 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2023/11/16 14:24:00 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/02/22 17:29:22 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror $(HEADERS)
+CFLAGS	= -Wall -Wextra -Werror -g $(HEADERS)
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -22,7 +22,11 @@ MLXOUT 	= $(LIBMLX)/build/libmlx42.a
 LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 
 CFILES	=	cube.c \
+			clean_up.c \
+			get_next_line_rt.c \
+			get_next_line_utils_rt.c \
 			main.c \
+			parsing.c \
 			quaternions.c \
 
 SRC_DIR	= src
