@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2023/11/17 15:49:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2023/11/17 17:23:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@
 # define HEIGHT 512
 # define PI 3.14159265359
 
-typedef struct s_quat
+typedef union s_quat
 {
-	int32_t	real;
-	int32_t	i;
-	int32_t	j;
-	int32_t	k;
+	double	q[4];
+	struct
+	{
+		double	real;
+		double	x;
+		double	y;
+		double	z;
+	};
 }	t_quat;
 
 typedef union s_vec
