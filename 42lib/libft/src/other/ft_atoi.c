@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 13:47:54 by cschabra      #+#    #+#                 */
-/*   Updated: 2022/10/21 11:21:15 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/02/28 16:30:44 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_atoi(const char *str)
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-				multiplier = -1;
+			multiplier = -1;
 		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')

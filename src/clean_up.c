@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/22 17:35:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/02/28 16:46:51 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ void	exit_error(t_data *data, char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	*ft_malloc(t_data *data, int32_t size)
-{
-	void	*alloc;
-
-	alloc = malloc(size);
-	if (alloc == NULL)
-		exit_error(data, ": malloc failed");
-	return (alloc);	
-}
-
 void	clear_list(t_input **input)
 {
 	t_input	*p;
@@ -40,7 +30,8 @@ void	clear_list(t_input **input)
 	while (*input)
 	{
 		p = (*input)->next;
-		free((*input)->line);
+	// data->info 2D array free
+		free((*input)->info);
 		free(*input);
 		*input = p;
 	}
@@ -50,4 +41,5 @@ void	clear_list(t_input **input)
 void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
+	close(data->fd);
 }
