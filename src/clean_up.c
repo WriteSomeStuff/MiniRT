@@ -6,11 +6,35 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/28 16:46:51 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:23:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static void	free_and_null(void **variable)
+{
+	free(*variable);
+	*variable = NULL;
+}
+
+void	free_2d_(void ***input)
+{
+	int		i;
+	void	**array;
+
+	if (*input == NULL)
+		return ;
+	array = *input;
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free_and_null(&array[i]);
+		i++;
+	}
+	free(array);
+	*input = NULL;
+}
 
 void	exit_error(t_data *data, char *msg)
 {
@@ -30,8 +54,7 @@ void	clear_list(t_input **input)
 	while (*input)
 	{
 		p = (*input)->next;
-	// data->info 2D array free
-		free((*input)->info);
+		free_2d_((void***)&(*input)->info);
 		free(*input);
 		*input = p;
 	}

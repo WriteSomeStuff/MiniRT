@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_rt.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/14 17:28:35 by vincent       #+#    #+#                 */
-/*   Updated: 2024/02/22 17:18:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:42:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ char	*get_next_line_rt(t_data *rt, int fd)
 	data.line = ft_realloc(rt, data.line, get_length(data.line) + 1);
 	if (*data.line == '\0')
 		return (free(data.line), NULL);
+	if (find_newl(data.line) != NOT_FOUND)
+		data.line[ft_strlen(data.line) - 1] = '\0';
 	return (data.line);
 }

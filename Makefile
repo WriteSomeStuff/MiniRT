@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/04 17:04:21 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/04 18:31:54 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,18 @@ HEADERS	= -I include -I $(LIBFT)/include -I $(LIBMLX)/include
 MLXOUT 	= $(LIBMLX)/build/libmlx42.a
 LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 
-CFILES	=	cube.c \
+CFILES	=	alloc.c \
+			a_to_double.c \
+			cube.c \
 			clean_up.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
+			init_lights.c \
+			init_objects.c \
 			main.c \
 			parsing.c \
 			quaternions.c \
+			utils.c \
 
 SRC_DIR	= src
 OBJ_DIR	= $(SRC_DIR)/obj
@@ -51,8 +56,11 @@ $(NAME): $(OBJ_DIR) $(OBJECTS)
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
-#$(OBJ_DIR)/%.o : $(SRC_DIR)/test/%.c
-#	$(CC) -c $(CFLAGS) -o $@ $^
+$(OBJ_DIR)/%.o : $(SRC_DIR)/initialisation/%.c
+	$(CC) -c $(CFLAGS) -o $@ $^
+
+$(OBJ_DIR)/%.o : $(SRC_DIR)/utils/%.c
+	$(CC) -c $(CFLAGS) -o $@ $^
 
 clean:
 	rm -rf $(OBJ_DIR)

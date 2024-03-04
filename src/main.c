@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/02/28 14:10:00 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:31:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,11 @@ int32_t	main(int32_t argc, char **argv)
 	(void)argc;
 	read_file(&data, argv[1]);
 	tmp = data.input;
-	while (data.input != NULL)
-	{
-		printf("%s\n", data.input->line);
-		data.input = data.input->next;
-	}
+	// while (data.input != NULL)
+	// {
+	// 	printf("%s\n", data.input->line);
+	// 	data.input = data.input->next;
+	// }
 	data.input = tmp;
 	clean_up(&data);
 	return (0);

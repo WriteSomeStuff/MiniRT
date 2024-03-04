@@ -6,11 +6,51 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/02/28 17:51:13 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:54:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	print_vector(t_vec vector)
+{
+	printf("%lf %lf %lf\n", vector.x, vector.y, vector.z);
+}
+
+void	print_2d_charray(char **array)
+{
+	int	i;
+
+	i = 0;
+	printf("args: ");
+	if (array == NULL)
+	{
+		printf("%p\n", array);
+		return ;
+	}
+	printf("\n");
+	while (array[i] != NULL)
+	{
+		printf("String [%d]: %s\n", i, array[i]);
+		i++;
+	}
+	printf("String [%d]: %s\n", i, array[i]);
+}
+
+t_vec	create_vector(t_data *data, char *info)
+{
+	t_vec	vector;
+	char	**vec;
+
+	vec = ft_split(info, ',');
+	if (vec == NULL)
+		exit_error(data, ": split failed");
+	vector.x = a_to_double(data, vec[0]);
+	vector.y = a_to_double(data, vec[1]);
+	vector.z = a_to_double(data, vec[2]);
+	free_2d_((void***)&vec);
+	return (vector);
+}
 
 void	check_split(t_data *data, char **info, int32_t num)
 {
@@ -51,7 +91,7 @@ void	verify_info(t_data *data, char **info)
 				y++;
 			if (info[x][y] == '\0')
 				break ;
-			else if (info[x][y] == '.' || info[x][y] == ',')
+			else if (ft_strchr(".,-", info[x][y]) != NULL)
 				y++;
 			else
 				exit_error(data, ": invalid character in input");

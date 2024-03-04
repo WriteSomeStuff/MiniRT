@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/02/28 16:45:22 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:39:10 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,5 @@ void	read_file(t_data *data, char *location)
 	}
 	data->input = input;
 	close(data->fd);
+	init_camera(data, input->next->info);
 }

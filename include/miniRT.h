@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/02/28 17:50:03 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/04 18:52:36 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum s_token
 	SPHERE,
 	INVALID
 }	t_token;
+
 typedef struct s_input
 {
 	char			**info;
@@ -104,18 +105,19 @@ uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 /*	Initialisation	*/
 
-void		init_ambient(t_data *data);
-void		init_camera(t_data *data);
-void		init_cylinder(t_data *data);
-void		init_light(t_data *data);
-void		init_plane(t_data *data);
-void		init_sphere(t_data *data);
+void		init_ambient(t_data *data, char **info);
+void		init_camera(t_data *data, char **info);
+void		init_cylinder(t_data *data, char **info);
+void		init_light(t_data *data, char **info);
+void		init_plane(t_data *data, char **info);
+void		init_sphere(t_data *data, char **info);
 
 /*	Errors & cleanup	*/
 
-void		clean_up(t_data *data);
-void		clear_list(t_input **input);
+void		free_2d_(void ***input);
 void		exit_error(t_data *data, char *msg);
+void		clear_list(t_input **input);
+void		clean_up(t_data *data);
 
 /*	Initialisation	*/
 
@@ -123,9 +125,14 @@ void		read_file(t_data *data, char *location);
 
 /*	Utilities	*/
 
+double		a_to_double(t_data *data, const char *str);
+
 void		*rt_malloc(t_data *data, size_t size);
 void		*rt_calloc(t_data *data, size_t size);
 
+void		print_vector(t_vec vector);
+void		print_2d_charray(char **array);
+t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);
 bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);
