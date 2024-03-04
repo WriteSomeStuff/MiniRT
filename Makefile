@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/02/22 17:29:22 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/04 17:04:21 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,10 @@ CFILES	=	cube.c \
 			quaternions.c \
 
 SRC_DIR	= src
-OBJ_DIR	= src/obj
-OBJECTS	= $(CFILES:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR	= $(SRC_DIR)/obj
+OBJECTS	= $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:%.c=%.o)))
 
-all: $(MLXOUT) $(NAME)
+all: $(LIBS) $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -42,15 +42,20 @@ $(MLXOUT):
 	cmake $(LIBMLX) -B $(LIBMLX)/build
 	cmake --build $(LIBMLX)/build -j4
 
-$(NAME): $(OBJ_DIR) $(OBJECTS)
+$(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
+
+$(NAME): $(OBJ_DIR) $(OBJECTS)
 	$(CC) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
+#$(OBJ_DIR)/%.o : $(SRC_DIR)/test/%.c
+#	$(CC) -c $(CFLAGS) -o $@ $^
+
 clean:
-	rm -rf $(SRC_DIR)/$(OBJ_DIR)
+	rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
