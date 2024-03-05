@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/01/14 17:28:35 by vincent       #+#    #+#                 */
-/*   Updated: 2024/03/04 18:42:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/05 17:35:44 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*read_stuff(t_data *rt, t_gnldata *data, int fd, char *buffer)
 char	*get_next_line_rt(t_data *rt, int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
-	t_gnldata		data;
+	t_gnldata	data;
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);

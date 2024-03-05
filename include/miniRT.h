@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/04 18:52:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/05 17:33:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,25 @@ typedef union s_vec
 	};
 }	t_vec;
 
-typedef struct s_sphere
+typedef struct s_ambient
 {
-	t_vec		center;
-	uint32_t	radius;
+	double		luminosity;
 	uint32_t	colour;
-}	t_sphere;
+}	t_ambient;
+
+typedef struct s_camera
+{
+	t_vec		viewpoint;
+	t_vec		orientation;
+	uint32_t	fov;
+}	t_camera;
 
 typedef struct s_cylinder
 {
 	t_vec		center;
-	uint32_t	radius;
-	uint32_t	height;
+	t_vec		orientation;
+	double		radius;
+	double		height;
 	uint32_t	colour;
 }	t_cylinder;
 
@@ -84,18 +91,24 @@ typedef struct s_plane
 	uint32_t	colour;
 }	t_plane;
 
-typedef struct s_camera
+typedef struct s_sphere
 {
-	t_vec		viewpoint;
-	t_vec		orientation;
-	uint32_t	fov;
-}	t_camera;
+	t_vec		center;
+	double		radius;
+	uint32_t	colour;
+}	t_sphere;
 
 typedef struct s_data
 {
 	mlx_image_t	*image;
 	mlx_t		*mlx;
 	t_input		*input;
+	t_ambient	*ambient;
+	t_camera	*cam;
+	t_cylinder	*cyls;
+	t_light		*light;
+	t_plane		*planes;
+	t_sphere	*spheres;
 	int32_t		fd;
 	void		(*f[6])(t_data *, char **);
 }	t_data;
@@ -105,10 +118,12 @@ uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 /*	Initialisation	*/
 
+void		check_rgb_values(t_data *data, t_vec vec);
 void		init_ambient(t_data *data, char **info);
+void		init_light(t_data *data, char **info);
+
 void		init_camera(t_data *data, char **info);
 void		init_cylinder(t_data *data, char **info);
-void		init_light(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
@@ -122,6 +137,14 @@ void		clean_up(t_data *data);
 /*	Initialisation	*/
 
 void		read_file(t_data *data, char *location);
+
+/*	List functions	*/
+
+void		node_add_back(t_input **lst, t_input *new);
+t_input		*new_node(t_data *data, char *line, t_token token);
+
+t_input		*node_last(t_input *lst);
+int32_t		count_objects(t_input *lst, t_token token);
 
 /*	Utilities	*/
 

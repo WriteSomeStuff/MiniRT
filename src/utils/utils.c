@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/04 18:54:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/05 17:38:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_vec	create_vector(t_data *data, char *info)
 	vector.x = a_to_double(data, vec[0]);
 	vector.y = a_to_double(data, vec[1]);
 	vector.z = a_to_double(data, vec[2]);
-	free_2d_((void***)&vec);
+	free_2d_((void ***)&vec);
 	return (vector);
 }
 

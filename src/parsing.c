@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/04 18:39:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/05 17:37:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,38 +51,35 @@ static t_token	determine_object(char *str)
 		return (INVALID);
 }
 
-static t_input	*node_last(t_input *lst)
+static void	init_objects(t_data *data, t_input *input, int32_t obj[])
 {
-	if (lst == NULL)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	while (input != NULL)
+	{
+		data->f[input->token](data, input->info);
+		input = input->next;
+	}
 }
 
-static void	node_add_back(t_input **lst, t_input *new)
+static void	alloc_objects(t_data *data, t_input *input)
 {
-	t_input	*t;
+	int32_t	obj[SPHERE + 1];
+	int32_t	i;
 
-	t = node_last(*lst);
-	if (t == NULL)
-		*lst = new;
-	else
-		t->next = new;
-}
-
-static t_input	*new_node(t_data *data, char *line, t_token token)
-{
-	t_input	*node;
-
-	if (token == INVALID)
-		exit_error(data, ": invalid input");
-	node = rt_calloc(data, sizeof(t_input));
-	node->info = ft_split(&line[2], ' ');
-	if (node->info == NULL)
-		exit_error(data, ": split failed");
-	node->token = token;
-	return (node);
+	i = 0;
+	while (i < SPHERE)
+	{
+		obj[i] = count_objects(input, i);
+		i++;
+	}
+	if (obj[AMBIENT] != 1 || obj[CAMERA] != 1 || obj[LIGHT] != 1)
+		exit_error(data, ": incompatible file input");
+	data->ambient = rt_calloc(data, obj[AMBIENT] * sizeof(t_ambient));
+	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));
+	data->cyls = rt_calloc(data, obj[CYLINDER] * sizeof(t_cylinder));
+	data->light = rt_calloc(data, obj[LIGHT] * sizeof(t_light));
+	data->planes = rt_calloc(data, obj[PLANE] * sizeof(t_plane));
+	data->spheres = rt_calloc(data, obj[SPHERE] * sizeof(t_sphere));
+	init_objects(data, input, obj);
 }
 
 void	read_file(t_data *data, char *location)
@@ -102,9 +99,10 @@ void	read_file(t_data *data, char *location)
 		if (is_empty_str(next_line) == true)
 			free(next_line);
 		else
-			node_add_back(&input, new_node(data, next_line, determine_object(next_line)));
+			node_add_back(&input, \
+				new_node(data, next_line, determine_object(next_line)));
 	}
 	data->input = input;
 	close(data->fd);
-	init_camera(data, input->next->info);
+	alloc_objects(data, input);
 }

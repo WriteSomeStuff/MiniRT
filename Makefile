@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/04 18:31:54 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/05 16:17:56 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ CFILES	=	alloc.c \
 			get_next_line_utils_rt.c \
 			init_lights.c \
 			init_objects.c \
+			list_adding.c \
+			list_navigation.c \
 			main.c \
 			parsing.c \
 			quaternions.c \

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/04 18:23:53 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/05 17:36:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	free_2d_(void ***input)
 
 void	exit_error(t_data *data, char *msg)
 {
-	(void)data;
-	// clean_up(data);
+	clean_up(data);
 	ft_putstr_fd("Error", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
@@ -54,7 +53,7 @@ void	clear_list(t_input **input)
 	while (*input)
 	{
 		p = (*input)->next;
-		free_2d_((void***)&(*input)->info);
+		free_2d_((void ***)&(*input)->info);
 		free(*input);
 		*input = p;
 	}
