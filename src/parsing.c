@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/08 12:53:04 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/08 13:45:54 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	read_file(t_data *data, char *location)
 		next_line = get_next_line_rt(data, data->fd);
 		if (next_line == NULL)
 			break ;
-		if (is_empty_str(next_line) == true)
+		if (is_empty_str(next_line) == true || next_line[0] == '#') // what if # isn't on #
 			free(next_line);
 		else
 			node_add_back(&input, \

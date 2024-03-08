@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/05 17:36:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 13:42:02 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	clear_list(t_input **input)
 		return ;
 	while (*input)
 	{
-		p = (*input)->next;
+		p = (*input)->next; // segfault here if invalid token given
 		free_2d_((void ***)&(*input)->info);
 		free(*input);
 		*input = p;
