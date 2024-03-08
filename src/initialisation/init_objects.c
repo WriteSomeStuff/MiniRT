@@ -6,11 +6,20 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/05 17:34:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 12:59:17 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	init_objects(t_data *data, t_input *input)
+{
+	while (input != NULL)
+	{
+		data->f[input->token](data, input->info);
+		input = input->next;
+	}
+}
 
 void	init_camera(t_data *data, char **info)
 {
@@ -36,6 +45,9 @@ void	init_cylinder(t_data *data, char **info)
 	check_rgb_values(data, tmp);
 	data->cyls[i].colour = ft_pixel((uint8_t)tmp.v[0], (uint8_t)tmp.v[1], \
 		(uint8_t)tmp.v[2], 0xff);
+	// print_vector(data->cyls[i].center);
+	// print_vector(data->cyls[i].orientation);
+	// printf("%f\n %f\n", data->cyls[i].radius, data->cyls[i].height);
 	i++;
 }
 

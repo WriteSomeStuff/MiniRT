@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/05 17:33:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 12:52:58 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void		check_rgb_values(t_data *data, t_vec vec);
 void		init_ambient(t_data *data, char **info);
 void		init_light(t_data *data, char **info);
 
+void		init_objects(t_data *data, t_input *input);
 void		init_camera(t_data *data, char **info);
 void		init_cylinder(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);

@@ -6,21 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/05 17:37:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 12:53:04 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	assign_function_pointers(t_data *data)
-{
-	data->f[AMBIENT] = &init_ambient;
-	data->f[CAMERA] = &init_camera;
-	data->f[CYLINDER] = &init_cylinder;
-	data->f[LIGHT] = &init_light;
-	data->f[PLANE] = &init_plane;
-	data->f[SPHERE] = &init_sphere;
-}
 
 static bool	is_empty_str(char *str)
 {
@@ -51,15 +41,6 @@ static t_token	determine_object(char *str)
 		return (INVALID);
 }
 
-static void	init_objects(t_data *data, t_input *input, int32_t obj[])
-{
-	while (input != NULL)
-	{
-		data->f[input->token](data, input->info);
-		input = input->next;
-	}
-}
-
 static void	alloc_objects(t_data *data, t_input *input)
 {
 	int32_t	obj[SPHERE + 1];
@@ -79,7 +60,17 @@ static void	alloc_objects(t_data *data, t_input *input)
 	data->light = rt_calloc(data, obj[LIGHT] * sizeof(t_light));
 	data->planes = rt_calloc(data, obj[PLANE] * sizeof(t_plane));
 	data->spheres = rt_calloc(data, obj[SPHERE] * sizeof(t_sphere));
-	init_objects(data, input, obj);
+	init_objects(data, input);
+}
+
+static void	assign_function_pointers(t_data *data)
+{
+	data->f[AMBIENT] = &init_ambient;
+	data->f[CAMERA] = &init_camera;
+	data->f[CYLINDER] = &init_cylinder;
+	data->f[LIGHT] = &init_light;
+	data->f[PLANE] = &init_plane;
+	data->f[SPHERE] = &init_sphere;
 }
 
 void	read_file(t_data *data, char *location)
@@ -104,5 +95,6 @@ void	read_file(t_data *data, char *location)
 	}
 	data->input = input;
 	close(data->fd);
+	assign_function_pointers(data);
 	alloc_objects(data, input);
 }
