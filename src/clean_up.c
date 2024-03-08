@@ -6,19 +6,19 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/08 13:42:02 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/08 15:33:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	free_and_null(void **variable)
+void	free_and_null(void **variable)
 {
 	free(*variable);
 	*variable = NULL;
 }
 
-void	free_2d_(void ***input)
+void	free_2d(void ***input)
 {
 	int		i;
 	void	**array;
@@ -53,7 +53,7 @@ void	clear_list(t_input **input)
 	while (*input)
 	{
 		p = (*input)->next; // segfault here if invalid token given
-		free_2d_((void ***)&(*input)->info);
+		free_2d((void ***)&(*input)->info);
 		free(*input);
 		*input = p;
 	}
@@ -63,5 +63,6 @@ void	clear_list(t_input **input)
 void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
+	free(data->line);
 	close(data->fd);
 }

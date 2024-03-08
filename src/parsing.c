@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/08 13:45:54 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/08 15:08:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	assign_function_pointers(t_data *data)
 void	read_file(t_data *data, char *location)
 {
 	t_input	*input;
-	char	*next_line;
 
 	input = NULL;
 	data->fd = open(location, O_RDONLY);
@@ -84,16 +83,18 @@ void	read_file(t_data *data, char *location)
 		exit_error(data, ": could not open file");
 	while (FOREVER)
 	{
-		next_line = get_next_line_rt(data, data->fd);
-		if (next_line == NULL)
+		data->line = get_next_line_rt(data, data->fd);
+		if (data->line == NULL)
 			break ;
-		if (is_empty_str(next_line) == true || next_line[0] == '#') // what if # isn't on #
-			free(next_line);
-		else
+		if (is_empty_str(data->line) == false)
+		{
 			node_add_back(&input, \
-				new_node(data, next_line, determine_object(next_line)));
+				new_node(data, data->line, determine_object(data->line)));
+			if (data->input == NULL)
+				data->input = input;
+		}
+		free_and_null((void **)&data->line);
 	}
-	data->input = input;
 	close(data->fd);
 	assign_function_pointers(data);
 	alloc_objects(data, input);

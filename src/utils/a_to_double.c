@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/03 18:52:12 by vincent       #+#    #+#                 */
-/*   Updated: 2024/03/04 18:17:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 15:54:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	check_input(t_data *data, const char *str, double *c, int i)
 		if (str[i] == '.')
 		{
 			i++;
+			if (str[i] == '\0' || ft_strlen(&str[i]) > 9)
+				exit_error(data, ": invalid input after decimal point");
 			break ;
 		}
 	}
@@ -50,6 +52,12 @@ static int	check_input(t_data *data, const char *str, double *c, int i)
 	if (str[i] != '\0')
 		exit_error(data, ": non-numerical input");
 	return (i);
+}
+
+static void	check_result(t_data *data, double result)
+{
+	if (result > INT_MAX || result < INT_MIN)
+		exit_error(data, ": input larger than integer values");
 }
 
 double	a_to_double(t_data *data, const char *str)
@@ -75,6 +83,7 @@ double	a_to_double(t_data *data, const char *str)
 		{
 			res += (str[i] - '0') * c;
 			c *= 10.0;
+			check_result(data, res);
 		}
 	}
 	return (res);

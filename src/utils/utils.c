@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/05 17:38:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 16:03:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	print_vector(t_vec vector)
 {
 	printf("%lf %lf %lf\n", vector.x, vector.y, vector.z);
+}
+
+void	print_colour(uint32_t colour)
+{
+	printf("r: %u g: %u b: %u a: %u\n", colour >> 24, 0xff0000 & (colour >> 16), 0xff00 & (colour >> 8), 0xff & colour);
 }
 
 void	print_2d_charray(char **array)
@@ -48,7 +53,7 @@ t_vec	create_vector(t_data *data, char *info)
 	vector.x = a_to_double(data, vec[0]);
 	vector.y = a_to_double(data, vec[1]);
 	vector.z = a_to_double(data, vec[2]);
-	free_2d_((void ***)&vec);
+	free_2d((void ***)&vec);
 	return (vector);
 }
 

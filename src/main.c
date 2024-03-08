@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/04 18:31:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/08 18:15:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int32_t	main(int32_t argc, char **argv)
 	t_input	*tmp;
 
 	(void)argc;
+	ft_bzero(&data, sizeof(t_data));
 	read_file(&data, argv[1]);
 	tmp = data.input;
 	// while (data.input != NULL)

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/08 12:52:58 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/08 18:04:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ typedef enum s_token
 	SPHERE,
 	INVALID
 }	t_token;
+
+typedef struct s_point
+{
+	double	x;
+	double	y;
+}	t_point;
 
 typedef struct s_input
 {
@@ -109,6 +115,7 @@ typedef struct s_data
 	t_light		*light;
 	t_plane		*planes;
 	t_sphere	*spheres;
+	char		*line;
 	int32_t		fd;
 	void		(*f[6])(t_data *, char **);
 }	t_data;
@@ -130,7 +137,8 @@ void		init_sphere(t_data *data, char **info);
 
 /*	Errors & cleanup	*/
 
-void		free_2d_(void ***input);
+void		free_and_null(void **variable);
+void		free_2d(void ***input);
 void		exit_error(t_data *data, char *msg);
 void		clear_list(t_input **input);
 void		clean_up(t_data *data);
@@ -147,6 +155,11 @@ t_input		*new_node(t_data *data, char *line, t_token token);
 t_input		*node_last(t_input *lst);
 int32_t		count_objects(t_input *lst, t_token token);
 
+/*	Math	*/
+
+double		pythagoras(double a, double b);
+double		pythagoras_3d(t_vec a, t_vec b);
+
 /*	Utilities	*/
 
 double		a_to_double(t_data *data, const char *str);
@@ -155,6 +168,7 @@ void		*rt_malloc(t_data *data, size_t size);
 void		*rt_calloc(t_data *data, size_t size);
 
 void		print_vector(t_vec vector);
+void		print_colour(uint32_t colour);
 void		print_2d_charray(char **array);
 t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);

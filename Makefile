@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/05 16:17:56 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/08 17:28:54 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ CFILES	=	alloc.c \
 			list_adding.c \
 			list_navigation.c \
 			main.c \
+			maths.c \
 			parsing.c \
 			quaternions.c \
 			utils.c \
@@ -53,7 +54,7 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(OBJ_DIR) $(OBJECTS)
-	$(CC) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
@@ -75,7 +76,7 @@ fclean: clean
 
 re: fclean all
 
-debug: CFLAGS += -g -fsanitize=address
+debug: CFLAGS += -fsanitize=address
 debug: re
 
 .PHONY: all clean fclean re debug
