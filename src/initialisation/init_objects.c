@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/08 16:04:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/11 14:33:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void	init_cylinder(t_data *data, char **info)
 	check_rgb_values(data, tmp);
 	data->cyls[i].colour = ft_pixel((uint8_t)tmp.v[0], (uint8_t)tmp.v[1], \
 		(uint8_t)tmp.v[2], 0xff);
-	print_vector(data->cyls[i].center);
-	print_vector(data->cyls[i].orientation);
-	print_colour(data->cyls[i].colour);
-	printf("%f\n %f\n", data->cyls[i].radius, data->cyls[i].height);
 	i++;
 }
 

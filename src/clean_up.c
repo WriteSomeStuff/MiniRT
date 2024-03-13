@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/08 15:33:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/11 16:12:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	clear_list(t_input **input)
 		return ;
 	while (*input)
 	{
-		p = (*input)->next; // segfault here if invalid token given
+		p = (*input)->next;
 		free_2d((void ***)&(*input)->info);
 		free(*input);
 		*input = p;
@@ -63,6 +63,15 @@ void	clear_list(t_input **input)
 void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
+	free(data->ambient);
+	free(data->cam);
+	free(data->cyls);
+	free(data->light);
+	free(data->planes);
+	free(data->spheres);
 	free(data->line);
 	close(data->fd);
+	// mlx_free_image(data->image);
+	mlx_close_window(data->mlx);
+	mlx_terminate(data->mlx);
 }

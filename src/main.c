@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/08 18:15:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/13 18:46:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,49 +59,27 @@ void	ft_hook(void *param)
 		data->image->instances[0].x += 5;
 }
 
-void	initialize_data(t_data *data)
+void	initialise_window(t_data *data)
 {
 	data->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (data->mlx == NULL)
 	{
-		printf("%s\n", mlx_strerror(mlx_errno));
-		exit(EXIT_FAILURE);
+		exit_error(data, ": mlx failed to initialise");
 	}
 	data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (data->image == NULL)
 	{
-		// clean_up(data, msg?);
-		mlx_close_window(data->mlx);
-		printf("%s\n", mlx_strerror(mlx_errno));
-		exit(EXIT_FAILURE);
+		exit_error(data, ": image failed to load");
 	}
 	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
 	{
-		// clean_up(data, msg?);
-		mlx_close_window(data->mlx);
-		printf("%s\n", mlx_strerror(mlx_errno));
-		exit(EXIT_FAILURE);
+		exit_error(data, ": failed to load window");
 	}
 }
 
 /* int32_t	main(int32_t argc, char **argv)
 {
-	t_data	data;
-	t_complex	start, end, center;
 
-	(void) argc;
-	(void) argv;
-	start.x = 0; start.y = 0;
-	end.x = 511; end.y = 511;
-	center.x = WIDTH / 2; center.y = HEIGHT / 2;
-	initialize_data(&data);
-	draw_background(&data);
-	draw_cube(&data, center);
-	draw_rectangle(&data, 300, 100, center);
-	draw_line(&data, start, end);
-	start.x = 511; start.y = 0;
-	end.x = 0; end.y = 511;
-	draw_line(&data, start, end);
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
@@ -111,18 +89,30 @@ void	initialize_data(t_data *data)
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data	data;
-	t_input	*tmp;
 
-	(void)argc;
+	if (argc != 2)
+	{
+		ft_putendl_fd("Error: incorrect argument count", STDERR_FILENO);
+		return (1);
+	}
 	ft_bzero(&data, sizeof(t_data));
+	// initialise_window(&data);
 	read_file(&data, argv[1]);
-	tmp = data.input;
-	// while (data.input != NULL)
-	// {
-	// 	printf("%s\n", data.input->line);
-	// 	data.input = data.input->next;
-	// }
-	data.input = tmp;
-	clean_up(&data);
+	t_ray ray;
+
+	ray.origin = data.cam->viewpoint;
+	ray.direction.x = 0;
+	ray.direction.y = 0;
+	ray.direction.z = 1;
+	ray.direction = normalize_vector(&ray.origin, &ray.direction);
+	t_hit hit = intersect_sphere(&ray, data.spheres);
+	if (hit.hit == true)
+	{
+		printf("hit at distance: %lf, location: ", hit.distance);
+		print_vector(hit.location);
+	}
+	else
+		puts("NO HIT");
+	// clean_up(&data);
 	return (0);
 }

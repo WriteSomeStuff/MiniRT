@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/08 18:04:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/13 17:27:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,26 @@ typedef union s_vec
 		double	y;
 		double	z;
 	};
+	struct
+	{
+		double	a;
+		double	b;
+		double	c;
+	};
 }	t_vec;
+
+typedef struct s_ray
+{
+	t_vec	origin;
+	t_vec	direction;
+}	t_ray;
+
+typedef struct s_hit
+{
+	bool	hit;
+	double	distance;
+	t_vec	location;
+}	t_hit;
 
 typedef struct s_ambient
 {
@@ -157,8 +176,21 @@ int32_t		count_objects(t_input *lst, t_token token);
 
 /*	Math	*/
 
-double		pythagoras(double a, double b);
-double		pythagoras_3d(t_vec a, t_vec b);
+t_hit		intersect_sphere(t_ray *ray, const t_sphere *sphere);
+
+double		dot_product(const t_vec *a, const t_vec *b);
+t_vec		cross_product(const t_vec *a, const t_vec *b);
+double		vector_length(const t_vec *origin, const t_vec *vector);
+t_vec		normalize_vector(const t_vec *origin, const t_vec *vector);
+
+t_vec		add_vectors(const t_vec *a, const t_vec *b);
+t_vec		subtract_vectors(const t_vec *a, const t_vec *b);
+
+t_vec		scale_vector(const t_vec *vector, double scalar);
+
+double		pythagoras(const double a, const double b);
+double		pytha_inverse(const double c, const double a);
+bool		quadratic_equation(const t_vec *yo, double *solution_a, double *solution_b);
 
 /*	Utilities	*/
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/08 15:08:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/11 14:20:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	alloc_objects(t_data *data, t_input *input)
 	int32_t	i;
 
 	i = 0;
-	while (i < SPHERE)
+	while (i <= SPHERE)
 	{
 		obj[i] = count_objects(input, i);
 		i++;
@@ -97,5 +97,5 @@ void	read_file(t_data *data, char *location)
 	}
 	close(data->fd);
 	assign_function_pointers(data);
-	alloc_objects(data, input);
+	alloc_objects(data, data->input);
 }
