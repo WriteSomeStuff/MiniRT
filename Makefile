@@ -6,13 +6,13 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/11 16:29:58 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/14 17:25:05 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -flto -g $(HEADERS)
+CFLAGS	= -Wall -Wextra -Werror -g $(HEADERS)
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -37,6 +37,7 @@ CFILES	=	alloc.c \
 			maths.c \
 			parsing.c \
 			quaternions.c \
+			rasterise.c \
 			utils.c \
 			vectors.c \
 			vector_utils.c \

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:39:10 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/14 14:24:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_vec	subtract_vectors(const t_vec *a, const t_vec *b)
 	return (result);
 }
 
-double	dot_product(const t_vec *a, const t_vec *b)
+float	dot_product(const t_vec *a, const t_vec *b)
 {
 	return (a->x * b->x + a->y * b->y + a->z * b->z);
 }

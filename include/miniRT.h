@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/13 17:27:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/14 17:17:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 512
-# define HEIGHT 512
+# define WIDTH 720
+# define HEIGHT 720
 # define PI 3.14159265359
 # define FOREVER 1
 
@@ -38,8 +38,8 @@ typedef enum s_token
 
 typedef struct s_point
 {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 }	t_point;
 
 typedef struct s_input
@@ -51,19 +51,19 @@ typedef struct s_input
 
 typedef union s_vec
 {
-	double	v[3];
+	float	v[3];
 
 	struct
 	{
-		double	x;
-		double	y;
-		double	z;
+		float	x;
+		float	y;
+		float	z;
 	};
 	struct
 	{
-		double	a;
-		double	b;
-		double	c;
+		float	a;
+		float	b;
+		float	c;
 	};
 }	t_vec;
 
@@ -76,13 +76,13 @@ typedef struct s_ray
 typedef struct s_hit
 {
 	bool	hit;
-	double	distance;
+	float	distance;
 	t_vec	location;
 }	t_hit;
 
 typedef struct s_ambient
 {
-	double		luminosity;
+	float		luminosity;
 	uint32_t	colour;
 }	t_ambient;
 
@@ -97,15 +97,15 @@ typedef struct s_cylinder
 {
 	t_vec		center;
 	t_vec		orientation;
-	double		radius;
-	double		height;
+	float		radius;
+	float		height;
 	uint32_t	colour;
 }	t_cylinder;
 
 typedef struct s_light
 {
 	t_vec		source;
-	double		luminosity;
+	float		luminosity;
 	uint32_t	colour;
 }	t_light;
 
@@ -119,9 +119,16 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_vec		center;
-	double		radius;
+	float		radius;
 	uint32_t	colour;
 }	t_sphere;
+
+typedef struct s_window
+{
+	uint32_t	x;
+	uint32_t	y;
+	float		aspect_ratio;
+}	t_window;
 
 typedef struct s_data
 {
@@ -134,6 +141,7 @@ typedef struct s_data
 	t_light		*light;
 	t_plane		*planes;
 	t_sphere	*spheres;
+	t_window	*window;
 	char		*line;
 	int32_t		fd;
 	void		(*f[6])(t_data *, char **);
@@ -178,23 +186,27 @@ int32_t		count_objects(t_input *lst, t_token token);
 
 t_hit		intersect_sphere(t_ray *ray, const t_sphere *sphere);
 
-double		dot_product(const t_vec *a, const t_vec *b);
+float		dot_product(const t_vec *a, const t_vec *b);
 t_vec		cross_product(const t_vec *a, const t_vec *b);
-double		vector_length(const t_vec *origin, const t_vec *vector);
-t_vec		normalize_vector(const t_vec *origin, const t_vec *vector);
+float		vector_length(const t_vec *origin, const t_vec *vector);
+t_vec		normalize_vector(const t_vec *vector);
+float		q_sqrt(float num);
+t_vec		scale_vector(const t_vec *vector, float scalar);
 
 t_vec		add_vectors(const t_vec *a, const t_vec *b);
 t_vec		subtract_vectors(const t_vec *a, const t_vec *b);
 
-t_vec		scale_vector(const t_vec *vector, double scalar);
+float		degree_to_radian(const float degree);
+float		radian_to_degree(const float radian);
+float		pythagoras(const float a, const float b);
+float		pytha_inverse(const float c, const float a);
+bool		quadratic_equation(const t_vec *yo, float *solution_a, float *solution_b);
 
-double		pythagoras(const double a, const double b);
-double		pytha_inverse(const double c, const double a);
-bool		quadratic_equation(const t_vec *yo, double *solution_a, double *solution_b);
+t_vec		direction_to_xy(t_data *data, float x, float y);
 
 /*	Utilities	*/
 
-double		a_to_double(t_data *data, const char *str);
+float		a_to_float(t_data *data, const char *str);
 
 void		*rt_malloc(t_data *data, size_t size);
 void		*rt_calloc(t_data *data, size_t size);
@@ -216,13 +228,13 @@ void		verify_info(t_data *data, char **info);
 
 // typedef union s_quat
 // {
-// 	double	q[4];
+// 	float	q[4];
 // 	struct
 // 	{
-// 		double	real;
-// 		double	x;
-// 		double	y;
-// 		double	z;
+// 		float	real;
+// 		float	x;
+// 		float	y;
+// 		float	z;
 // 	};
 // }	t_quat;
 
@@ -232,8 +244,3 @@ void		verify_info(t_data *data, char **info);
 // 	int32_t	y;
 // }	t_complex;
 
-/* typedef struct s_window
-{
-	uint32_t	width;
-	uint32_t	height;
-}	t_window; */

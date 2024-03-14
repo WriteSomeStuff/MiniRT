@@ -15,14 +15,14 @@
 // void	rotate_rectangle(t_data *data, t_complex a, t_complex b, \
 // t_complex c, t_complex d, int32_t angle)
 // {
-// 	double theta;
+// 	float theta;
 
 // 	(void)a;
 // 	(void)b;
 // 	(void)c;
 // 	(void)d;
 // 	(void)data;
-// 	theta = (double)(angle % 360) * PI/180;
+// 	theta = (float)(angle % 360) * PI/180;
 // 	a.x = cos(theta) - sin(theta);
 // 	a.y = 
 // 	b.x = 
@@ -38,8 +38,8 @@
 // void	draw_rectangle(t_data *data, uint32_t wide, uint32_t high, t_complex center)
 // {
 // 	t_complex a, b, c, d, middle;
-// 	double	x;
-// 	double	y;
+// 	float	x;
+// 	float	y;
 
 // 	middle.x = WIDTH / 2;
 // 	middle.y = HEIGHT / 2;
@@ -99,14 +99,14 @@
 
 // void	draw_line(t_data *data, t_complex start, t_complex end)
 // {
-// 	double	len;
-// 	double	angle;
+// 	float	len;
+// 	float	angle;
 // 	int		dx;
 // 	int		dy;
 
 // 	dx = end.x - start.x;
 // 	dy = end.y - start.y;
-// 	len = (double)sqrt(dx * dx + dy * dy);
+// 	len = (float)sqrt(dx * dx + dy * dy);
 // 	angle = atan2(dy, dx);
 // 	while (len > 0)
 // 	{

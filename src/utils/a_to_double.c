@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   a_to_double.c                                      :+:    :+:            */
+/*   a_to_float.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
@@ -27,10 +27,10 @@ static double	ft_pow_fl(double number, int power)
 	return (x);
 }
 
-static int	check_input(t_data *data, const char *str, double *c, int i)
+static int	check_input(t_data *data, const char *str, float *c, int i)
 {
-	if (ft_strlen(str) >= 15)
-		exit_error(data, ": number doesn't fit in a double");
+	if (ft_strlen(str) >= 9)
+		exit_error(data, ": number doesn't fit in a float");
 	if (str[i] == '-')
 	{
 		*c *= -1;
@@ -42,7 +42,7 @@ static int	check_input(t_data *data, const char *str, double *c, int i)
 		if (str[i] == '.')
 		{
 			i++;
-			if (str[i] == '\0' || ft_strlen(&str[i]) > 9)
+			if (str[i] == '\0' || ft_strlen(&str[i]) > 7)
 				exit_error(data, ": invalid input after decimal point");
 			break ;
 		}
@@ -60,10 +60,10 @@ static void	check_result(t_data *data, double result)
 		exit_error(data, ": input larger than integer values");
 }
 
-double	a_to_double(t_data *data, const char *str)
+float	a_to_float(t_data *data, const char *str)
 {
 	double	res;
-	double	c;
+	float	c;
 	int		i;
 
 	res = 0;
@@ -86,5 +86,5 @@ double	a_to_double(t_data *data, const char *str)
 			check_result(data, res);
 		}
 	}
-	return (res);
+	return ((float)res);
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/11 16:12:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/14 16:25:04 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	clean_up(t_data *data)
 	free(data->light);
 	free(data->planes);
 	free(data->spheres);
+	free(data->window);
 	free(data->line);
 	close(data->fd);
 	// mlx_free_image(data->image);
