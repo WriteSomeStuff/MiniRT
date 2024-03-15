@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/14 14:24:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/15 17:40:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ t_vec	normalize_vector(const t_vec *vector)
 
 float	q_sqrt(float num)
 {
-	union
-	{
-		int32_t	i;
-		float	y;
-	}	magic;
-	
+	t_magic	magic;
+
 	magic.y = num;
-	magic.i = 0x5f3759df - (magic.i >> 1);
+	magic.i = 0x5F375A86 - (magic.i >> 1);
 	magic.y *= 1.5f - (num * 0.5f * magic.y * magic.y);
 	return (magic.y);
 }

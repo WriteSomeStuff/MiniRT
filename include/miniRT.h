@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/14 17:17:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/15 17:51:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define HEIGHT 720
 # define PI 3.14159265359
 # define FOREVER 1
+
+typedef float	t_vec3 __attribute__ ((vector_size(16)));
 
 typedef enum s_token
 {
@@ -51,8 +53,7 @@ typedef struct s_input
 
 typedef union s_vec
 {
-	float	v[3];
-
+	t_vec3	vec3;
 	struct
 	{
 		float	x;
@@ -66,6 +67,12 @@ typedef union s_vec
 		float	c;
 	};
 }	t_vec;
+
+typedef union s_magic
+{
+	int32_t	i;
+	float	y;
+}	t_magic;
 
 typedef struct s_ray
 {
@@ -152,7 +159,7 @@ uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 /*	Initialisation	*/
 
-void		check_rgb_values(t_data *data, t_vec vec);
+void		check_rgb_values(t_data *data, const t_vec3 *vec);
 void		init_ambient(t_data *data, char **info);
 void		init_light(t_data *data, char **info);
 
@@ -192,9 +199,6 @@ float		vector_length(const t_vec *origin, const t_vec *vector);
 t_vec		normalize_vector(const t_vec *vector);
 float		q_sqrt(float num);
 t_vec		scale_vector(const t_vec *vector, float scalar);
-
-t_vec		add_vectors(const t_vec *a, const t_vec *b);
-t_vec		subtract_vectors(const t_vec *a, const t_vec *b);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);

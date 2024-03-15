@@ -6,31 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/14 14:24:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/15 17:27:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-t_vec	add_vectors(const t_vec *a, const t_vec *b)
-{
-	t_vec	result;
-
-	result.x = a->x + b->x;
-	result.y = a->y + b->y;
-	result.z = a->z + b->z;
-	return (result);
-}
-
-t_vec	subtract_vectors(const t_vec *a, const t_vec *b)
-{
-	t_vec	result;
-
-	result.x = a->x - b->x;
-	result.y = a->y - b->y;
-	result.z = a->z - b->z;
-	return (result);
-}
 
 float	dot_product(const t_vec *a, const t_vec *b)
 {

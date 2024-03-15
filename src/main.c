@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/14 17:28:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/15 17:35:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void	draw_something(t_data *data)
 	float	y;
 	t_ray	ray;
 	t_hit	col;
+	// t_hit	col2;
 
 	ray.origin = data->cam->viewpoint;
-	x = 0;
-	while (x < WIDTH)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		y = 0;
-		while (y < HEIGHT)
+		x = 0;
+		while (x < WIDTH)
 		{
 			ray.direction = direction_to_xy(data, x, y);
 			col = intersect_sphere(&ray, data->spheres);
@@ -39,9 +40,9 @@ void	draw_something(t_data *data)
 				mlx_put_pixel(data->image, x, y, ft_pixel(100, 0, 255, 255));
 			else
 				mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
@@ -52,14 +53,14 @@ void	ft_hook(void *param)
 	data = (t_data *)param;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
-		data->image->instances[0].y -= 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
-		data->image->instances[0].y += 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-		data->image->instances[0].x -= 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		data->image->instances[0].x += 5;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_UP))
+	// 	data->image->instances[0].y -= 5;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN))
+	// 	data->image->instances[0].y += 5;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	// 	data->image->instances[0].x -= 5;
+	// if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+	// 	data->image->instances[0].x += 5;
 }
 
 void	initialise_window(t_data *data)
@@ -108,7 +109,7 @@ int32_t	main(int32_t argc, char **argv)
 	read_file(&data, argv[1]);
 	draw_something(&data);
 
-	// mlx_loop_hook(data.mlx, ft_hook, &data);
+	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	return (0);
