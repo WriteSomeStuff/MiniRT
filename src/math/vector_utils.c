@@ -6,23 +6,18 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:40:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/18 15:25:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static float	length(const float x, const float y)
-{
-	return (fabs(x - y));
-}
-
-float	vector_length(const t_vec *origin, const t_vec *vector)
+float	vector_length(const t_vec *a, const t_vec *b)
 {
 	float	c;
 
-	c = pythagoras(length(origin->x, vector->x), length(origin->y, vector->y));
-	return (pythagoras(c, length(origin->z, vector->z)));
+	c = pythagoras(a->x - b->x, a->y - b->y);
+	return (pythagoras(c, a->z - b->z));
 }
 
 t_vec	normalize_vector(const t_vec *vector)

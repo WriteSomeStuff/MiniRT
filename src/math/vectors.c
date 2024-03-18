@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:27:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/18 16:07:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,5 @@ t_vec	cross_product(const t_vec *a, const t_vec *b)
 	cross.z = a->x * b->y - a->y * b->x;
 	return (cross);
 }
+
+// t_vec	surface_normal()

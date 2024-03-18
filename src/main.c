@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/15 18:53:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/18 16:33:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@ void	draw_something(t_data *data)
 {
 	float	x;
 	float	y;
+	float	dot;
 	t_ray	ray;
 	t_hit	col;
-	t_vec	nd;
-	t_vec	ld;
+	t_vec	surface_norm;
+	t_vec	light_dir;
 	t_vec	light;
+	uint8_t	sphere[4] = {data->spheres->colour >> 24, data->spheres->colour >> 16, data->spheres->colour >> 8, data->spheres->colour};
 	
-	light.x = 4;
-	light.y = 0;
+	light.x = 0;
+	light.y = 25000;
 	light.z = 4;
 
-	ray.origin = data->cam->viewpoint;
+	ray.origin.vec3 = data->cam->viewpoint.vec3;
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -41,15 +43,22 @@ void	draw_something(t_data *data)
 		while (x < WIDTH)
 		{
 			ray.direction = direction_to_xy(data, x, y);
-			col = intersect_sphere(&ray, data->spheres);
-			nd.vec3 = col.location.vec3 - data->spheres->center.vec3;
-			nd = normalize_vector(&nd);
-			ld.vec3 = col.location.vec3 - light.vec3;
-			ld = normalize_vector(&ld);
-			float dot = dot_product(&nd, &ld);
-			dot = 1 - cos(dot);
+			col = intersect_sphere(&ray, &data->spheres[0]);
 			if (col.hit == true)
-				mlx_put_pixel(data->image, x, y, ft_pixel(dot * 255, dot * 255, dot * 255, 255));
+			{
+				surface_norm.vec3 = col.location.vec3 - data->spheres->center.vec3;
+				surface_norm = normalize_vector(&surface_norm);
+				light_dir.vec3 = light.vec3 - col.location.vec3;
+				light_dir = normalize_vector(&light_dir);
+				dot = dot_product(&light_dir, &surface_norm);
+				if (dot < 0)
+					mlx_put_pixel(data->image, x, y, ft_pixel(sphere[0] * 0.2, sphere[1] * 0.2, sphere[2] * 0.2, 255));
+				else
+				{
+					dot += 0.2 * (1 - dot);
+					mlx_put_pixel(data->image, x, y, ft_pixel(dot * sphere[0], dot * sphere[1], dot * sphere[2], 255));
+				}
+			}
 			else
 				mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
 			x++;
@@ -57,6 +66,15 @@ void	draw_something(t_data *data)
 		y++;
 	}
 }
+
+// ray.direction = direction_to_xy(data, x, y);
+// col = intersect_sphere(&ray, data->spheres);
+// inc_dir.vec3 = data->spheres->center.vec3 - col.location.vec3;
+// inc_dir = normalize_vector(&inc_dir);
+// light_dir.vec3 = light.vec3 - col.location.vec3;
+// light_dir = normalize_vector(&light_dir);
+// float dot = dot_product(&inc_dir, &light_dir);
+// dot = 1 - cos(dot);
 
 void	ft_hook(void *param)
 {
