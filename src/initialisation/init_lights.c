@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/15 17:47:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/19 18:04:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	init_light(t_data *data, char **info)
 	data->light->luminosity = a_to_float(data, info[1]);
 	tmp = create_vector(data, info[2]);
 	check_rgb_values(data, &tmp.vec3);
-	data->ambient->colour = ft_pixel((uint8_t)tmp.x, (uint8_t)tmp.y, \
+	data->light->colour = ft_pixel((uint8_t)tmp.x, (uint8_t)tmp.y, \
 		(uint8_t)tmp.z, 0xff);
 }

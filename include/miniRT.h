@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/15 18:26:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/19 18:01:58 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ typedef struct s_input
 	struct s_input	*next;
 }	t_input;
 
+typedef union s_colour
+{
+	uint32_t	rgba;
+	struct
+	{
+		uint8_t	a;
+		uint8_t	b;
+		uint8_t	g;
+		uint8_t	r;
+	};
+}	t_colour;
+
 typedef union s_vec
 {
 	t_vec3	vec3;
@@ -83,6 +95,7 @@ typedef struct s_ray
 typedef struct s_hit
 {
 	bool	hit;
+	bool	inside_object;
 	float	distance;
 	t_vec	location;
 }	t_hit;
@@ -169,6 +182,12 @@ void		init_cylinder(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
+/*	Colours	*/
+
+void		print_colour(t_colour c);
+uint32_t	reflection_result(t_colour colour1, t_colour colour2, float fraction);
+uint32_t	combine_colours(t_colour colour1, t_colour colour2);
+
 /*	Errors & cleanup	*/
 
 void		free_and_null(void **variable);
@@ -204,7 +223,7 @@ float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
 float		pythagoras(const float a, const float b);
 float		pytha_inverse(const float c, const float a);
-bool		quadratic_equation(const t_vec *yo, float *solution_a, float *solution_b);
+bool		quadratic_equation(const t_vec *vec, float *a, float *b);
 
 t_vec		direction_to_xy(t_data *data, float x, float y);
 
@@ -216,7 +235,6 @@ void		*rt_malloc(t_data *data, size_t size);
 void		*rt_calloc(t_data *data, size_t size);
 
 void		print_vector(t_vec vector);
-void		print_colour(uint32_t colour);
 void		print_2d_charray(char **array);
 t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);

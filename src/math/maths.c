@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/15 18:06:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/19 15:25:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ float	pytha_inverse(const float c, const float a)
 
 bool	quadratic_equation(const t_vec *vec, float *a, float *b)
 {
-	float	root_abc;
+	float	b_4ac;
 
-	root_abc = vec->y * vec->y - 4 * vec->x * vec->z;
-	if (root_abc < 0)
+	b_4ac = vec->y * vec->y - 4 * vec->x * vec->z;
+	if (b_4ac < 0)
 		return (false);
-	root_abc = sqrt(root_abc);
-	*a = (-vec->y + root_abc) / (2 * vec->x);
-	*b = (-vec->y - root_abc) / (2 * vec->x);
+	b_4ac = sqrt(b_4ac);
+	*a = (-vec->y + b_4ac) / (2 * vec->x);
+	*b = (-vec->y - b_4ac) / (2 * vec->x);
 	return (true);
 }

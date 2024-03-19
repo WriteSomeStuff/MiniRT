@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/14 17:25:05 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/19 16:13:24 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 CFILES	=	alloc.c \
 			a_to_double.c \
 			cast_rays.c \
+			colours.c \
 			cube.c \
 			clean_up.c \
 			get_next_line_rt.c \
