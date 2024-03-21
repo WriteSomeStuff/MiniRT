@@ -6,11 +6,19 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 16:13:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/21 15:54:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 17:38:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+uint32_t	ambient_colour(const t_vec *obj_colour, const t_vec *ambient)
+{
+	t_vec	amb;
+
+	amb = reflection_result(obj_colour, ambient, 1);
+	return (percentage_to_rgba(&amb));
+}
 
 t_vec	reflection_result(const t_vec *c1, const t_vec *c2, float fraction)
 {

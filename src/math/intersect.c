@@ -6,11 +6,29 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/21 16:55:04 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/21 18:23:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_hit	intersect_cylinder(t_ray *ray, const t_sphere *cyl)
+{
+	t_hit	col;
+
+	(void)ray;
+	(void)cyl;
+	return (col);
+}
+
+t_hit	intersect_plane(t_ray *ray, const t_sphere *plane)
+{
+	t_hit	col;
+
+	(void)ray;
+	(void)plane;
+	return (col);
+}
 
 t_hit	intersect_sphere(t_ray *ray, const t_sphere *sphere)
 {
@@ -43,4 +61,36 @@ t_hit	intersect_sphere(t_ray *ray, const t_sphere *sphere)
 		collision.location.vec3 = collision.location.vec3 + ray->origin.vec3;
 	}
 	return (collision);
+}
+
+uint32_t	draw_closest_object(t_data *data, t_cylinder *c, t_plane *p, t_sphere *s)
+{
+	float	distance;
+	t_hit	col;
+	t_input	*in;
+	t_ray	ray;
+
+	in = data->input;
+	distance = FLT_MAX;
+	while (in != NULL)
+	{
+		if (in->token == CYLINDER)
+		{
+			col = intersect_cylinder(&ray, c);
+			c++;
+		}
+		if (in->token == PLANE)
+		{
+			col = intersect_cylinder(&ray, c);
+			p++;
+		}
+		if (in->token == SPHERE)
+		{
+			col = intersect_cylinder(&ray, c);
+			s++;
+		}
+		if (col.hit == true && col.distance < distance)
+			distance = col.distance;			
+		in = in->next;
+	}
 }

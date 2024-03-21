@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 15:37:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 17:57:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_objects(t_data *data, t_input *input)
 		data->f[input->token](data, input->info);
 		input = input->next;
 	}
+	obj_ambiance(data, data->cyls, data->planes, data->spheres);
 }
 
 void	init_camera(t_data *data, char **info)

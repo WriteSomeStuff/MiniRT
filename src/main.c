@@ -6,119 +6,11 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 16:38:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 17:25:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-#define RADIUS 16
-
-uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void	lights_out(t_data *data)
-{
-	uint32_t	x;
-	uint32_t	y;
-
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
-			x++;
-		}
-		y++;
-	}
-}
-
-void	draw_something(t_data *data)
-{
-	float	x;
-	float	y;
-	float	dot;
-	t_ray	ray;
-	t_hit	col;
-	t_vec	surface_norm;
-	t_vec	light_dir;
-	t_vec	light;
-	t_vec	light_colour;
-	light_colour = data->light[0].colour;
-	t_vec	sphere;
-	sphere = data->spheres[0].colour;
-	t_vec	ambiance;
-	ambiance = data->ambient->colour;
-	
-	light.x = 25000;
-	light.y = 4;
-	light.z = 0;
-
-	puts("AMBIANCE");
-	print_vector(ambiance);
-	puts("LIGHT");
-	print_vector(light_colour);
-	puts("SPHERE");
-	print_vector(sphere);
-	ray.origin.vec3 = data->cam->viewpoint.vec3;
-	y = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			ray.direction = direction_to_xy(data, x, y);
-			col = intersect_sphere(&ray, &data->spheres[0]);
-			if (col.inside_object == true)
-			{
-				ft_putendl_fd("Warning: camera is inside an object", STDERR_FILENO);
-				lights_out(data);
-				return ;
-			}
-			if (col.hit == true)
-			{
-				surface_norm.vec3 = col.location.vec3 - data->spheres->center.vec3;
-				surface_norm = normalize_vector(&surface_norm);
-				light_dir.vec3 = light.vec3 - col.location.vec3;
-				light_dir = normalize_vector(&light_dir);
-				dot = dot_product(&light_dir, &surface_norm);
-				if (dot < 0)
-				{
-					t_vec	result = reflection_result(&sphere, &ambiance, 1);
-					percentage_to_rgba(&result);
-					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
-				}
-				else
-				{
-					t_vec	result = reflection_result(&sphere, &light_colour, dot);
-					t_vec	ambsphere = reflection_result(&sphere, &ambiance, 1);
-					result = combine_colours(&ambsphere, &result);
-					percentage_to_rgba(&result);
-					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
-				}
-			}
-			else
-				mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
-			x++;
-		}
-		y++;
-	}
-}
-
-void	ft_hook(void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-	{
-		exit_success(data);
-	}
-}
 
 void	initialise_window(t_data *data)
 {
@@ -139,8 +31,8 @@ void	initialise_window(t_data *data)
 	{
 		exit_error(data, ": failed to load window");
 	}
-	w->x = data->mlx->width;
-	w->y = data->mlx->height;
+	w->width = data->mlx->width;
+	w->height = data->mlx->height;
 	w->aspect_ratio = (float)data->mlx->width / data->mlx->height;
 	data->window = w;
 }

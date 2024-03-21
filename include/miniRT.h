@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 17:05:14 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/03/21 18:19:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "get_next_line_rt.h"
 # include <MLX42/MLX42.h>
+# include <float.h>
 # include <math.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -108,6 +109,7 @@ typedef struct s_cylinder
 	float		radius;
 	float		height;
 	t_vec		colour;
+	uint32_t	amb_colour;
 }	t_cylinder;
 
 typedef struct s_light
@@ -122,6 +124,7 @@ typedef struct s_plane
 	t_vec		location;
 	t_vec		orientation;
 	t_vec		colour;
+	uint32_t	amb_colour;
 }	t_plane;
 
 typedef struct s_sphere
@@ -129,12 +132,13 @@ typedef struct s_sphere
 	t_vec		center;
 	float		radius;
 	t_vec		colour;
+	uint32_t	amb_colour;
 }	t_sphere;
 
 typedef struct s_window
 {
-	uint32_t	x;
-	uint32_t	y;
+	uint32_t	width;
+	uint32_t	height;
 	float		aspect_ratio;
 }	t_window;
 
@@ -155,20 +159,26 @@ typedef struct s_data
 	void		(*f[6])(t_data *, char **);
 }	t_data;
 
-uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-// void		draw_line(t_data *data, t_complex start, t_complex end);
+void		draw_something(t_data *data);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
+uint32_t	ambient_colour(const t_vec *obj_colour, const t_vec *ambient);
 t_vec		reflection_result(const t_vec *c1, const t_vec *c2, float fraction);
 t_vec		combine_colours(const t_vec *c1, const t_vec *c2);
 uint32_t	percentage_to_rgba(const t_vec *f);
+/*	------------------------------------------------------------------	*/
+
+/*	Hooks	*/
+/*	------------------------------------------------------------------	*/
+void		ft_hook(void *param);
 /*	------------------------------------------------------------------	*/
 
 /*	Initialisation	*/
 /*	------------------------------------------------------------------	*/
 void		check_rgb_values(t_data *data, const t_vec3 *vec);
 void		init_ambient(t_data *data, char **info);
+void		obj_ambiance(t_data *d, t_cylinder *c, t_plane *p, t_sphere *s);
 void		init_light(t_data *data, char **info);
 
 void		init_objects(t_data *data, t_input *input);
@@ -209,6 +219,7 @@ t_input		*new_node(t_data *data, char *line, t_token token);
 t_input		*node_last(t_input *lst);
 int32_t		count_objects(t_input *lst, t_token token);
 
+uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void		print_vector(t_vec vector);
 void		print_2d_charray(char **array);
 void		rgb_to_floats(t_vec *rgb);

@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/21 17:02:05 by cschabra      ########   odam.nl          #
+#    Updated: 2024/03/21 17:23:19 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ CFILES	=	alloc.c \
 			colours.c \
 			cube.c \
 			clean_up.c \
+			draw.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
+			keyboard.c \
 			init_lights.c \
 			init_objects.c \
 			intersect.c \
@@ -36,6 +38,7 @@ CFILES	=	alloc.c \
 			list_navigation.c \
 			main.c \
 			maths.c \
+			mouse.c \
 			parsing.c \
 			quaternions.c \
 			rasterise.c \
@@ -66,6 +69,9 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/colours/%.c
+	$(CC) -c $(CFLAGS) -o $@ $^
+
+$(OBJ_DIR)/%.o : $(SRC_DIR)/hooks/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 	
 $(OBJ_DIR)/%.o : $(SRC_DIR)/initialisation/%.c

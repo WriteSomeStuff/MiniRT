@@ -6,11 +6,16 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 15:15:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 17:24:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
 
 void	print_vector(t_vec vector)
 {
