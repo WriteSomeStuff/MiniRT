@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/19 18:04:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 15:52:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,27 @@ void	check_rgb_values(t_data *data, const t_vec3 *vec)
 
 void	init_ambient(t_data *data, char **info)
 {
-	t_vec	tmp;
+	float	luminosity;
 
 	check_split(data, info, 2);
 	verify_info(data, info);
-	data->ambient->luminosity = a_to_float(data, info[0]);
-	tmp = create_vector(data, info[1]);
-	check_rgb_values(data, &tmp.vec3);
-	data->ambient->colour = ft_pixel((uint8_t)tmp.x, (uint8_t)tmp.y, \
-		(uint8_t)tmp.z, 0xff);
+	luminosity = a_to_float(data, info[0]);
+	data->ambient->colour = create_vector(data, info[1]);
+	check_rgb_values(data, &data->ambient->colour.vec3);
+	rgb_to_floats(&data->ambient->colour);
+	data->ambient->colour.vec3 *= luminosity;
 }
 
 void	init_light(t_data *data, char **info)
 {
-	t_vec	tmp;
+	float	luminosity;
 
 	check_split(data, info, 3);
 	verify_info(data, info);
 	data->light->source = create_vector(data, info[0]);
-	data->light->luminosity = a_to_float(data, info[1]);
-	tmp = create_vector(data, info[2]);
-	check_rgb_values(data, &tmp.vec3);
-	data->light->colour = ft_pixel((uint8_t)tmp.x, (uint8_t)tmp.y, \
-		(uint8_t)tmp.z, 0xff);
+	luminosity = a_to_float(data, info[1]);
+	data->light->colour = create_vector(data, info[2]);
+	check_rgb_values(data, &data->light->colour.vec3);
+	rgb_to_floats(&data->light->colour);
+	data->light->colour.vec3 *= luminosity;
 }

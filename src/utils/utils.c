@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/19 18:02:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 15:15:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ void	print_2d_charray(char **array)
 		i++;
 	}
 	printf("String [%d]: %s\n", i, array[i]);
+}
+
+void	rgb_to_floats(t_vec *rgb)
+{
+	rgb->r /= 255;
+	rgb->g /= 255;
+	rgb->b /= 255;
 }
 
 t_vec	create_vector(t_data *data, char *info)

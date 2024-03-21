@@ -6,35 +6,33 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 16:13:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/19 18:13:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 15:54:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	print_colour(t_colour c)
+t_vec	reflection_result(const t_vec *c1, const t_vec *c2, float fraction)
 {
-	printf("r: %d, g: %d, b: %d a: %d\n", c.r, c.g, c.b, c.a);
+	t_vec	result;
+
+	result.r = c1->r * c2->r * fraction;
+	result.g = c1->g * c2->g * fraction;
+	result.b = c1->b * c2->b * fraction;
+	return (result);
 }
 
-uint32_t	reflection_result(t_colour colour1, t_colour colour2, float fraction)
+t_vec	combine_colours(const t_vec *c1, const t_vec *c2)
 {
-	t_colour	result;
+	t_vec	result;
 
-	result.r = colour1.r * (colour2.r / 255) * fraction;
-	result.g = colour1.g * (colour2.g / 255) * fraction;
-	result.b = colour1.b * (colour2.b / 255) * fraction;
-	result.a = 0xff;
-	return (result.rgba);
+	result.r = c1->r + (1 - c1->r) * c2->r;
+	result.g = c1->g + (1 - c1->g) * c2->g;
+	result.b = c1->b + (1 - c1->b) * c2->b;
+	return (result);
 }
 
-uint32_t	combine_colours(t_colour colour1, t_colour colour2)
+uint32_t	percentage_to_rgba(const t_vec *f)
 {
-	t_colour	result;
-
-	result.r = colour1.r + (255 - colour1.r) * colour2.r / 255;
-	result.g = colour1.g + (255 - colour1.g) * colour2.g / 255;
-	result.b = colour1.b + (255 - colour1.b) * colour2.b / 255;
-	result.a = 0xff;
-	return (result.rgba);
+	return (ft_pixel(f->r * 255, f->g * 255, f->b * 255, 0xff));
 }

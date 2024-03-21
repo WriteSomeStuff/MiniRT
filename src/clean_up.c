@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/14 16:25:04 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 15:44:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void	exit_error(t_data *data, char *msg)
 	ft_putstr_fd("Error", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
+}
+
+void	exit_success(t_data *data)
+{
+	clean_up(data);
+	exit(EXIT_SUCCESS);
 }
 
 void	clear_list(t_input **input)

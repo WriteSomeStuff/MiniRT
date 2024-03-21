@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/19 18:17:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 16:38:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,28 @@ void	draw_something(t_data *data)
 	float	x;
 	float	y;
 	float	dot;
-	float	amb;
 	t_ray	ray;
 	t_hit	col;
 	t_vec	surface_norm;
 	t_vec	light_dir;
 	t_vec	light;
-	t_colour	light_colour;
-	light_colour.rgba = data->light[0].colour;
-	t_colour	sphere;
-	sphere.rgba = data->spheres[0].colour;
-	t_colour	ambiance;
-	ambiance.rgba = data->ambient->colour;
-	t_colour	combo;
-	combo.rgba = combine_colours(light_colour, ambiance);
+	t_vec	light_colour;
+	light_colour = data->light[0].colour;
+	t_vec	sphere;
+	sphere = data->spheres[0].colour;
+	t_vec	ambiance;
+	ambiance = data->ambient->colour;
 	
 	light.x = 25000;
 	light.y = 4;
 	light.z = 0;
 
+	puts("AMBIANCE");
+	print_vector(ambiance);
 	puts("LIGHT");
-	print_colour(light_colour);
-	puts("combo");
-	print_colour(combo);
+	print_vector(light_colour);
 	puts("SPHERE");
-	print_colour(sphere);
-	amb = data->ambient->luminosity;
+	print_vector(sphere);
 	ray.origin.vec3 = data->cam->viewpoint.vec3;
 	y = 0;
 	while (y < HEIGHT)
@@ -92,13 +88,17 @@ void	draw_something(t_data *data)
 				dot = dot_product(&light_dir, &surface_norm);
 				if (dot < 0)
 				{
-					// mlx_put_pixel(data->image, x, y, ft_pixel(sphere[0] * amb * (ambiance[0] / 255), sphere[1] * amb * (ambiance[1] / 255), sphere[2] * amb * (ambiance[2] / 255), 255));
-					mlx_put_pixel(data->image, x, y, reflection_result(sphere, ambiance, 1));
+					t_vec	result = reflection_result(&sphere, &ambiance, 1);
+					percentage_to_rgba(&result);
+					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
 				}
 				else
 				{
-					dot += amb * (1 - dot);
-					mlx_put_pixel(data->image, x, y, reflection_result(sphere, combo, dot));
+					t_vec	result = reflection_result(&sphere, &light_colour, dot);
+					t_vec	ambsphere = reflection_result(&sphere, &ambiance, 1);
+					result = combine_colours(&ambsphere, &result);
+					percentage_to_rgba(&result);
+					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
 				}
 			}
 			else
@@ -115,7 +115,9 @@ void	ft_hook(void *param)
 
 	data = (t_data *)param;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(data->mlx);
+	{
+		exit_success(data);
+	}
 }
 
 void	initialise_window(t_data *data)
