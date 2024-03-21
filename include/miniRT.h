@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 16:29:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/21 17:05:14 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,15 @@ typedef struct s_data
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 // void		draw_line(t_data *data, t_complex start, t_complex end);
 
-/*	Initialisation	*/
+/*	Colours	*/
+/*	------------------------------------------------------------------	*/
+t_vec		reflection_result(const t_vec *c1, const t_vec *c2, float fraction);
+t_vec		combine_colours(const t_vec *c1, const t_vec *c2);
+uint32_t	percentage_to_rgba(const t_vec *f);
+/*	------------------------------------------------------------------	*/
 
+/*	Initialisation	*/
+/*	------------------------------------------------------------------	*/
 void		check_rgb_values(t_data *data, const t_vec3 *vec);
 void		init_ambient(t_data *data, char **info);
 void		init_light(t_data *data, char **info);
@@ -170,43 +177,12 @@ void		init_cylinder(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
-/*	Colours	*/
-
-t_vec		reflection_result(const t_vec *c1, const t_vec *c2, float fraction);
-t_vec		combine_colours(const t_vec *c1, const t_vec *c2);
-uint32_t	percentage_to_rgba(const t_vec *f);
-
-/*	Errors & cleanup	*/
-
-void		free_and_null(void **variable);
-void		free_2d(void ***input);
-void		exit_error(t_data *data, char *msg);
-void		exit_success(t_data *data);
-void		clear_list(t_input **input);
-void		clean_up(t_data *data);
-
-/*	Initialisation	*/
-
 void		read_file(t_data *data, char *location);
-
-/*	List functions	*/
-
-void		node_add_back(t_input **lst, t_input *new);
-t_input		*new_node(t_data *data, char *line, t_token token);
-
-t_input		*node_last(t_input *lst);
-int32_t		count_objects(t_input *lst, t_token token);
+/*	------------------------------------------------------------------	*/
 
 /*	Math	*/
-
+/*	------------------------------------------------------------------	*/
 t_hit		intersect_sphere(t_ray *ray, const t_sphere *sphere);
-
-float		dot_product(const t_vec *a, const t_vec *b);
-t_vec		cross_product(const t_vec *a, const t_vec *b);
-float		vector_length(const t_vec *origin, const t_vec *vector);
-t_vec		normalize_vector(const t_vec *vector);
-float		q_sqrt(float num);
-t_vec		scale_vector(const t_vec *vector, float scalar);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
@@ -216,12 +192,22 @@ bool		quadratic_equation(const t_vec *vec, float *a, float *b);
 
 t_vec		direction_to_xy(t_data *data, float x, float y);
 
-/*	Utilities	*/
+float		dot_product(const t_vec *a, const t_vec *b);
+t_vec		cross_product(const t_vec *a, const t_vec *b);
+/*	------------------------------------------------------------------	*/
 
+/*	Utilities	*/
+/*	------------------------------------------------------------------	*/
 float		a_to_float(t_data *data, const char *str);
 
 void		*rt_malloc(t_data *data, size_t size);
 void		*rt_calloc(t_data *data, size_t size);
+
+void		node_add_back(t_input **lst, t_input *new);
+t_input		*new_node(t_data *data, char *line, t_token token);
+
+t_input		*node_last(t_input *lst);
+int32_t		count_objects(t_input *lst, t_token token);
 
 void		print_vector(t_vec vector);
 void		print_2d_charray(char **array);
@@ -230,6 +216,22 @@ t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);
 bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);
+
+float		vector_length(const t_vec *origin, const t_vec *vector);
+t_vec		normalize_vector(const t_vec *vector);
+float		q_sqrt(float num);
+t_vec		scale_vector(const t_vec *vector, float scalar);
+/*	------------------------------------------------------------------	*/
+
+/*	Errors & cleanup	*/
+/*	------------------------------------------------------------------	*/
+void		free_and_null(void **variable);
+void		free_2d(void ***input);
+void		exit_error(t_data *data, char *msg);
+void		exit_success(t_data *data);
+void		clear_list(t_input **input);
+void		clean_up(t_data *data);
+/*	------------------------------------------------------------------	*/
 
 #endif
 

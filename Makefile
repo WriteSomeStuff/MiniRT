@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/19 16:13:24 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/21 17:02:05 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MLXOUT 	= $(LIBMLX)/build/libmlx42.a
 LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 
 CFILES	=	alloc.c \
-			a_to_double.c \
+			a_to_float.c \
 			cast_rays.c \
 			colours.c \
 			cube.c \
@@ -65,14 +65,18 @@ $(NAME): $(OBJ_DIR) $(OBJECTS)
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/initialisation/%.c
+$(OBJ_DIR)/%.o : $(SRC_DIR)/colours/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/utils/%.c
+	
+$(OBJ_DIR)/%.o : $(SRC_DIR)/initialisation/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/math/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
+	
+$(OBJ_DIR)/%.o : $(SRC_DIR)/utils/%.c
+	$(CC) -c $(CFLAGS) -o $@ $^
+
 
 clean:
 	rm -rf $(OBJ_DIR)
