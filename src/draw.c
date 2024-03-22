@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/21 18:05:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:22:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ void	draw_something(t_data *data)
 	float	x;
 	float	y;
 	float	dot;
+	// t_vec3	luminosity;
 	t_ray	ray;
 	t_hit	col;
 	t_vec	surface_norm;
 	t_vec	light_dir;
 	t_vec	light;
 	t_vec	light_colour;
-	light_colour = data->light->colour;
+	light_colour = data->light[0].colour;
 	t_vec	sphere;
-	sphere = data->spheres->colour;
+	sphere = data->spheres[0].colour;
 	t_vec	ambiance;
 	ambiance = data->ambient->colour;
 	
@@ -59,7 +60,7 @@ void	draw_something(t_data *data)
 		while (x < data->window->width)
 		{
 			ray.direction = direction_to_xy(data, x, y);
-			col = intersect_sphere(&ray, &data->spheres[0]);
+			col = find_closest_object(data, &ray);
 			if (col.inside_object == true)
 			{
 				ft_putendl_fd("Warning: camera is inside an object", STDERR_FILENO);
@@ -93,6 +94,15 @@ void	draw_something(t_data *data)
 		y++;
 	}
 }
+
+/* while (luminosity > threshhold)
+{
+	luminosity *= distance_thingy();
+	luminosity *= object_colour();
+	ray.origin = col.location;
+	ray.direction = surface_norm;
+	find_closest_object()
+} */
 
 /* void	draw_something(t_data *data)
 {

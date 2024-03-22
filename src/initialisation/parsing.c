@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/11 14:20:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:25:41 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static t_token	determine_object(char *str)
 
 static void	alloc_objects(t_data *data, t_input *input)
 {
-	int32_t	obj[SPHERE + 1];
+	int32_t	obj[INVALID];
 	int32_t	i;
 
 	i = 0;
-	while (i <= SPHERE)
+	while (i < INVALID)
 	{
 		obj[i] = count_objects(input, i);
 		i++;
@@ -56,10 +56,10 @@ static void	alloc_objects(t_data *data, t_input *input)
 		exit_error(data, ": incompatible file input");
 	data->ambient = rt_calloc(data, obj[AMBIENT] * sizeof(t_ambient));
 	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));
-	data->cyls = rt_calloc(data, obj[CYLINDER] * sizeof(t_cylinder));
+	data->cyls = rt_calloc(data, (obj[CYLINDER] + 1) * sizeof(t_cylinder));
 	data->light = rt_calloc(data, obj[LIGHT] * sizeof(t_light));
-	data->planes = rt_calloc(data, obj[PLANE] * sizeof(t_plane));
-	data->spheres = rt_calloc(data, obj[SPHERE] * sizeof(t_sphere));
+	data->planes = rt_calloc(data, (obj[PLANE] + 1) * sizeof(t_plane));
+	data->spheres = rt_calloc(data, (obj[SPHERE] + 1) * sizeof(t_sphere));
 	init_objects(data, input);
 }
 

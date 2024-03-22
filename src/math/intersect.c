@@ -6,91 +6,69 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/21 18:23:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:23:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_hit	intersect_cylinder(t_ray *ray, const t_sphere *cyl)
+static void	intersect_cylinders(t_hit *col, const t_ray *ray, const t_cylinder *cyl)
 {
-	t_hit	col;
-
+	(void)col;
 	(void)ray;
 	(void)cyl;
-	return (col);
 }
 
-t_hit	intersect_plane(t_ray *ray, const t_sphere *plane)
+static void	intersect_planes(t_hit *col, const t_ray *ray, const t_plane *cyl)
 {
-	t_hit	col;
-
+	(void)col;
 	(void)ray;
-	(void)plane;
-	return (col);
+	(void)cyl;
 }
 
-t_hit	intersect_sphere(t_ray *ray, const t_sphere *sphere)
+static void	update_intersection(t_hit *col, const t_ray *ray, float distance)
 {
-	t_hit	collision;
-	t_vec	dir_to_sphere_center;
+	col->hit = true;
+	col->distance = distance;
+	col->location = scale_vector(&ray->direction, distance);
+	col->location.vec3 += ray->origin.vec3;
+}
+
+static void	intersect_spheres(t_hit *col, const t_ray *ray, const t_sphere *s)
+{
+	t_vec	to_sphere;
 	t_vec	tmp;
 	float	res_a;
 	float	res_b;
 
-	dir_to_sphere_center.vec3 = ray->origin.vec3 - sphere->center.vec3;
-	ft_bzero(&collision, sizeof(t_hit));
 	tmp.x = 1.0f;
-	tmp.y = 2.0f * dot_product(&dir_to_sphere_center, &ray->direction);
-	tmp.z = dot_product(&dir_to_sphere_center, &dir_to_sphere_center) - sphere->radius * sphere->radius;
-	if (quadratic_equation(&tmp, &res_a, &res_b) == true)
+	while (s->object != INVALID)
 	{
-		if ((res_a < 0 && res_b >= 0) || (res_b < 0 && res_a >= 0))
+		to_sphere.vec3 = ray->origin.vec3 - s->center.vec3;
+		tmp.y = 2.0f * dot_product(&to_sphere, &ray->direction);
+		tmp.z = dot_product(&to_sphere, &to_sphere) - s->radius * s->radius;
+		if (quadratic_equation(&tmp, &res_a, &res_b) == true)
 		{
-			collision.inside_object = true;
-			return (collision);
+			if ((res_a < 0 && res_b >= 0) || (res_b < 0 && res_a >= 0))
+				col->inside_object = true;
+			if (res_a < col->distance && res_a > 0)
+				update_intersection(col, ray, res_a);
+			if (res_b < col->distance && res_b > 0)
+				update_intersection(col, ray, res_b);
 		}
-		if (res_a < 0 && res_b < 0)
-			return (collision);
-		collision.hit = true;
-		if (res_a <= res_b && res_a >= 0)
-			collision.distance = res_a;
-		else
-			collision.distance = res_b;
-		collision.location = scale_vector(&ray->direction, collision.distance);
-		collision.location.vec3 = collision.location.vec3 + ray->origin.vec3;
+		s++;
 	}
-	return (collision);
 }
 
-uint32_t	draw_closest_object(t_data *data, t_cylinder *c, t_plane *p, t_sphere *s)
+t_hit find_closest_object(t_data *data, const t_ray *ray)
 {
-	float	distance;
 	t_hit	col;
-	t_input	*in;
-	t_ray	ray;
 
-	in = data->input;
-	distance = FLT_MAX;
-	while (in != NULL)
-	{
-		if (in->token == CYLINDER)
-		{
-			col = intersect_cylinder(&ray, c);
-			c++;
-		}
-		if (in->token == PLANE)
-		{
-			col = intersect_cylinder(&ray, c);
-			p++;
-		}
-		if (in->token == SPHERE)
-		{
-			col = intersect_cylinder(&ray, c);
-			s++;
-		}
-		if (col.hit == true && col.distance < distance)
-			distance = col.distance;			
-		in = in->next;
-	}
+	ft_bzero(&col, sizeof(t_hit));
+	col.type = INVALID;
+	col.distance = FLT_MAX;
+	intersect_cylinders(&col, ray, data->cyls);
+	intersect_planes(&col, ray, data->planes);
+	intersect_spheres(&col, ray, data->spheres);
+	return (col);
 }

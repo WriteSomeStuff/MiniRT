@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 18:19:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:29:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 2160
-# define HEIGHT 2160
+# define WIDTH 1080
+# define HEIGHT 1080
 # define PI 3.14159265359
 # define FOREVER 1
 
@@ -30,12 +30,12 @@ typedef float	t_vec3 __attribute__ ((vector_size(16)));
 
 typedef enum s_token
 {
-	AMBIENT,
-	CAMERA,
 	CYLINDER,
-	LIGHT,
 	PLANE,
 	SPHERE,
+	AMBIENT,
+	CAMERA,
+	LIGHT,
 	INVALID
 }	t_token;
 
@@ -75,19 +75,22 @@ typedef union s_magic
 	float	y;
 }	t_magic;
 
-typedef struct s_ray
-{
-	t_vec	origin;
-	t_vec	direction;
-}	t_ray;
-
 typedef struct s_hit
 {
 	bool	hit;
 	bool	inside_object;
+	t_token	type;
 	float	distance;
+	void	*obj;
 	t_vec	location;
 }	t_hit;
+
+typedef struct s_ray
+{
+	t_vec	origin;
+	t_vec	direction;
+	t_hit	*col;
+}	t_ray;
 
 typedef struct s_ambient
 {
@@ -109,6 +112,7 @@ typedef struct s_cylinder
 	float		radius;
 	float		height;
 	t_vec		colour;
+	t_token		object;
 	uint32_t	amb_colour;
 }	t_cylinder;
 
@@ -124,6 +128,7 @@ typedef struct s_plane
 	t_vec		location;
 	t_vec		orientation;
 	t_vec		colour;
+	t_token		object;
 	uint32_t	amb_colour;
 }	t_plane;
 
@@ -132,6 +137,7 @@ typedef struct s_sphere
 	t_vec		center;
 	float		radius;
 	t_vec		colour;
+	t_token		object;
 	uint32_t	amb_colour;
 }	t_sphere;
 
@@ -156,6 +162,9 @@ typedef struct s_data
 	t_window	*window;
 	char		*line;
 	int32_t		fd;
+	int32_t		cyl_count;
+	int32_t		plane_count;
+	int32_t		sphere_count;
 	void		(*f[6])(t_data *, char **);
 }	t_data;
 
@@ -192,7 +201,7 @@ void		read_file(t_data *data, char *location);
 
 /*	Math	*/
 /*	------------------------------------------------------------------	*/
-t_hit		intersect_sphere(t_ray *ray, const t_sphere *sphere);
+t_hit		find_closest_object(t_data *data, const t_ray *ray);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
@@ -245,27 +254,3 @@ void		clean_up(t_data *data);
 /*	------------------------------------------------------------------	*/
 
 #endif
-
-// void	draw_rectangle(t_data *data, uint32_t wide, uint32_t high, \
-//	t_complex center);
-// void	draw_cube(t_data *data, t_complex center);
-// void	draw_background(t_data *data);
-
-// typedef union s_quat
-// {
-// 	float	q[4];
-// 	struct
-// 	{
-// 		float	real;
-// 		float	x;
-// 		float	y;
-// 		float	z;
-// 	};
-// }	t_quat;
-
-// typedef struct s_complex
-// {
-// 	int32_t	x;
-// 	int32_t	y;
-// }	t_complex;
-
