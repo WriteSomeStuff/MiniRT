@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/22 16:22:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:56:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void	draw_something(t_data *data)
 	t_vec	light_dir;
 	t_vec	light;
 	t_vec	light_colour;
-	light_colour = data->light[0].colour;
-	t_vec	sphere;
-	sphere = data->spheres[0].colour;
+	light_colour = data->light->colour;
+	t_sphere	*sphere;
 	t_vec	ambiance;
 	ambiance = data->ambient->colour;
 	
@@ -60,28 +59,29 @@ void	draw_something(t_data *data)
 		while (x < data->window->width)
 		{
 			ray.direction = direction_to_xy(data, x, y);
-			col = find_closest_object(data, &ray);
+			find_closest_object(data, &col, &ray);
 			if (col.inside_object == true)
 			{
 				ft_putendl_fd("Warning: camera is inside an object", STDERR_FILENO);
 				lights_out(data);
 				return ;
 			}
+			sphere = (t_sphere *)col.obj;
 			if (col.hit == true)
 			{
-				surface_norm.vec3 = col.location.vec3 - data->spheres->center.vec3;
+				surface_norm.vec3 = col.location.vec3 - sphere->center.vec3;
 				surface_norm = normalize_vector(&surface_norm);
 				light_dir.vec3 = light.vec3 - col.location.vec3;
 				light_dir = normalize_vector(&light_dir);
 				dot = dot_product(&light_dir, &surface_norm);
-				t_vec	ambsphere = reflection_result(&sphere, &ambiance, 1);
+				t_vec	ambsphere = reflection_result(&sphere->colour, &ambiance, 1);
 				if (dot < 0)
 				{
-					mlx_put_pixel(data->image, x, y, data->spheres->amb_colour);
+					mlx_put_pixel(data->image, x, y, sphere->amb_colour);
 				}
 				else
 				{
-					t_vec	result = reflection_result(&sphere, &light_colour, dot);
+					t_vec	result = reflection_result(&sphere->colour, &light_colour, dot);
 					result = combine_colours(&ambsphere, &result);
 					percentage_to_rgba(&result);
 					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));

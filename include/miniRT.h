@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/22 16:29:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:54:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void		read_file(t_data *data, char *location);
 
 /*	Math	*/
 /*	------------------------------------------------------------------	*/
-t_hit		find_closest_object(t_data *data, const t_ray *ray);
+void		find_closest_object(t_data *data, t_hit *col, const t_ray *ray);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);

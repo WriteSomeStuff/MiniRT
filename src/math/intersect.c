@@ -6,11 +6,20 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/22 16:23:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/22 16:53:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static void	update(t_hit *col, const t_ray *ray, void *obj, float distance)
+{
+	col->hit = true;
+	col->distance = distance;
+	col->location = scale_vector(&ray->direction, distance);
+	col->location.vec3 += ray->origin.vec3;
+	col->obj = obj;
+}
 
 static void	intersect_cylinders(t_hit *col, const t_ray *ray, const t_cylinder *cyl)
 {
@@ -24,14 +33,6 @@ static void	intersect_planes(t_hit *col, const t_ray *ray, const t_plane *cyl)
 	(void)col;
 	(void)ray;
 	(void)cyl;
-}
-
-static void	update_intersection(t_hit *col, const t_ray *ray, float distance)
-{
-	col->hit = true;
-	col->distance = distance;
-	col->location = scale_vector(&ray->direction, distance);
-	col->location.vec3 += ray->origin.vec3;
 }
 
 static void	intersect_spheres(t_hit *col, const t_ray *ray, const t_sphere *s)
@@ -52,23 +53,20 @@ static void	intersect_spheres(t_hit *col, const t_ray *ray, const t_sphere *s)
 			if ((res_a < 0 && res_b >= 0) || (res_b < 0 && res_a >= 0))
 				col->inside_object = true;
 			if (res_a < col->distance && res_a > 0)
-				update_intersection(col, ray, res_a);
+				update(col, ray, (void *)s, res_a);
 			if (res_b < col->distance && res_b > 0)
-				update_intersection(col, ray, res_b);
+				update(col, ray, (void *)s, res_b);
 		}
 		s++;
 	}
 }
 
-t_hit find_closest_object(t_data *data, const t_ray *ray)
+void find_closest_object(t_data *data, t_hit *col, const t_ray *ray)
 {
-	t_hit	col;
-
-	ft_bzero(&col, sizeof(t_hit));
-	col.type = INVALID;
-	col.distance = FLT_MAX;
-	intersect_cylinders(&col, ray, data->cyls);
-	intersect_planes(&col, ray, data->planes);
-	intersect_spheres(&col, ray, data->spheres);
-	return (col);
+	ft_bzero(col, sizeof(t_hit));
+	col->type = INVALID;
+	col->distance = FLT_MAX;
+	intersect_cylinders(col, ray, data->cyls);
+	intersect_planes(col, ray, data->planes);
+	intersect_spheres(col, ray, data->spheres);
 }
