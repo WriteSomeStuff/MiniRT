@@ -6,13 +6,15 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/21 17:23:19 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/24 15:49:37 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+#-L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit
+
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g $(HEADERS)
+CFLAGS	= -Wall -Wextra -Werror -Ofast  -pthread -g -fsanitize=address $(HEADERS) 
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -62,8 +64,8 @@ $(MLXOUT):
 $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
-$(NAME): $(OBJ_DIR) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+$(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit -o $(NAME) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^

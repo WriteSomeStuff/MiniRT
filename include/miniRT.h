@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/22 16:54:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/24 16:28:48 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 1080
-# define HEIGHT 1080
+# define WIDTH 1024
+# define HEIGHT 1024
 # define PI 3.14159265359
 # define FOREVER 1
 
@@ -68,6 +68,13 @@ typedef union s_vec
 		float	b;
 	};
 }	t_vec;
+
+typedef struct s_texture
+{
+	uint32_t	width;
+	uint32_t	height;
+	t_vec		**px;
+}	t_texture;
 
 typedef union s_magic
 {
@@ -134,11 +141,12 @@ typedef struct s_plane
 
 typedef struct s_sphere
 {
+	uint32_t	amb_colour;
 	t_vec		center;
 	float		radius;
 	t_vec		colour;
 	t_token		object;
-	uint32_t	amb_colour;
+	t_texture	*tex;
 }	t_sphere;
 
 typedef struct s_window
@@ -159,6 +167,7 @@ typedef struct s_data
 	t_light		*light;
 	t_plane		*planes;
 	t_sphere	*spheres;
+	t_texture	*textures;
 	t_window	*window;
 	char		*line;
 	int32_t		fd;

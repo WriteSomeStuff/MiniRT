@@ -6,4 +6,3 @@ miniRT
 .vscode
 *.dSYM
 obj
-*.txt
