@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/24 17:53:04 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/25 19:02:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ t_texture	parse_textures(t_data *data, char *location)
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data		data;
-	// uint8_t		pixel[3];
+	mlx_texture_t	*texture;
+	uint8_t		*pixel;
 
 	if (argc != 2)
 	{
@@ -93,23 +94,24 @@ int32_t	main(int32_t argc, char **argv)
 		return (1);
 	}
 	ft_bzero(&data, sizeof(t_data));
-	// data.textures = rt_calloc(&data, 2 * sizeof(t_texture));
-	data.textures = rt_calloc(&data, sizeof(t_texture));
-	data.textures[0] = parse_textures(&data, "scenes/earth.txt");
+	texture = mlx_load_png("scenes/earth.png");
+	data.textures = rt_calloc(&data, 2 * sizeof(t_texture));
+	// data.textures = rt_calloc(&data, sizeof(t_texture));
+	// data.textures[0] = parse_textures(&data, "scenes/earth.txt");
 	// data.textures[1] = parse_textures(&data, "scenes/night_earth.txt");
 	initialise_window(&data);
 	read_file(&data, argv[1]);
-	// for (uint32_t j = 0; j < data.textures->height; j++)
-	// {
-	// 	for (uint32_t i = 0; i < data.textures->width; i++)
-	// 	{
-	// 		pixel[0] = (uint8_t)(data.textures->px[j][i].r * 255);
-	// 		pixel[1] = (uint8_t)(data.textures->px[j][i].g * 255);
-	// 		pixel[2] = (uint8_t)(data.textures->px[j][i].b * 255);
-	// 		mlx_put_pixel(data.image, i, j, ft_pixel(pixel[0], pixel[1], pixel[2], 0xff));
-	// 	}
-	// }
-	draw_something(&data);
+	puts("DONE PARSING");
+	pixel = texture->pixels;
+	for (uint32_t y = 0; y < texture->height; y++)
+	{
+		for (uint32_t x = 0; x < texture->width; x++)
+		{
+			mlx_put_pixel(data.image, x, y, ft_pixel(*pixel, *(pixel + 1), *(pixel + 2), *(pixel + 3)));
+			pixel += 4;
+		}
+	}
+	// draw_something(&data);
 
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);

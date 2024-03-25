@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/24 16:28:48 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/25 11:24:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 1024
-# define HEIGHT 1024
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PI 3.14159265359
 # define FOREVER 1
 

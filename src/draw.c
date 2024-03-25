@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/24 17:54:02 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/25 11:23:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	draw_something(t_data *data)
 				t_vec	ambsphere = reflection_result(&clr, &ambiance, 1);
 				if (dot < 0)
 				{
-					// t_vec night = get_texture_colour(&data->textures[0], &col.location, &sphere->center, sphere->radius);
-					// ambsphere = reflection_result(&night, &ambiance, 1);
+					t_vec night = get_texture_colour(&data->textures[1], &col.location, &sphere->center, sphere->radius);
+					ambsphere = reflection_result(&night, &ambiance, 1);
 					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&ambsphere));
 				}
 				else
