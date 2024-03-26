@@ -6,12 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 17:35:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 18:03:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
 
 static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 {
@@ -23,10 +22,29 @@ static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 
 static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 {
-	(void)data;
-	(void)col;
-	(void)x;
-	(void)y;	
+	float	dot;
+	t_plane	*plane;
+	t_vec	ambplane;
+	t_vec	light_dir;
+	t_vec	result;
+	t_vec	clr;
+	
+	plane = (t_plane *)col->obj;
+	set_vector(&light_dir, &col->location, &data->light->source);
+	dot = dot_product(&light_dir, &plane->orientation);
+	clr = plane_texture(plane, &plane->orientation);
+	ambplane = reflection_result(&clr, &data->ambient->colour, 1);
+	if (dot < 0)
+	{
+		mlx_put_pixel(data->image, x, y, percentage_to_rgba(&ambplane));
+	}
+	else
+	{
+		result = reflection_result(&clr, &data->light->colour, dot);
+		result = combine_colours(&ambplane, &result);
+		percentage_to_rgba(&result);
+		mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
+	}
 }
 
 static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)

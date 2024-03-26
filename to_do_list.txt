@@ -4,13 +4,13 @@
 
 - Fix fisheye
 
-- Fix main draw loop / add ray bounce support
+- add ray bounce support
 
 - Mouse, resize & key hook implementations
 
 - translation and rotation transformation to objects, lights and cameras
 
-- leaks & segfaults 'n stuff
+- leaks & segfaults & norm 'n stuff
 
 - go nuts with bonus thingies
 {

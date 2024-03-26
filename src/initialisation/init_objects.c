@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/22 16:05:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 18:15:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_plane(t_data *data, char **info)
 	data->planes[i].object = PLANE;
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
+	data->planes[i].orientation = normalize_vector(&data->planes[i].orientation);
 	data->plane_count++;
 }
 
