@@ -1,0 +1,22 @@
+- Construct plane
+
+- Construct cylinder
+
+- Fix fisheye
+
+- Fix main draw loop / add ray bounce support
+
+- Mouse, resize & key hook implementations
+
+- translation and rotation transformation to objects, lights and cameras
+
+- leaks & segfaults 'n stuff
+
+- go nuts with bonus thingies
+{
+	- specular reflection
+	- textures
+	- rotation/translation in real time
+	- phong model
+	- extra shape(s)
+}

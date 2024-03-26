@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 14:28:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 15:59:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int32_t	main(int32_t argc, char **argv)
 	if (data.textures[0] == NULL)
 		exit_error(&data, ": Texture parsing failed");
 	read_file(&data, argv[1]);
-	draw_something(&data);
+	draw_something(&data, 0, 0);
 
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);
-	mlx_terminate(data.mlx);
+	clean_up(&data);
 	return (0);
 }

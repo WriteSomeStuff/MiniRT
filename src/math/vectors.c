@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   vector_utils.c                                     :+:    :+:            */
+/*   vectors.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/18 15:25:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 15:30:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,10 @@ t_vec	scale_vector(const t_vec *vector, const float scalar)
 	size.y = vector->y * scalar;
 	size.z = vector->z * scalar;
 	return (size);
+}
+
+void	set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2)
+{
+	vector->vec3 = location2->vec3 - location1->vec3;
+	*vector = normalize_vector(vector);
 }

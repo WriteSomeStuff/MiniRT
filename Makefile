@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/26 11:17:47 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/26 17:00:44 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 CFILES	=	alloc.c \
 			a_to_float.c \
 			cast_rays.c \
+			collisions.c \
 			colours.c \
 			cube.c \
 			clean_up.c \
@@ -44,6 +45,7 @@ CFILES	=	alloc.c \
 			parsing.c \
 			quaternions.c \
 			rasterise.c \
+			textures.c \
 			utils.c \
 			vectors.c \
 			vector_products.c \
@@ -75,16 +77,15 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/colours/%.c
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/hooks/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
-	
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/initialisation/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/math/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
-	
+
 $(OBJ_DIR)/%.o : $(SRC_DIR)/utils/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
-
 
 clean:
 	rm -rf $(OBJ_DIR)

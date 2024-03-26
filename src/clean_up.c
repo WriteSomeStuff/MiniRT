@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/21 15:44:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 16:20:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ void	clear_list(t_input **input)
 	*input = NULL;
 }
 
+static void	free_spheres(t_sphere **spheres, uint32_t amount)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (i < amount)
+	{
+		free((*spheres)[i].tex);
+		i++;
+	}
+	free(*spheres);
+	*spheres = NULL;
+}
+
 void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
@@ -74,7 +88,7 @@ void	clean_up(t_data *data)
 	free(data->cyls);
 	free(data->light);
 	free(data->planes);
-	free(data->spheres);
+	free_spheres(&data->spheres, data->sphere_count);
 	free(data->window);
 	free(data->line);
 	close(data->fd);

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 11:21:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 17:27:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
 # define PI 3.14159265359
 # define FOREVER 1
 
@@ -90,6 +90,7 @@ typedef struct s_hit
 	float	distance;
 	void	*obj;
 	t_vec	location;
+	t_vec	surface_norm;
 }	t_hit;
 
 typedef struct s_ray
@@ -114,13 +115,14 @@ typedef struct s_camera
 
 typedef struct s_cylinder
 {
-	t_vec		center;
-	t_vec		orientation;
-	float		radius;
-	float		height;
-	t_vec		colour;
-	t_token		object;
-	uint32_t	amb_colour;
+	t_vec			center;
+	t_vec			orientation;
+	float			radius;
+	float			height;
+	t_vec			colour;
+	t_token			object;
+	uint32_t		amb_colour;
+	mlx_texture_t	*tex;
 }	t_cylinder;
 
 typedef struct s_light
@@ -132,11 +134,12 @@ typedef struct s_light
 
 typedef struct s_plane
 {
-	t_vec		location;
-	t_vec		orientation;
-	t_vec		colour;
-	t_token		object;
-	uint32_t	amb_colour;
+	t_vec			location;
+	t_vec			orientation;
+	t_vec			colour;
+	t_token			object;
+	uint32_t		amb_colour;
+	mlx_texture_t	*tex;
 }	t_plane;
 
 typedef struct s_sphere
@@ -177,7 +180,8 @@ typedef struct s_data
 	void			(*f[6])(t_data *, char **);
 }	t_data;
 
-void		draw_something(t_data *data);
+void		draw_something(t_data *data, uint32_t x, uint32_t y);
+void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
@@ -185,6 +189,10 @@ uint32_t	ambient_colour(const t_vec *obj_colour, const t_vec *ambient);
 t_vec		reflection_result(const t_vec *c1, const t_vec *c2, float fraction);
 t_vec		combine_colours(const t_vec *c1, const t_vec *c2);
 uint32_t	percentage_to_rgba(const t_vec *f);
+
+t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
+t_vec		plane_texture(t_plane *plane, t_vec *surface);
+t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
 /*	------------------------------------------------------------------	*/
 
 /*	Hooks	*/
@@ -210,7 +218,7 @@ void		read_file(t_data *data, char *location);
 
 /*	Math	*/
 /*	------------------------------------------------------------------	*/
-void		find_closest_object(t_data *data, t_hit *col, const t_ray *ray);
+void		find_closest_object(t_data *data, t_hit *col, t_ray *ray);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
@@ -222,6 +230,12 @@ t_vec		direction_to_xy(t_data *data, float x, float y);
 
 float		dot_product(const t_vec *a, const t_vec *b);
 t_vec		cross_product(const t_vec *a, const t_vec *b);
+
+float		vector_length(const t_vec *origin, const t_vec *vector);
+t_vec		normalize_vector(const t_vec *vector);
+float		q_sqrt(float num);
+t_vec		scale_vector(const t_vec *vector, float scalar);
+void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
 /*	------------------------------------------------------------------	*/
 
 /*	Utilities	*/
@@ -245,11 +259,6 @@ t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);
 bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);
-
-float		vector_length(const t_vec *origin, const t_vec *vector);
-t_vec		normalize_vector(const t_vec *vector);
-float		q_sqrt(float num);
-t_vec		scale_vector(const t_vec *vector, float scalar);
 /*	------------------------------------------------------------------	*/
 
 /*	Errors & cleanup	*/
