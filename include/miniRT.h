@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/25 11:24:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 11:21:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_texture
 {
 	uint32_t	width;
 	uint32_t	height;
-	t_vec		**px;
+	uint8_t		*pixels;
 }	t_texture;
 
 typedef union s_magic
@@ -141,12 +141,12 @@ typedef struct s_plane
 
 typedef struct s_sphere
 {
-	uint32_t	amb_colour;
-	t_vec		center;
-	float		radius;
-	t_vec		colour;
-	t_token		object;
-	t_texture	*tex;
+	uint32_t		amb_colour;
+	t_vec			center;
+	float			radius;
+	t_vec			colour;
+	t_token			object;
+	mlx_texture_t	*tex;
 }	t_sphere;
 
 typedef struct s_window
@@ -158,23 +158,23 @@ typedef struct s_window
 
 typedef struct s_data
 {
-	mlx_image_t	*image;
-	mlx_t		*mlx;
-	t_input		*input;
-	t_ambient	*ambient;
-	t_camera	*cam;
-	t_cylinder	*cyls;
-	t_light		*light;
-	t_plane		*planes;
-	t_sphere	*spheres;
-	t_texture	*textures;
-	t_window	*window;
-	char		*line;
-	int32_t		fd;
-	int32_t		cyl_count;
-	int32_t		plane_count;
-	int32_t		sphere_count;
-	void		(*f[6])(t_data *, char **);
+	mlx_image_t		*image;
+	mlx_t			*mlx;
+	t_input			*input;
+	t_ambient		*ambient;
+	t_camera		*cam;
+	t_cylinder		*cyls;
+	t_light			*light;
+	t_plane			*planes;
+	t_sphere		*spheres;
+	mlx_texture_t	**textures;
+	t_window		*window;
+	char			*line;
+	int32_t			fd;
+	int32_t			cyl_count;
+	int32_t			plane_count;
+	int32_t			sphere_count;
+	void			(*f[6])(t_data *, char **);
 }	t_data;
 
 void		draw_something(t_data *data);

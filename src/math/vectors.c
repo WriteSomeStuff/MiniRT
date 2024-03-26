@@ -1,30 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   vectors.c                                          :+:    :+:            */
+/*   vector_utils.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/18 16:07:41 by vvan-der      ########   odam.nl         */
+/*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
+/*   Updated: 2024/03/18 15:25:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float	dot_product(const t_vec *a, const t_vec *b)
+float	vector_length(const t_vec *a, const t_vec *b)
 {
-	return (a->x * b->x + a->y * b->y + a->z * b->z);
+	float	c;
+
+	c = pythagoras(a->x - b->x, a->y - b->y);
+	return (pythagoras(c, a->z - b->z));
 }
 
-t_vec	cross_product(const t_vec *a, const t_vec *b)
+t_vec	normalize_vector(const t_vec *vector)
 {
-	t_vec	cross;
+	float	len;
+	t_vec	norm;
+	t_vec	dummy;
 
-	cross.x = a->y * b->z - a->z * b->y;
-	cross.y = a->z * b->x - a->x * b->z;
-	cross.z = a->x * b->y - a->y * b->x;
-	return (cross);
+	ft_bzero(&dummy, sizeof(t_vec));
+	len = vector_length(&dummy, vector);
+	if (len == 0)
+		return (dummy);
+	norm.x = vector->x / len;
+	norm.y = vector->y / len;
+	norm.z = vector->z / len;
+	return (norm);
 }
 
-// t_vec	surface_normal()
+float	q_sqrt(float num)
+{
+	t_magic	magic;
+
+	magic.y = num;
+	magic.i = 0x5F375A86 - (magic.i >> 1);
+	magic.y *= 1.5f - (num * 0.5f * magic.y * magic.y);
+	return (magic.y);
+}
+
+t_vec	scale_vector(const t_vec *vector, const float scalar)
+{
+	t_vec	size;
+
+	size.x = vector->x * scalar;
+	size.y = vector->y * scalar;
+	size.z = vector->z * scalar;
+	return (size);
+}

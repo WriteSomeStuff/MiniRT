@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/25 19:02:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 14:28:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,56 +37,9 @@ void	initialise_window(t_data *data)
 	data->window = w;
 }
 
-static void	parse_single_rgb(t_data *data, t_vec *res, char *rgb)
-{
-	char	**split;
-
-	split = ft_split(rgb, ',');
-	res->r = a_to_float(data, split[0]);
-	res->g = a_to_float(data, split[1]);
-	res->b = a_to_float(data, split[2]);
-	rgb_to_floats(res);
-	free_2d((void ***)&split);
-}
-
-t_texture	parse_textures(t_data *data, char *location)
-{
-	char		*line;
-	t_texture	tex;
-	
-	data->fd = open(location, O_RDONLY);
-	line = get_next_line_rt(data, data->fd);
-	tex.width = ft_atoi(line);
-	free(line);
-	line = get_next_line_rt(data, data->fd);
-	tex.height = ft_atoi(line);
-	free(line);
-	tex.px = rt_calloc(data, (tex.height + 1) * sizeof(t_vec *));
-	for (uint32_t i = 0; i < tex.height; i++)
-	{
-		tex.px[i] = rt_malloc(data, tex.width * sizeof(t_vec));
-	}
-	for (uint32_t j = 0; j < tex.height; j++)
-	{
-		line = get_next_line_rt(data, data->fd);
-		if (line == NULL)
-			break ;
-		char **split = ft_split(line, ' ');
-		for (uint32_t i = 0; i < tex.width; i++)
-		{
-			parse_single_rgb(data, &tex.px[j][i], split[i]);
-		}
-		free_2d((void ***)&split);
-	}
-	close(data->fd);
-	return (tex);
-}
-
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data		data;
-	mlx_texture_t	*texture;
-	uint8_t		*pixel;
 
 	if (argc != 2)
 	{
@@ -94,24 +47,13 @@ int32_t	main(int32_t argc, char **argv)
 		return (1);
 	}
 	ft_bzero(&data, sizeof(t_data));
-	texture = mlx_load_png("scenes/earth.png");
-	data.textures = rt_calloc(&data, 2 * sizeof(t_texture));
-	// data.textures = rt_calloc(&data, sizeof(t_texture));
-	// data.textures[0] = parse_textures(&data, "scenes/earth.txt");
-	// data.textures[1] = parse_textures(&data, "scenes/night_earth.txt");
+	data.textures = rt_calloc(&data, 2 * sizeof(t_texture *));
 	initialise_window(&data);
+	data.textures[0] = mlx_load_png("scenes/earth.png");
+	if (data.textures[0] == NULL)
+		exit_error(&data, ": Texture parsing failed");
 	read_file(&data, argv[1]);
-	puts("DONE PARSING");
-	pixel = texture->pixels;
-	for (uint32_t y = 0; y < texture->height; y++)
-	{
-		for (uint32_t x = 0; x < texture->width; x++)
-		{
-			mlx_put_pixel(data.image, x, y, ft_pixel(*pixel, *(pixel + 1), *(pixel + 2), *(pixel + 3)));
-			pixel += 4;
-		}
-	}
-	// draw_something(&data);
+	draw_something(&data);
 
 	mlx_loop_hook(data.mlx, ft_hook, &data);
 	mlx_loop(data.mlx);

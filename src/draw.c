@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/25 11:23:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/26 11:26:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,17 @@ static void	lights_out(t_data *data)
 	}
 }
 
-static t_vec	get_texture_colour(t_texture *texture, t_vec *surface, t_vec *center, float radius)
+static t_vec	pixel_to_clrvec(mlx_texture_t *t, int x, int y)
+{
+	t_vec		clr;
+
+	clr.r = t->pixels[y * t->width + x];
+	clr.g = t->pixels[y * t->width + x + 1];
+	clr.b = t->pixels[y * t->width + x + 2];
+	return (clr);
+}
+
+static t_vec	get_texture_colour(mlx_texture_t *texture, t_vec *surface, t_vec *center, float radius)
 {
 	t_vec	colour;
 	t_vec	dir;
@@ -45,7 +55,8 @@ static t_vec	get_texture_colour(t_texture *texture, t_vec *surface, t_vec *cente
 	y = texture->height - (texture->height / 2 + ((dir.y / radius) * (texture->height / 2)));
 	// printf("x: %f, y: %f\n", x, y);
 	// exit(0);
-	colour = texture->px[(int)y][(int)x];
+	colour = pixel_to_clrvec(texture, (int)x * 4, (int)y * 4);
+	rgb_to_floats(&colour);
 	return (colour);
 }
 
@@ -89,6 +100,7 @@ void	draw_something(t_data *data)
 			if (col.hit == true)
 			{
 				sphere = (t_sphere *)col.obj;
+				sphere->tex = data->textures[0];
 				surface_norm.vec3 = col.location.vec3 - sphere->center.vec3;
 				surface_norm = normalize_vector(&surface_norm);
 				light_dir.vec3 = light.vec3 - col.location.vec3;
@@ -99,12 +111,12 @@ void	draw_something(t_data *data)
 				// printf("center: %p\n", &sphere->center);
 				// printf("radius: %f\n", sphere->radius);
 				dot = dot_product(&light_dir, &surface_norm);
-				clr = get_texture_colour(&data->textures[0], &col.location, &sphere->center, sphere->radius);
+				clr = get_texture_colour(sphere->tex, &col.location, &sphere->center, sphere->radius);
 				t_vec	ambsphere = reflection_result(&clr, &ambiance, 1);
 				if (dot < 0)
 				{
-					t_vec night = get_texture_colour(&data->textures[1], &col.location, &sphere->center, sphere->radius);
-					ambsphere = reflection_result(&night, &ambiance, 1);
+					// t_vec night = get_texture_colour(sphere->tex, &col.location, &sphere->center, sphere->radius);
+					// ambsphere = reflection_result(&night, &ambiance, 1);
 					mlx_put_pixel(data->image, x, y, percentage_to_rgba(&ambsphere));
 				}
 				else

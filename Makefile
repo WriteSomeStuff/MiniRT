@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/25 10:53:05 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/26 11:17:47 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) #-g -fsanitize=address 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address 
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -46,7 +46,7 @@ CFILES	=	alloc.c \
 			rasterise.c \
 			utils.c \
 			vectors.c \
-			vector_utils.c \
+			vector_products.c \
 
 SRC_DIR	= src
 OBJ_DIR	= $(SRC_DIR)/obj
