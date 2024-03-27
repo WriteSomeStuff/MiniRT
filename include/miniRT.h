@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 17:27:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:39:20 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "get_next_line_rt.h"
+# include "structsRT.h"
 # include <MLX42/MLX42.h>
 # include <float.h>
 # include <math.h>
@@ -25,160 +26,6 @@
 # define HEIGHT 720
 # define PI 3.14159265359
 # define FOREVER 1
-
-typedef float	t_vec3 __attribute__ ((vector_size(16)));
-
-typedef enum s_token
-{
-	CYLINDER,
-	PLANE,
-	SPHERE,
-	AMBIENT,
-	CAMERA,
-	LIGHT,
-	INVALID
-}	t_token;
-
-typedef struct s_point
-{
-	float	x;
-	float	y;
-}	t_point;
-
-typedef struct s_input
-{
-	char			**info;
-	t_token			token;
-	struct s_input	*next;
-}	t_input;
-
-typedef union s_vec
-{
-	t_vec3	vec3;
-	struct
-	{
-		float	x;
-		float	y;
-		float	z;
-	};
-	struct
-	{
-		float	r;
-		float	g;
-		float	b;
-	};
-}	t_vec;
-
-typedef struct s_texture
-{
-	uint32_t	width;
-	uint32_t	height;
-	uint8_t		*pixels;
-}	t_texture;
-
-typedef union s_magic
-{
-	int32_t	i;
-	float	y;
-}	t_magic;
-
-typedef struct s_hit
-{
-	bool	hit;
-	bool	inside_object;
-	t_token	type;
-	float	distance;
-	void	*obj;
-	t_vec	location;
-	t_vec	surface_norm;
-}	t_hit;
-
-typedef struct s_ray
-{
-	t_vec	origin;
-	t_vec	direction;
-	t_hit	*col;
-}	t_ray;
-
-typedef struct s_ambient
-{
-	float		luminosity;
-	t_vec		colour;
-}	t_ambient;
-
-typedef struct s_camera
-{
-	t_vec		viewpoint;
-	t_vec		orientation;
-	uint32_t	fov;
-}	t_camera;
-
-typedef struct s_cylinder
-{
-	t_vec			center;
-	t_vec			orientation;
-	float			radius;
-	float			height;
-	t_vec			colour;
-	t_token			object;
-	uint32_t		amb_colour;
-	mlx_texture_t	*tex;
-}	t_cylinder;
-
-typedef struct s_light
-{
-	t_vec		source;
-	float		luminosity;
-	t_vec		colour;
-}	t_light;
-
-typedef struct s_plane
-{
-	t_vec			location;
-	t_vec			orientation;
-	t_vec			colour;
-	t_token			object;
-	uint32_t		amb_colour;
-	mlx_texture_t	*tex;
-}	t_plane;
-
-typedef struct s_sphere
-{
-	uint32_t		amb_colour;
-	t_vec			center;
-	float			radius;
-	t_vec			colour;
-	t_token			object;
-	mlx_texture_t	*tex;
-}	t_sphere;
-
-typedef struct s_window
-{
-	uint32_t	width;
-	uint32_t	height;
-	float		aspect_ratio;
-}	t_window;
-
-typedef struct s_data
-{
-	mlx_image_t		*image;
-	mlx_t			*mlx;
-	t_input			*input;
-	t_ambient		*ambient;
-	t_camera		*cam;
-	t_cylinder		*cyls;
-	t_light			*light;
-	t_plane			*planes;
-	t_sphere		*spheres;
-	mlx_texture_t	**textures;
-	t_window		*window;
-	char			*line;
-	int32_t			fd;
-	int32_t			cyl_count;
-	int32_t			plane_count;
-	int32_t			sphere_count;
-	void			(*f[6])(t_data *, char **);
-}	t_data;
 
 void		draw_something(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);

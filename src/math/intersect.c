@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:16:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/27 17:19:46 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 	while (p->object != INVALID)
 	{
 		denominator = dot_product(&ray->direction, &p->orientation);
-		if (denominator > 0.0001)
+		if (denominator > 0.01)
 		{
 			tmp.vec3 = p->location.vec3 - ray->origin.vec3;
 			// print_vector(tmp);
