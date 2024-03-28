@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 16:59:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/28 13:53:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ static void	lights_out(t_data *data)
 	uint32_t	y;
 
 	y = 0;
-	while (y < HEIGHT)
+	while (y < data->window->height)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < data->window->width)
 		{
 			mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
 			x++;
 		}
 		y++;
 	}
+	mlx_put_string(data->mlx, "Warning: camera is inside object", 50, 50);
 }
 
 void	draw_something(t_data *data, uint32_t x, uint32_t y)

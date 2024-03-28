@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/27 17:09:56 by vincent       ########   odam.nl          #
+#    Updated: 2024/03/28 13:38:33 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit $(LIBS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
