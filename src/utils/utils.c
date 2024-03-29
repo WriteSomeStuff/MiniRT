@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/21 17:24:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/29 14:28:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ void	check_split(t_data *data, char **info, int32_t num)
 	while (i < num)
 	{
 		if (info[i] == NULL)
-			exit_error(data, ": invalid input");
+			exit_error(data, ": insufficient input");
 		i++;
 	}
+	if (info[i] != NULL && ft_strncmp(info[i], "t:", 2) == 0)
+		i++;
 	if (info[i] != NULL)
 		exit_error(data, ": invalid input");
 }
@@ -86,6 +88,16 @@ bool	is_white_space(char c)
 	return (false);
 }
 
+static void	check_texture(t_data *data, char *str)
+{
+	int32_t		fd;
+
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		exit_error(data, ": could not open texture file");
+	close(fd);
+}
+
 void	verify_info(t_data *data, char **info)
 {
 	int32_t	x;
@@ -95,6 +107,11 @@ void	verify_info(t_data *data, char **info)
 	while (info[x] != NULL)
 	{
 		y = 0;
+		if (info[x + 1] == NULL && ft_strncmp("t:", info[x], 2) == 0)
+		{
+			check_texture(data, &info[x][2]);
+			break ;
+		}
 		while (info[x][y] != '\0')
 		{
 			if (info[x][y] == '-' && ft_isdigit(info[x][y + 1]) == false)

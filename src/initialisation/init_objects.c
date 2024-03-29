@@ -6,11 +6,21 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 18:15:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/29 14:19:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static mlx_texture_t	*load_texture(t_data *data, char *path)
+{
+	mlx_texture_t	*tex;
+
+	tex = mlx_load_png(path);
+	if (tex == NULL)
+		exit_error(data, ": texture failed to load");
+	return (tex);
+}
 
 void	init_objects(t_data *data, t_input *input)
 {
@@ -46,6 +56,8 @@ void	init_cylinder(t_data *data, char **info)
 	data->cyls[i].radius = a_to_float(data, info[2]) / 2.0f;
 	data->cyls[i].height = a_to_float(data, info[3]);
 	data->cyls[i].colour = create_vector(data, info[4]);
+	if (info[5] != NULL)
+		data->cyls[i].tex = load_texture(data, &info[5][2]);
 	data->cyls[i].object = CYLINDER;
 	check_rgb_values(data, &data->cyls[i].colour.vec3);
 	rgb_to_floats(&data->cyls[i].colour);
@@ -62,6 +74,8 @@ void	init_plane(t_data *data, char **info)
 	data->planes[i].location = create_vector(data, info[0]);
 	data->planes[i].orientation = create_vector(data, info[1]);
 	data->planes[i].colour = create_vector(data, info[2]);
+	if (info[3] != NULL)
+		data->planes[i].tex = load_texture(data, &info[3][2]);
 	data->planes[i].object = PLANE;
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
@@ -79,6 +93,8 @@ void	init_sphere(t_data *data, char **info)
 	data->spheres[i].center = create_vector(data, info[0]);
 	data->spheres[i].radius = a_to_float(data, info[1]) / 2.0f;
 	data->spheres[i].colour = create_vector(data, info[2]);
+	if (info[3] != NULL)
+		data->spheres[i].tex = load_texture(data, &info[3][2]);
 	data->spheres[i].object = SPHERE;
 	check_rgb_values(data, &data->spheres[i].colour.vec3);
 	rgb_to_floats(&data->spheres[i].colour);

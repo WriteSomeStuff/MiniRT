@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/03/27 17:09:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/29 14:20:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ struct s_data
 	t_light			*light;
 	t_plane			*planes;
 	t_sphere		*spheres;
-	mlx_texture_t	**textures;
 	t_window		*window;
 	char			*line;
 	int32_t			fd;

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 15:59:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/29 14:20:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,7 @@ int32_t	main(int32_t argc, char **argv)
 		return (1);
 	}
 	ft_bzero(&data, sizeof(t_data));
-	data.textures = rt_calloc(&data, 2 * sizeof(t_texture *));
 	initialise_window(&data);
-	data.textures[0] = mlx_load_png("scenes/earth.png");
-	if (data.textures[0] == NULL)
-		exit_error(&data, ": Texture parsing failed");
 	read_file(&data, argv[1]);
 	draw_something(&data, 0, 0);
 

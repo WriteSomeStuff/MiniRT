@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/27 17:41:33 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/29 16:56:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	plane = (t_plane *)col->obj;
 	set_vector(&light_dir, &col->location, &data->light->source);
 	dot = dot_product(&light_dir, &plane->orientation);
-	// printf("dot: %f\n", dot);
-	dot *= -1;
-	clr = plane_texture(plane, &plane->orientation);
+	clr = plane_texture(plane, &col->location);
 	ambplane = reflection_result(&clr, &data->ambient->colour, 1);
 	if (dot < 0)
 	{
@@ -58,7 +56,6 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	t_vec	clr;
 	
 	sphere = (t_sphere *)col->obj;
-	sphere->tex = data->textures[0];
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
 	dot = dot_product(&light_dir, &col->surface_norm);

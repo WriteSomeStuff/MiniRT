@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 17:36:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/29 17:32:06 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
 	return (pixel_to_clrvec(cyl->tex, (int)x * 4, (int)y * 4));
 }
 
-t_vec	plane_texture(t_plane *plane, t_vec *surface)
+t_vec	plane_texture(t_plane *plane, t_vec *loc)
 {
-	t_vec	dir;	
-	float	x;
-	float	y;
+	t_vec	dir;
+	uint32_t	x;
+	uint32_t	y;
 
 	if (plane->tex == NULL)
 		return (plane->colour);
-	set_vector(&dir, &plane->orientation, surface); // calculate 90 degree perpendicular direction
-	x = plane->tex->width / 2 + ((dir.x / 2) * (plane->tex->width / 2));
-	y = plane->tex->height - (plane->tex->height / 2 + (dir.y * (plane->tex->height / 2)));
-	return (pixel_to_clrvec(plane->tex, (int)x * 4, (int)y * 4));
+	dir.vec3 = loc->vec3 - plane->location.vec3;
+	x = (uint32_t)(fabs(dir.z) * 100) % 360;
+	y = (uint32_t)(fabs(dir.y) * 100) % 360;
+	printf("x: %d, y: %d\n", x, y);
+	return (pixel_to_clrvec(plane->tex, x, y));
 }
 
 t_vec	sphere_texture(t_sphere *sphere, t_vec *sn)
