@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/03/29 14:20:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/01 21:02:29 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include <MLX42/MLX42.h>
 
 typedef float	t_vec3 __attribute__ ((vector_size(16)));
+typedef float	t_vec4 __attribute__ ((vector_size(16)));
 
 typedef enum s_token		t_token;
 typedef struct s_point		t_point;
 typedef struct s_input		t_input;
 typedef union s_vec			t_vec;
+typedef union s_quat		t_quat;
 typedef struct s_texture	t_texture;
 typedef union s_magic		t_magic;
 typedef struct s_hit		t_hit;
@@ -74,7 +76,32 @@ union s_vec
 		float	g;
 		float	b;
 	};
+	struct
+	{
+		float	i;
+		float	j;
+		float	k;
+	};
 };
+
+// union s_quat
+// {
+// 	t_vec4	vec4;
+// 	struct
+// 	{
+// 		float	i;
+// 		float	j;
+// 		float	k;
+// 		float	scalar;
+// 	};
+// 	struct
+// 	{
+// 		float	x;
+// 		float	y;
+// 		float	z;
+// 		float	scalar;
+// 	};
+// };
 
 struct s_texture
 {
@@ -123,12 +150,15 @@ struct s_camera
 struct s_cylinder
 {
 	t_vec			center;
+	t_vec			base;
+	t_vec			top;
 	t_vec			orientation;
 	float			radius;
 	float			height;
 	t_vec			colour;
 	t_token			object;
 	uint32_t		amb_colour;
+	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
 
@@ -146,6 +176,7 @@ struct s_plane
 	t_vec			colour;
 	t_token			object;
 	uint32_t		amb_colour;
+	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
 
@@ -156,6 +187,7 @@ struct s_sphere
 	float			radius;
 	t_vec			colour;
 	t_token			object;
+	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
 
@@ -179,6 +211,7 @@ struct s_data
 	t_sphere		*spheres;
 	t_window		*window;
 	char			*line;
+	int16_t			**map;
 	int32_t			fd;
 	int32_t			cyl_count;
 	int32_t			plane_count;

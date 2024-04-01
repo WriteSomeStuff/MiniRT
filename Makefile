@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/03/28 13:38:33 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/03/31 23:02:17 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME	= miniRT
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g -fsanitize=address 
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -67,7 +67,7 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit -o $(NAME) 
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^

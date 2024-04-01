@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/29 17:32:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/31 22:08:14 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
 
 t_vec	plane_texture(t_plane *plane, t_vec *loc)
 {
-	t_vec	dir;
+	t_vec		dir;
 	uint32_t	x;
 	uint32_t	y;
 

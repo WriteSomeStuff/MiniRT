@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/27 17:39:20 by vincent       ########   odam.nl         */
+/*   Updated: 2024/03/31 22:13:56 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
 /*	Hooks	*/
 /*	------------------------------------------------------------------	*/
 void		ft_hook(void *param);
+void		rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p);
 /*	------------------------------------------------------------------	*/
 
 /*	Initialisation	*/
@@ -60,6 +61,7 @@ void		init_cylinder(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
+void		init_map(t_data *data);
 void		read_file(t_data *data, char *location);
 /*	------------------------------------------------------------------	*/
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/29 16:56:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/03/31 22:55:22 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	t_vec	light_dir;
 	t_vec	result;
 	t_vec	clr;
-	
+
 	plane = (t_plane *)col->obj;
 	set_vector(&light_dir, &col->location, &data->light->source);
 	dot = dot_product(&light_dir, &plane->orientation);
@@ -55,6 +55,7 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	t_vec	light_dir;
 	t_vec	clr;
 	
+	// puts("HI4");
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
@@ -72,6 +73,9 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 		percentage_to_rgba(&clr);
 		mlx_put_pixel(data->image, x, y, percentage_to_rgba(&clr));
 	}
+	data->map[y][x] = SPHERE;
+	// printf("%p %p\n", sphere, data->spheres);
+	// printf("map[x]: %d, map[y]: %d, value: %d\n", x, y, data->map[y][x]);
 }
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
