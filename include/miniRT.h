@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/31 22:13:56 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/02 17:41:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
 float		pythagoras(const float a, const float b);
 float		pytha_inverse(const float c, const float a);
-bool		quadratic_equation(const t_vec *vec, float *a, float *b);
+bool		quadratic_equation(const t_vec *vec, float *result);
 
 t_vec		direction_to_xy(t_data *data, float x, float y);
 
-float		dot_product(const t_vec *a, const t_vec *b);
+float		dot(const t_vec *a, const t_vec *b);
 t_vec		cross_product(const t_vec *a, const t_vec *b);
 
 float		vector_length(const t_vec *origin, const t_vec *vector);

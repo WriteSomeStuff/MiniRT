@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/06 15:04:00 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/31 21:37:22 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/02 17:41:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_vec	quaternion_math(const t_vec *a, const t_vec *b, float distance)
 	t_vec	new;
 
 	new.vec3 = a->vec3 + b->vec3 * distance + cross_product(a, b).vec3;
-	scale_vector(&new, distance - dot_product(a, b));
+	scale_vector(&new, distance - dot(a, b));
 	return (new);
 }
 
