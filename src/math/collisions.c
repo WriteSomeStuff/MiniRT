@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/02 18:00:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/03 10:50:44 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 {
-	(void)data;
-	(void)col;
+	t_cylinder	*cyl;
+
+	cyl = (t_cylinder *)col->obj;
 	mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
-	data->map[y][x] = CYLINDER;
+	data->map[y][x] = cyl->instance;
 }
 
 static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
@@ -45,7 +46,7 @@ static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 		percentage_to_rgba(&result);
 		mlx_put_pixel(data->image, x, y, percentage_to_rgba(&result));
 	}
-	data->map[y][x] = PLANE;
+	data->map[y][x] = plane->instance;
 }
 
 static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
@@ -73,7 +74,7 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 		percentage_to_rgba(&clr);
 		mlx_put_pixel(data->image, x, y, percentage_to_rgba(&clr));
 	}
-	data->map[y][x] = SPHERE;
+	data->map[y][x] = sphere->instance;
 }
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)

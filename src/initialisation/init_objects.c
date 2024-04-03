@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/01 17:34:56 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/03 10:46:02 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ static mlx_texture_t	*load_texture(t_data *data, char *path)
 	if (tex == NULL)
 		exit_error(data, ": texture failed to load");
 	return (tex);
+}
+
+static int16_t	object_count(t_data *data)
+{
+	return (data->cyl_count + data->plane_count + data->sphere_count);
 }
 
 void	init_objects(t_data *data, t_input *input)
@@ -59,7 +64,7 @@ void	init_cylinder(t_data *data, char **info)
 	if (info[5] != NULL)
 		data->cyls[i].tex = load_texture(data, &info[5][2]);
 	data->cyls[i].object = CYLINDER;
-	data->cyls[i].instance = i + data->sphere_count + data->plane_count;
+	data->cyls[i].instance = object_count(data);
 	check_rgb_values(data, &data->cyls[i].colour.vec3);
 	rgb_to_floats(&data->cyls[i].colour);
 	data->cyl_count++;
@@ -78,7 +83,7 @@ void	init_plane(t_data *data, char **info)
 	if (info[3] != NULL)
 		data->planes[i].tex = load_texture(data, &info[3][2]);
 	data->planes[i].object = PLANE;
-	data->planes[i].instance = i + data->sphere_count + data->cyl_count;
+	data->planes[i].instance = object_count(data);
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
 	data->planes[i].orientation = normalize_vector(&data->planes[i].orientation);
@@ -98,6 +103,7 @@ void	init_sphere(t_data *data, char **info)
 	if (info[3] != NULL)
 		data->spheres[i].tex = load_texture(data, &info[3][2]);
 	data->spheres[i].object = SPHERE;
+	data->spheres[i].instance = object_count(data);
 	check_rgb_values(data, &data->spheres[i].colour.vec3);
 	rgb_to_floats(&data->spheres[i].colour);
 	data->sphere_count++;
