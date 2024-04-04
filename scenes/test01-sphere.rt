@@ -1,5 +1,5 @@
-sp  -4,-4,2     4   50,255,50   t:textures/earth.png
-sp  0,0,2     4   50,255,50   t:textures/bunny.png
+sp  -4,-4,3     4   50,255,50   t:textures/earth.png
+sp  0,0,5     4   50,255,50   t:textures/bunny.png
 C   0,0,-3      0,0,1     90
 L   0,0,-3     1   255,255,255
 A   0.2   255,255,255
