@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/02 15:05:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/05 15:57:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,8 @@ struct s_camera
 {
 	t_vec		viewpoint;
 	t_vec		orientation;
-	uint32_t	fov;
+	float		fov;
+	float		fov_correction;
 };
 
 struct s_cylinder

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/14 14:42:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/04 17:19:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/05 15:59:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,21 @@
 t_vec	direction_to_xy(t_data *data, float x, float y)
 {
 	t_vec	t;
-	t_vec	cam;
-	t_vec	res;
+	// t_vec	tnorm;
+	// t_vec	ray;
+	// t_vec	dir;
 
-	cam.x = 0;
-	cam.y = 0;
-	cam.z = 0;
-	t.x = (2 * ((x + 0.5f) / data->mlx->width) - 1) * data->window->aspect_ratio;
-	t.y = 2 * ((y + 0.5f) / data->mlx->height) - 1;
+	t.x = (2 * ((x + 0.5f) / data->mlx->width) - 1);
+	t.y = (1 - (2 * ((y + 0.5f) / data->mlx->height))) * data->window->aspect_ratio;
 	t.z = 1;
-	t.x *= tan(degree_to_radian((float)data->cam->fov) / 2);
-	t.y *= tan(degree_to_radian((float)data->cam->fov) / 2);
-	res = normalize_vector(&t);
-	// printf("Length: %f\n", len);
-	t.x *= res.x * res.z;
-	t.y *= res.y * res.z;
-	// puts("CAM");
-	// print_vector(cam);
-	// set_vector(&res, &cam, &t);
-	// puts("RES");
-	// print_vector(res);
+	t.x *= data->cam->fov_correction;
+	t.y *= data->cam->fov_correction;
+	// tnorm = normalize_vector(&t);
+	// ray.x = tnorm.x;
+	// ray.y = tnorm.y;
+	// ray.z = 0;
+	// dir.vec3 = t.vec3 - ray.vec3;
+	// dir.x *= tan(degree_to_radian((float)data->cam->fov) / 2);
+	// dir.y *= tan(degree_to_radian((float)data->cam->fov) / 2);
 	return (normalize_vector(&t));
 }
