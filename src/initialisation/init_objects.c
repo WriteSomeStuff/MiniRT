@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/05 15:58:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/05 18:32:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,19 @@ void	init_camera(t_data *data, char **info)
 
 void	init_cylinder(t_data *data, char **info)
 {
-	int	i;
+	int		i;
+	t_vec	tmp;
+	t_cylinder	*cyl;
 
 	i = data->cyl_count;
+	cyl = &data->cyls[i];
 	check_split(data, info, 5);
 	verify_info(data, info);
 	data->cyls[i].center = create_vector(data, info[0]);
-	data->cyls[i].orientation = create_vector(data, info[1]);
+	tmp = create_vector(data, info[1]);
+	data->cyls[i].orientation = normalize_vector(&tmp);
+	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
+	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
 	data->cyls[i].radius = a_to_float(data, info[2]) / 2.0f;
 	data->cyls[i].height = a_to_float(data, info[3]);
 	data->cyls[i].colour = create_vector(data, info[4]);
