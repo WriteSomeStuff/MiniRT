@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/02 18:02:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/05 17:41:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c)
 		tmp.z = dot(&og_to_cyl, &og_to_cyl) - pow(dot(&og_to_cyl, &c->orientation), 2) - pow(c->radius, 2);
 		if (quadratic_equation(&tmp, &res) == true)
 		{
-			if (res < col->distance && res > 0.0001)
+			if (res < col->distance && fabs(res) > 0.0001)
 			{
 				tmp2.vec3 = c->orientation.vec3 * res;
 				m = dot(&ray->direction, &tmp2) + dot(&og_to_cyl, &c->orientation);
