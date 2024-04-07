@@ -6,11 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/05 17:25:28 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/07 23:13:34 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+bool	checkerboard_tex(t_sphere *sphere, t_vec *loc);
 
 static uint32_t	pixel_colour(t_data *data, t_vec *clr, float product)
 {
@@ -86,6 +88,11 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
+	if (checkerboard_tex(sphere, &col->location) == true)
+		mlx_put_pixel(data->image, x, y, 0xffffffff);
+	else
+		mlx_put_pixel(data->image, x, y, 0x0);
+	return ;
 	clr = sphere_texture(sphere, &col->surface_norm);
 	// ambsphere = reflection_result(&clr, &data->ambient->colour, 1);
 	// if (product < 0)

@@ -6,11 +6,26 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/31 22:08:14 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/07 23:38:40 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+bool	checkerboard_tex(t_sphere *sphere, t_vec *loc)
+{
+	t_vec		sn;
+	uint32_t	x;
+	uint32_t	y;
+	uint32_t	factor = 5;
+
+	sn.vec3 = sphere->center.vec3 - loc->vec3;
+	x = fabs((sphere->radius + ((sn.x / 2) * sphere->radius)) * factor);
+	y = fabs((sphere->radius - (sphere->radius + (sn.y * sphere->radius))) * factor);
+	if ((x % 2 == 0 && y % 2 == 0) || (x % 2 == 1 && y % 2 == 1))
+		return (true);
+	return (false);
+}
 
 static t_vec	pixel_to_clrvec(mlx_texture_t *t, int x, int y)
 {
