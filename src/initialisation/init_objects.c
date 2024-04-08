@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/05 18:32:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/08 17:13:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_camera(t_data *data, char **info)
 	verify_info(data, info);
 	data->cam->viewpoint = create_vector(data, info[0]);
 	data->cam->orientation = create_vector(data, info[1]);
+	data->cam->orientation = normalize_vector(&data->cam->orientation);
 	data->cam->fov = a_to_float(data, info[2]);
 	data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
 }

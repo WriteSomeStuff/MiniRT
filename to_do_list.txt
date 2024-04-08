@@ -1,8 +1,6 @@
-- Construct plane
+- Test / maybe fix planes
 
 - Construct cylinder
-
-- Fix fisheye
 
 - add ray bounce support
 

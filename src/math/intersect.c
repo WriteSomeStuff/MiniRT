@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/05 18:37:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/08 13:51:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,15 @@ static void	update(t_ray *ray, t_token type, void *obj, float distance)
 
 void	intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c)
 {
-	t_vec	og_to_cyl;
-	t_vec	tmp;
-	t_vec	tmp2;
-	float	res;
-	float	m;
+	float	distance = 0.0f;
 
+	(void)col;
+	(void)ray;
 	while (c->object != INVALID)
 	{
-		og_to_cyl.vec3 = ray->origin.vec3 - c->base.vec3;
-		tmp.x = 1 - pow(dot(&ray->direction, &c->orientation), 2);
-		tmp.y = 2 * dot(&ray->direction, &og_to_cyl) - pow(dot(&ray->direction, &c->orientation), 2);
-		tmp.z = dot(&og_to_cyl, &og_to_cyl) - pow(dot(&og_to_cyl, &c->orientation), 2) - pow(c->radius, 2);
-		if (quadratic_equation(&tmp, &res) == true)
+		if (distance > 0.00001)
 		{
-			if (res < col->distance && res > 0.0001)
-			{
-				tmp2.vec3 = c->orientation.vec3 * res;
-				m = dot(&ray->direction, &tmp2) + dot(&og_to_cyl, &c->orientation);
-				if (fabs(m) < c->height)
-					update(ray, CYLINDER, (void *)c, res);
-			}
+			;
 		}
 		c++;
 	}

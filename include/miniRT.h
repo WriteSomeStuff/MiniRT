@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/07 23:30:45 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/08 18:18:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ t_vec		normalize_vector(const t_vec *vector);
 float		q_sqrt(float num);
 t_vec		scale_vector(const t_vec *vector, float scalar);
 void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
+
+void		rotate_point();
 /*	------------------------------------------------------------------	*/
 
 /*	Utilities	*/

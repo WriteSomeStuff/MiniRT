@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/05 15:57:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/08 16:11:26 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,24 +84,24 @@ union s_vec
 	};
 };
 
-// union s_quat
-// {
-// 	t_vec4	vec4;
-// 	struct
-// 	{
-// 		float	i;
-// 		float	j;
-// 		float	k;
-// 		float	scalar;
-// 	};
-// 	struct
-// 	{
-// 		float	x;
-// 		float	y;
-// 		float	z;
-// 		float	scalar;
-// 	};
-// };
+union s_quat
+{
+	t_vec4	vec4;
+	struct
+	{
+		float	real;
+		float	i;
+		float	j;
+		float	k;
+	};
+	struct
+	{
+		float	scalar;
+		float	x;
+		float	y;
+		float	z;
+	};
+};
 
 struct s_texture
 {
@@ -119,7 +119,6 @@ union s_magic
 struct s_hit
 {
 	bool	hit;
-	bool	inside_object;
 	t_token	type;
 	float	distance;
 	void	*obj;

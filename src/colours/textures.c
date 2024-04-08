@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/07 23:38:40 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/08 12:27:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ t_vec	plane_texture(t_plane *plane, t_vec *loc)
 	if (plane->tex == NULL)
 		return (plane->colour);
 	dir.vec3 = loc->vec3 - plane->location.vec3;
-	x = (uint32_t)(fabs(dir.z) * 100) % 360;
-	y = (uint32_t)(fabs(dir.y) * 100) % 360;
-	printf("x: %d, y: %d\n", x, y);
-	return (pixel_to_clrvec(plane->tex, x, y));
+	x = (uint32_t)(fabs(dir.x) * 100);
+	y = (uint32_t)(fabs(dir.y) * 100);
+	return (pixel_to_clrvec(plane->tex, (x * 4) % 360, (y * 4) % 360));
 }
 
 t_vec	sphere_texture(t_sphere *sphere, t_vec *sn)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   quaternions.c                                      :+:    :+:            */
+/*   quaternions copy.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/06 15:04:00 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/08 18:18:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/08 18:22:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,36 @@ static void	print_quat(t_quat quat)
 	printf("scalar: %f, i: %f, j: %f, k: %f\n", quat.scalar, quat.i, quat.j, quat.k);
 }
 
-void	rotate_point()
+static t_vec	quat_to_vector(t_vec *quat)
+{
+	t_vec	vec;
+
+	vec.x = quat->i;
+	vec.x = quat->i;
+	vec.x = quat->i;
+	return (vec);
+}
+
+static t_quat	vector_to_quat(t_vec *vector)
+{
+	t_quat	quat;
+
+	quat.scalar = 0;
+	quat.i = vector->x;
+	quat.j = vector->y;
+	quat.k = vector->z;
+	return (quat);
+}
+
+void	rotate_point(t_vec *pt, const t_vec *ang)
 {
 	// t_quat	origin = zero_quat();
-	t_quat	point = zero_quat();
-	t_quat	angle = zero_quat();
-	t_vec	xyz;
+	t_quat	point;
+	t_quat	angle;
 
-	xyz.x = 1;
-	xyz.y = 1;
-	xyz.z = 1;
-	xyz = normalize_vector(&xyz);
-	angle.scalar = degree_to_radian(90);
-	angle.i = xyz.x;
-	angle.j = xyz.y;
-	angle.k = xyz.z;
-	angle_to_vec(&angle, angle.scalar);
-	point.k = 1;
+
+	point = vector_to_quat(pt);
+	angle = vector_to_quat(ang);
 	t_quat res = rotate(&point, &angle);
 	print_quat(res);
 	t_vec	check;

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 15:30:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/08 16:15:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 float	vector_length(const t_vec *a, const t_vec *b)
 {
 	float	c;
+	t_vec	new;
 
+	if (a == NULL)
+	{
+		a = &new;
+		new.x = 0;
+		new.y = 0;
+		new.z = 0;
+	}
 	c = pythagoras(a->x - b->x, a->y - b->y);
 	return (pythagoras(c, a->z - b->z));
 }
