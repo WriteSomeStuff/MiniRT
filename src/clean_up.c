@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/26 16:20:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/09 16:42:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,36 @@ void	clear_list(t_input **input)
 	*input = NULL;
 }
 
+static void	free_cylinders(t_cylinder **cylinders, uint32_t amount)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (i < amount)
+	{
+		if ((*cylinders[i]).tex != NULL)
+			mlx_delete_texture((*cylinders)[i].tex);
+		i++;
+	}
+	free(*cylinders);
+	*cylinders = NULL;
+}
+
+static void	free_planes(t_plane **planes, uint32_t amount)
+{
+	uint32_t	i;
+
+	i = 0;
+	while (i < amount)
+	{
+		if ((*planes[i]).tex != NULL)
+			mlx_delete_texture((*planes)[i].tex);
+		i++;
+	}
+	free(*planes);
+	*planes = NULL;
+}
+
 static void	free_spheres(t_sphere **spheres, uint32_t amount)
 {
 	uint32_t	i;
@@ -73,7 +103,8 @@ static void	free_spheres(t_sphere **spheres, uint32_t amount)
 	i = 0;
 	while (i < amount)
 	{
-		free((*spheres)[i].tex);
+		if ((*spheres[i]).tex != NULL)
+			mlx_delete_texture((*spheres)[i].tex);
 		i++;
 	}
 	free(*spheres);
@@ -85,9 +116,9 @@ void	clean_up(t_data *data)
 	clear_list(&data->input);
 	free(data->ambient);
 	free(data->cam);
-	free(data->cyls);
 	free(data->light);
-	free(data->planes);
+	free_cylinders(&data->cyls, data->cyl_count);
+	free_planes(&data->planes, data->plane_count);
 	free_spheres(&data->spheres, data->sphere_count);
 	free(data->window);
 	free(data->line);

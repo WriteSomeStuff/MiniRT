@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/08 18:18:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/09 12:53:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "get_next_line_rt.h"
 # include "structsRT.h"
+# include "vectorsRT.h"
 # include <MLX42/MLX42.h>
 # include <float.h>
 # include <math.h>
@@ -74,20 +75,8 @@ float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
 float		pythagoras(const float a, const float b);
 float		pytha_inverse(const float c, const float a);
-bool		quadratic_equation(const t_vec *vec, float *result);
 
 t_vec		direction_to_xy(t_data *data, float x, float y);
-
-float		dot(const t_vec *a, const t_vec *b);
-t_vec		cross_product(const t_vec *a, const t_vec *b);
-
-float		vector_length(const t_vec *origin, const t_vec *vector);
-t_vec		normalize_vector(const t_vec *vector);
-float		q_sqrt(float num);
-t_vec		scale_vector(const t_vec *vector, float scalar);
-void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
-
-void		rotate_point();
 /*	------------------------------------------------------------------	*/
 
 /*	Utilities	*/
@@ -104,10 +93,8 @@ t_input		*node_last(t_input *lst);
 int32_t		count_objects(t_input *lst, t_token token);
 
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-void		print_vector(t_vec vector);
 void		print_2d_charray(char **array);
 void		rgb_to_floats(t_vec *rgb);
-t_vec		create_vector(t_data *data, char *info);
 void		check_split(t_data *data, char **info, int32_t num);
 bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);

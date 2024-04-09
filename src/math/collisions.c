@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/08 13:52:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/09 18:25:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,21 @@ static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	t_vec		light_dir;
 	t_vec		clr;
 	float		product;
+	t_vec		to_center;
+	t_vec		to_new;
 
 	cyl = (t_cylinder *)col->obj;
+	to_center.vec3 = col->location.vec3 - cyl->center.vec3;
+	product = dot(&to_center, &cyl->orientation);
+	if (fabs(product) > fabs(vector_length(&cyl->center, &cyl->base)))
+	{
+		mlx_put_pixel(data->image, x, y, 0x000000ff);
+		return ;
+	}
+	to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
+	set_vector(&col->surface_norm, &to_new, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
-	product = dot(&light_dir, &cyl->orientation);
+	product = dot(&light_dir, &col->surface_norm);
 	clr = cylinder_texture(cyl, &col->location);
 	mlx_put_pixel(data->image, x, y, pixel_colour(data, &clr, product));
 	data->map[y][x] = cyl->instance;
@@ -73,11 +84,11 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
-	if (checkerboard_tex(sphere, &col->location) == true)
-		mlx_put_pixel(data->image, x, y, 0xffffffff);
-	else
-		mlx_put_pixel(data->image, x, y, 0x0);
-	return ;
+	// if (checkerboard_tex(sphere, &col->location) == true)
+	// 	mlx_put_pixel(data->image, x, y, 0xffffffff);
+	// else
+	// 	mlx_put_pixel(data->image, x, y, 0x0);
+	// return ;
 	clr = sphere_texture(sphere, &col->surface_norm);
 	mlx_put_pixel(data->image, x, y, pixel_colour(data, &clr, product));
 	data->map[y][x] = sphere->instance;

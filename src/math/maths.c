@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/05 15:01:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/09 11:36:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ float	pythagoras(const float a, const float b)
 float	pytha_inverse(const float c, const float a)
 {
 	return (sqrt(c * c - a * a));
+}
+
+float	angle(const t_vec *a, const t_vec *b)
+{
+	return (acos(dot(a, b)));
 }
 
 bool	quadratic_equation(const t_vec *vec, float *result)

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/08 17:13:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/09 18:21:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	init_cylinder(t_data *data, char **info)
 	data->cyls[i].center = create_vector(data, info[0]);
 	tmp = create_vector(data, info[1]);
 	data->cyls[i].orientation = normalize_vector(&tmp);
-	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
-	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
 	data->cyls[i].radius = a_to_float(data, info[2]) / 2.0f;
 	data->cyls[i].height = a_to_float(data, info[3]);
 	data->cyls[i].colour = create_vector(data, info[4]);
@@ -75,6 +73,14 @@ void	init_cylinder(t_data *data, char **info)
 	data->cyls[i].instance = object_count(data);
 	check_rgb_values(data, &data->cyls[i].colour.vec3);
 	rgb_to_floats(&data->cyls[i].colour);
+	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
+	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
+	puts("top");
+	print_vector(cyl->top);
+	puts("base");
+	print_vector(cyl->base);
+	puts("center");
+	print_vector(cyl->center);
 	data->cyl_count++;
 }
 

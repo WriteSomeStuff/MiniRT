@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/08 12:09:12 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/04/09 17:09:07 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ CFILES	=	alloc.c \
 			maths.c \
 			mouse.c \
 			parsing.c \
+			quaternions_utils.c \
 			quaternions.c \
 			rasterise.c \
 			textures.c \
