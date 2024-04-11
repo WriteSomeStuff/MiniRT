@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/09 13:16:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/11 17:59:08 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,6 @@ int32_t	main(int32_t argc, char **argv)
 		ft_putendl_fd("Error: incorrect argument count", STDERR_FILENO);
 		return (1);
 	}
-	// t_vec	point;
-	// t_vec	point2;
-	// t_vec	dir;
-
-	// point.x = 0;
-	// point.y = 0;
-	// point.z = 1;
-
-	// point2.x = 0;
-	// point2.y = 1;
-	// point2.z = 0;
-
-	// dir.x = 1;
-	// dir.y = 1;
-	// dir.z = 1;
-
-	// dir = normalize_vector(&dir);
-
-	// t_quat dir2 = vector_to_quat(dir);
-	// dir2.real = angle(&point, &point2);
-	// printf("angle: %f\n", radian_to_degree(dir2.real));
-	
-	// rotate_point(&point, &dir2);
-	// printf("length: %f\n", vector_length(NULL, &point));
-	// exit(0);
 	ft_bzero(&data, sizeof(t_data));
 	initialise_window(&data);
 	read_file(&data, argv[1]);
