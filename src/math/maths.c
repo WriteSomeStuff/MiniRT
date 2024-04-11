@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/09 11:36:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/11 15:24:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ bool	quadratic_equation(const t_vec *vec, float *result)
 		*result = res1;
 	else if (res2 > 0)
 		*result = res2;
+	else
+		return (false);
 	return (true);
 }

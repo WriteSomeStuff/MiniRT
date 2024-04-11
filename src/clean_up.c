@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/09 16:42:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/11 15:29:58 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	free_cylinders(t_cylinder **cylinders, uint32_t amount)
 	i = 0;
 	while (i < amount)
 	{
-		if ((*cylinders[i]).tex != NULL)
+		if ((*cylinders)[i].tex != NULL)
 			mlx_delete_texture((*cylinders)[i].tex);
 		i++;
 	}
@@ -88,7 +88,7 @@ static void	free_planes(t_plane **planes, uint32_t amount)
 	i = 0;
 	while (i < amount)
 	{
-		if ((*planes[i]).tex != NULL)
+		if ((*planes)[i].tex != NULL)
 			mlx_delete_texture((*planes)[i].tex);
 		i++;
 	}
@@ -103,7 +103,7 @@ static void	free_spheres(t_sphere **spheres, uint32_t amount)
 	i = 0;
 	while (i < amount)
 	{
-		if ((*spheres[i]).tex != NULL)
+		if ((*spheres)[i].tex != NULL)
 			mlx_delete_texture((*spheres)[i].tex);
 		i++;
 	}
