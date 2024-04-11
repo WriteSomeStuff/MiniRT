@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/11 15:20:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/11 18:35:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	update(t_ray *ray, t_token type, void *obj, float distance)
 	ray->col->type = type;
 }
 
-static void	hit_infinite_body(t_hit *col, t_ray *ray, const t_cylinder *c)
+static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 {
 	t_vec	rc_cross;
 	t_vec	cyl_cross;
@@ -41,8 +41,22 @@ static void	hit_infinite_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 	{
 		if (res > 0.0001 && res < col->distance)
 		{
+			t_vec to_center;
+
+			to_center = scale_vector(&ray->direction, res);
+			to_center.vec3 += ray->origin.vec3;
+			to_center.vec3 = to_center.vec3 - c->center.vec3;
+			// puts("to center");
+			// print_vector(to_center);
+			t_vec tmp;
+
+			tmp.vec3 = c->orientation.vec3;
+			float product = dot(&to_center, &c->orientation);
+			printf("dot: %f\n", product);
+			if (fabs(product) <= c->height)
+				update(ray, CYLINDER, (void *)c, res);
+			// if (dot(&col->location, &c->base) <= c->height / 2)
 			// check voor lengte van cylinder
-			update(ray, CYLINDER, (void *)c, res);
 		}
 	}
 }
@@ -56,7 +70,7 @@ void	intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c)
 {
 	while (c->object != INVALID)
 	{
-		hit_infinite_body(col, ray, c);
+		hit_body(col, ray, c);
 		// hit_caps(col, ray, c);
 		c++;
 	}
