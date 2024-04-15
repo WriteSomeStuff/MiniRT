@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/08 16:11:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 11:17:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ struct s_plane
 {
 	t_vec			location;
 	t_vec			orientation;
+	t_vec			rev_norm;
 	t_vec			colour;
 	t_token			object;
 	uint32_t		amb_colour;

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/09 18:21:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 11:21:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,6 @@ void	init_cylinder(t_data *data, char **info)
 	rgb_to_floats(&data->cyls[i].colour);
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
 	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
-	puts("top");
-	print_vector(cyl->top);
-	puts("base");
-	print_vector(cyl->base);
-	puts("center");
-	print_vector(cyl->center);
 	data->cyl_count++;
 }
 
@@ -101,6 +95,9 @@ void	init_plane(t_data *data, char **info)
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
 	data->planes[i].orientation = normalize_vector(&data->planes[i].orientation);
+	data->planes[i].rev_norm.vec3 = data->planes[i].orientation.vec3 * -1;
+	print_vector(data->planes[i].orientation);
+	print_vector(data->planes[i].rev_norm);
 	data->plane_count++;
 }
 

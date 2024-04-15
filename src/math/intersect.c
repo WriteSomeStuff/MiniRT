@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/11 18:35:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 14:49:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 
 			tmp.vec3 = c->orientation.vec3;
 			float product = dot(&to_center, &c->orientation);
-			printf("dot: %f\n", product);
 			if (fabs(product) <= c->height)
 				update(ray, CYLINDER, (void *)c, res);
 			// if (dot(&col->location, &c->base) <= c->height / 2)
@@ -80,19 +79,22 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 {
 	t_vec	tmp;
 	float	distance;
-	float	denominator;
+	float	denom;
 
 	while (p->object != INVALID)
 	{
-		denominator = dot(&ray->direction, &p->orientation);
-		if (denominator > 0.0001)
+		denom = dot(&ray->direction, &p->orientation);
+		tmp.vec3 = p->location.vec3 - ray->origin.vec3;
+		if (fabs(denom) > 0.0001)
 		{
-			tmp.vec3 = p->location.vec3 - ray->origin.vec3;
-			distance = dot(&tmp, &p->orientation);
-			distance /= denominator;
-			if (distance < col->distance)
+			distance = dot(&tmp, &p->orientation) / denom;
+			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, PLANE, (void *)p, distance);
+				if (denom > 0)
+					col->surface_norm = p->rev_norm;
+				else
+					col->surface_norm = p->orientation;
 			}
 		}
 		p++;

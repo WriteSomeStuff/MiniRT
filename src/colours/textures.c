@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/08 12:27:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 15:44:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,24 @@
 bool	checkerboard_tex(t_sphere *sphere, t_vec *loc)
 {
 	t_vec		sn;
-	uint32_t	x;
-	uint32_t	y;
+	float		x;
+	float		y;
+	// float		z;
 	uint32_t	factor = 5;
+	float		modulus = sphere->radius;
 
-	sn.vec3 = sphere->center.vec3 - loc->vec3;
-	x = fabs((sphere->radius + ((sn.x / 2) * sphere->radius)) * factor);
-	y = fabs((sphere->radius - (sphere->radius + (sn.y * sphere->radius))) * factor);
-	if ((x % 2 == 0 && y % 2 == 0) || (x % 2 == 1 && y % 2 == 1))
+	sn.vec3 = (sphere->center.vec3 - sphere->radius) - loc->vec3;
+	x = fabs(sn.x) * factor;
+	y = fabs(sn.y) * factor;
+	// printf("x: %f, y: %f\n", x, y);
+	// z = fabs(sn.z) * factor;
+	// x *= z;
+	// y *= z;
+	if ((fmod(x, modulus) <= modulus / 2 && fmod(y, modulus) <= modulus / 2) ||
+		(fmod(x, modulus) > modulus / 2 && fmod(y, modulus) > modulus / 2))
 		return (true);
+	// if ((x % 2 == 0 && y % 2 == 0) || (x % 2 == 1 && y % 2 == 1))
+	// 	return (true);
 	return (false);
 }
 
