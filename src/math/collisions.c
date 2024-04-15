@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 15:02:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 18:52:58 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
-	if (checkerboard_tex(sphere, &col->location) == true)
-		mlx_put_pixel(data->image, x, y, 0xffffffff);
-	else
-		mlx_put_pixel(data->image, x, y, 0x0);
-	return ;
+	// if (checkerboard_tex(sphere, &col->location) == true)
+	// 	mlx_put_pixel(data->image, x, y, 0xffffffff);
+	// else
+	// 	mlx_put_pixel(data->image, x, y, 0x0);
+	// return ;
+	data->map[y][x] = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
 	mlx_put_pixel(data->image, x, y, pixel_colour(data, &clr, product));
-	data->map[y][x] = sphere->instance;
 }
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)

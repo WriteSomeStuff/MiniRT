@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 15:44:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/15 18:51:32 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	checkerboard_tex(t_sphere *sphere, t_vec *loc)
 	if ((fmod(x, modulus) <= modulus / 2 && fmod(y, modulus) <= modulus / 2) ||
 		(fmod(x, modulus) > modulus / 2 && fmod(y, modulus) > modulus / 2))
 		return (true);
-	// if ((x % 2 == 0 && y % 2 == 0) || (x % 2 == 1 && y % 2 == 1))
+	// if (x % 2 == y % 2)
 	// 	return (true);
 	return (false);
 }
