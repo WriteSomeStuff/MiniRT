@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 18:52:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/16 18:29:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	checkerboard_tex(t_sphere *sphere, t_vec *loc);
+bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 
 static uint32_t	pixel_colour(t_data *data, t_vec *clr, float product)
 {
@@ -84,11 +84,11 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
-	// if (checkerboard_tex(sphere, &col->location) == true)
-	// 	mlx_put_pixel(data->image, x, y, 0xffffffff);
-	// else
-	// 	mlx_put_pixel(data->image, x, y, 0x0);
-	// return ;
+	if (checkerboard_tex(data, sphere, col) == true)
+		mlx_put_pixel(data->image, x, y, 0xffffffff);
+	else
+		mlx_put_pixel(data->image, x, y, 0xff);
+	return ;
 	data->map[y][x] = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
 	mlx_put_pixel(data->image, x, y, pixel_colour(data, &clr, product));

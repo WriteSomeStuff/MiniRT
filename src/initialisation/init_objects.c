@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/15 11:21:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/16 11:32:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ void	init_plane(t_data *data, char **info)
 	rgb_to_floats(&data->planes[i].colour);
 	data->planes[i].orientation = normalize_vector(&data->planes[i].orientation);
 	data->planes[i].rev_norm.vec3 = data->planes[i].orientation.vec3 * -1;
-	print_vector(data->planes[i].orientation);
-	print_vector(data->planes[i].rev_norm);
 	data->plane_count++;
 }
 

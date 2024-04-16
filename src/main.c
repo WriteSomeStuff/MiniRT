@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/09 13:16:54 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/16 14:57:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,21 @@ int32_t	main(int32_t argc, char **argv)
 		ft_putendl_fd("Error: incorrect argument count", STDERR_FILENO);
 		return (1);
 	}
-	// t_vec	point;
-	// t_vec	point2;
-	// t_vec	dir;
 
-	// point.x = 0;
-	// point.y = 0;
-	// point.z = 1;
-
-	// point2.x = 0;
-	// point2.y = 1;
-	// point2.z = 0;
-
-	// dir.x = 1;
-	// dir.y = 1;
-	// dir.z = 1;
-
-	// dir = normalize_vector(&dir);
-
-	// t_quat dir2 = vector_to_quat(dir);
-	// dir2.real = angle(&point, &point2);
-	// printf("angle: %f\n", radian_to_degree(dir2.real));
-	
-	// rotate_point(&point, &dir2);
-	// printf("length: %f\n", vector_length(NULL, &point));
-	// exit(0);
 	ft_bzero(&data, sizeof(t_data));
 	initialise_window(&data);
 	read_file(&data, argv[1]);
+	// uint32_t factor = 100;
+	// for (uint32_t x = 0; x < data.window->width; x++)
+	// {
+	// 	for (uint32_t y = 0; y < data.window->height; y++)
+	// 	{
+	// 		if ((x % factor < factor / 2 && + y % factor < factor / 2) || (x % factor >= factor / 2 && y % factor >= factor / 2))
+	// 			mlx_put_pixel(data.image, x, y, 0xffffffff);
+	// 		else
+	// 			mlx_put_pixel(data.image, x, y, 0x0);
+	// 	}
+	// }
 	draw_something(&data, 0, 0);
 
 	mlx_loop_hook(data.mlx, ft_hook, &data);
