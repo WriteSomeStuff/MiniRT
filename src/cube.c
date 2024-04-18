@@ -58,9 +58,9 @@
 // 		while (y < HEIGHT)
 // 		{
 // 			if ((x >= a.x && x <= b.x) && (y == a.y || y == c.y))
-// 				mlx_put_pixel(data->image, x, y, ft_pixel(100, 0, 255, 255));
+// 				mlx_put_pixel(data->scene, x, y, ft_pixel(100, 0, 255, 255));
 // 			else if ((x == a.x || x == b.x) && (y >= a.y && y <= c.y))
-// 				mlx_put_pixel(data->image, x, y, ft_pixel(100, 0, 255, 255));
+// 				mlx_put_pixel(data->scene, x, y, ft_pixel(100, 0, 255, 255));
 // 			y++;
 // 		}
 // 		x++;
@@ -90,7 +90,7 @@
 // 		y = 0;
 // 		while (y < HEIGHT)
 // 		{
-// 			mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
+// 			mlx_put_pixel(data->scene, x, y, ft_pixel(0, 0, 0, 0xFF));
 // 			y++;
 // 		}
 // 		x++;
@@ -110,7 +110,7 @@
 // 	angle = atan2(dy, dx);
 // 	while (len > 0)
 // 	{
-// 		mlx_put_pixel(data->image, (uint32_t)start.x + cos(angle) * len, \
+// 		mlx_put_pixel(data->scene, (uint32_t)start.x + cos(angle) * len, \
 // 		(uint32_t)start.y + sin(angle) * len, ft_pixel(100, 0, 255, 255));
 // 		len--;
 // 	}

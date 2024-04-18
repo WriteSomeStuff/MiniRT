@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/15 11:17:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/18 15:46:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,8 +201,9 @@ struct s_window
 
 struct s_data
 {
-	mlx_image_t		*image;
 	mlx_t			*mlx;
+	mlx_image_t		*highlight;
+	mlx_image_t		*scene;
 	t_input			*input;
 	t_ambient		*ambient;
 	t_camera		*cam;

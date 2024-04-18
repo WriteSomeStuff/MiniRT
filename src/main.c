@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/16 14:57:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/18 15:28:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,17 @@ void	initialise_window(t_data *data)
 	{
 		exit_error(data, ": mlx failed to initialise");
 	}
-	data->image = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (data->image == NULL)
+	data->scene = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (data->scene == NULL)
 	{
 		exit_error(data, ": image failed to load");
 	}
-	if (mlx_image_to_window(data->mlx, data->image, 0, 0) == -1)
+	data->highlight = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (data->highlight == NULL)
+	{
+		exit_error(data, ": image failed to load");
+	}
+	if (mlx_image_to_window(data->mlx, data->scene, 0, 0) == -1)
 	{
 		exit_error(data, ": failed to load window");
 	}
@@ -57,9 +62,9 @@ int32_t	main(int32_t argc, char **argv)
 	// 	for (uint32_t y = 0; y < data.window->height; y++)
 	// 	{
 	// 		if ((x % factor < factor / 2 && + y % factor < factor / 2) || (x % factor >= factor / 2 && y % factor >= factor / 2))
-	// 			mlx_put_pixel(data.image, x, y, 0xffffffff);
+	// 			mlx_put_pixel(data.scene, x, y, 0xffffffff);
 	// 		else
-	// 			mlx_put_pixel(data.image, x, y, 0x0);
+	// 			mlx_put_pixel(data.scene, x, y, 0x0);
 	// 	}
 	// }
 	draw_something(&data, 0, 0);

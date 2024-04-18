@@ -6,50 +6,81 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/07 23:35:58 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/18 16:00:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
+/* static void	img_to_win(t_data *data)
+{
+	for (uint32_t y = 0; y < data->window->height; y++)
+	{
+		for (uint32_t x = 0; x < data->window->width; x++)
+		{
+			mlx_image_to_window(data->mlx, data->highlight, x, y);
+		}
+	}
+} */
+
 static void	highlight_object(t_data *data, int16_t num)
 {
+	static bool	highlighted = false;
 	uint32_t	x;
 	uint32_t	y;
+	long		clr;
 
 	y = 0;
-	while (y < data->window->height)
+	if (highlighted == false)
 	{
-		x = 0;
-		while (x < data->window->width)
+		clr = 0xffffffff;
+		highlighted = true;
+		while (y < data->window->height)
 		{
-			if (data->map[y][x] != num)
+			x = 0;
+			while (x < data->window->width)
 			{
-				if (x < data->window->width - 2 && data->map[y][x + 2] == num)
+				if (data->map[y][x] != num)
 				{
-					data->map[y][x] = -2;
-					mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
+					if (x < data->window->width - 2 && data->map[y][x + 2] == num)
+					{
+						mlx_put_pixel(data->highlight, x, y, clr);
+					}
+					if (x > 1 && data->map[y][x - 2] == num)
+					{
+						mlx_put_pixel(data->highlight, x, y, clr);
+					}
+					if (y < data->window->height - 2 && data->map[y + 2][x] == num)
+					{
+						mlx_put_pixel(data->highlight, x, y, clr);
+					}
+					if (y > 1 && data->map[y - 2][x] == num)
+					{
+						mlx_put_pixel(data->highlight, x, y, clr);
+					}
 				}
-				if (x > 1 && data->map[y][x - 2] == num)
-				{
-					data->map[y][x] = -2;
-					mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
-				}
-				if (y < data->window->height - 2 && data->map[y + 2][x] == num)
-				{
-					data->map[y][x] = -2;
-					mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
-				}
-				if (y > 1 && data->map[y - 2][x] == num)
-				{
-					data->map[y][x] = -2;
-					mlx_put_pixel(data->image, x, y, 0xFFFFFFFF);
-				}
+				x++;
 			}
-			x++;
+			y++;
 		}
-		y++;
 	}
+	else
+	{
+		clr = 0x0;
+		highlighted = false;
+		while (y < data->window->height)
+		{
+			x = 0;
+			while (x < data->window->width)
+			{
+				mlx_put_pixel(data->highlight, x, y, clr);
+				x++;
+			}
+			y++;
+		}
+	}
+	mlx_image_to_window(data->mlx, data->highlight, 0, 0);
+	// img_to_win(data);
 }
 
 void	rt_resize(int32_t width, int32_t height, void *param)
@@ -67,7 +98,6 @@ void	rt_resize(int32_t width, int32_t height, void *param)
 void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)
 {
 	t_data		*data;
-	static int16_t	selected = -1;
 	int32_t		x;
 	int32_t		y;
 
@@ -78,17 +108,6 @@ void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)
 		mlx_get_mouse_pos(data->mlx, &x, &y);
 		// if (selected == -2)
 		// 	unselect(data);
-		if (data->map[y][x] != -1 && data->map[y][x] != selected)
-		{
-			if (selected != -1)
-				draw_something(data, 0, 0);
-			selected = data->map[y][x];
-			highlight_object(data, selected);
-		}
-		else
-		{
-			draw_something(data, 0, 0);
-			selected = -1;
-		}
+		highlight_object(data, data->map[y][x]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/08 13:50:24 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/18 15:27:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 				draw_collision(data, ray.col, x, y);
 			}
 			else
-				mlx_put_pixel(data->image, x, y, ft_pixel(0, 0, 0, 0xFF));
+				mlx_put_pixel(data->scene, x, y, ft_pixel(0, 0, 0, 0xFF));
 			x++;
 		}
 		y++;
