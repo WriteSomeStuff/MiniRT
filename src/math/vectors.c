@@ -6,41 +6,29 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:55:52 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/04/23 17:56:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float	vector_length(const t_vec *a, const t_vec *b)
+float	vector_length(const t_vec a, const t_vec b)
 {
 	float	c;
-	t_vec	new;
 
-	if (a == NULL)
-	{
-		a = &new;
-		new.x = 0;
-		new.y = 0;
-		new.z = 0;
-	}
-	c = pythagoras(a->x - b->x, a->y - b->y);
-	return (pythagoras(c, a->z - b->z));
+	c = pythagoras(a.x - b.x, a.y - b.y);
+	return (pythagoras(c, a.z - b.z));
 }
 
-t_vec	normalize_vector(const t_vec *vector)
+t_vec	normalize_vector(const t_vec vector)
 {
 	float	len;
 	t_vec	norm;
-	t_vec	dummy;
 
-	ft_bzero(&dummy, sizeof(t_vec));
-	len = vector_length(&dummy, vector);
+	len = vector_length(vec(0, 0, 0), vector);
 	if (len == 0)
-		return (dummy);
-	norm.x = vector->x / len;
-	norm.y = vector->y / len;
-	norm.z = vector->z / len;
+		return (vec(0, 0, 0));
+	norm.vec3 = vector.vec3 / len;
 	return (norm);
 }
 
@@ -54,18 +42,8 @@ float	q_sqrt(float num)
 	return (magic.y);
 }
 
-t_vec	scale_vector(const t_vec *vector, const float scalar)
-{
-	t_vec	size;
-
-	size.x = vector->x * scalar;
-	size.y = vector->y * scalar;
-	size.z = vector->z * scalar;
-	return (size);
-}
-
 void	set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2)
 {
 	vector->vec3 = location2->vec3 - location1->vec3;
-	*vector = normalize_vector(vector);
+	*vector = normalize_vector(*vector);
 }

@@ -1,7 +1,20 @@
 #ifndef TESTS_H
 # define TESTS_H
 
+#ifdef __cplusplus
+    #define new __new__
+#endif
 
+#include <assert.h>
+#include "miniRT.h"
+
+#ifdef __cplusplus
+    #undef new
+#endif
+
+
+#include <iostream>
+#include <iomanip>
 
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
