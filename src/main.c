@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/18 15:28:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 14:15:17 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	initialise_window(t_data *data)
 	}
 	w->width = data->mlx->width;
 	w->height = data->mlx->height;
-	printf("width: %d, height: %d\n", w->width, w->height);
 	w->aspect_ratio = (float)data->mlx->height / data->mlx->width;
 	data->window = w;
 }

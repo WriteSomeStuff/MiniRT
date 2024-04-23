@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 11:05:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 14:46:46 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 /*	3D vectors	*/
 /*	------------------------------------------------------------------	*/
+t_vec		vec(float x, float y, float z);
 float		dot(const t_vec *a, const t_vec *b);
 t_vec		cross_product(const t_vec *a, const t_vec *b);
 

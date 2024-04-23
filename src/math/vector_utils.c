@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   vector_products.c                                  :+:    :+:            */
+/*   vector_utils.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 11:05:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 14:46:22 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_vec	vec(float x, float y, float z)
+{
+	t_vec	vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
+}
 
 float	dot(const t_vec *a, const t_vec *b)
 {

@@ -6,13 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/18 11:13:31 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/04/23 15:57:10 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 #-L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit
 
 NAME	= miniRT
+T_EXEC	= tester
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address 
 
@@ -39,7 +40,6 @@ CFILES	=	alloc.c \
 			intersect.c \
 			list_adding.c \
 			list_navigation.c \
-			main.c \
 			maths.c \
 			mouse.c \
 			parsing.c \
@@ -50,13 +50,25 @@ CFILES	=	alloc.c \
 			textures.c \
 			utils.c \
 			vectors.c \
-			vector_products.c \
+			vector_utils.c \
+
+TFILES	=	chey.cpp \
+			vinny.cpp \
+			tests.cpp
+
+MAIN	= 	main.c	
 
 SRC_DIR	= src
+T_DIR	= tests
 OBJ_DIR	= $(SRC_DIR)/obj
 OBJECTS	= $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:%.c=%.o)))
 
-all: $(LIBS) $(NAME)
+M_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(MAIN:%.c=%.o)))
+T_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(TFILES:%.cpp=%.o)))
+
+all: $(NAME)
+
+test: $(T_EXEC)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -68,8 +80,11 @@ $(MLXOUT):
 $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
-$(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+$(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
+	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+
+$(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
+	c++ $(CFLAGS) -std=c++11 $(OBJECTS) $(T_OBJ) -o $(T_EXEC)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
@@ -89,6 +104,9 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/math/%.c
 $(OBJ_DIR)/%.o : $(SRC_DIR)/utils/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
+$(OBJ_DIR)/%.o : $(T_DIR)/%.cpp
+	c++ -c $(CFLAGS) -std=c++11 -o $@ $^
+
 clean:
 	rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT) clean
@@ -96,11 +114,13 @@ clean:
 fclean: clean
 	rm -rf $(LIBMLX)/build
 	rm -f $(NAME)
+	rm -f $(T_EXEC)
 	$(MAKE) -C $(LIBFT) fclean
 
 re: fclean all
+retest: fclean test
 
 debug: CFLAGS += -fsanitize=address
 debug: re
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug test retest
