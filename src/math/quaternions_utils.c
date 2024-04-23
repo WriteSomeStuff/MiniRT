@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   quater_pounder.c                                   :+:    :+:            */
+/*   quaternions_utils.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:38:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/09 13:05:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 17:46:22 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,13 @@ void	print_quat(t_quat quat)
 	printf("scalar: %f, i: %f, j: %f, k: %f\n", quat.scalar, quat.i, quat.j, quat.k);
 }
 
-t_vec	quat_to_vector(t_quat quat)
-{
-	t_vec	vec;
-
-	vec.x = quat.i;
-	vec.y = quat.j;
-	vec.z = quat.k;
-	return (vec);
-}
-
-t_quat	vector_to_quat(t_vec vector)
+t_quat	quat(float real, float x, float y, float z)
 {
 	t_quat	quat;
 
-	quat.scalar = 0;
-	quat.i = vector.x;
-	quat.j = vector.y;
-	quat.k = vector.z;
+	quat.real = real;
+	quat.x = x;
+	quat.y = y;
+	quat.z = z;
 	return (quat);
 }

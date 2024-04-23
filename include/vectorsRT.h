@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:57:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 18:04:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ t_vec		create_vector(t_data *data, char *info);
 /*	Quaternions	*/
 /*	------------------------------------------------------------------	*/
 void		print_quat(t_quat quat);
-t_vec		quat_to_vector(t_quat quat);
-t_quat		vector_to_quat(t_vec vector);
+t_quat		quat(float real, float x, float y, float z);
 
 void		rotate_point(t_vec *point, t_quat *rotation);
 /*	------------------------------------------------------------------	*/
