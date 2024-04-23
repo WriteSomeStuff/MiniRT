@@ -1,9 +1,19 @@
+#ifdef __cplusplus
+    #define new __new__
+#endif
+
 #include <assert.h>
+#include "miniRT.h"
+#include "libft.h"
+#include "structsRT.h"
+#include "vectorsRT.h"
+
+#ifdef __cplusplus
+    #undef new
+#endif
 
 #include <iostream>
-
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
+#include "tests.h"
 
 // static void	troubleshoot_func(std::string str1, std::string str2, int& x, int& y, bool outcome, int xres, int yres)
 // {

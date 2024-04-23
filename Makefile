@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/23 15:57:10 by cschabra      ########   odam.nl          #
+#    Updated: 2024/04/23 17:14:48 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
 	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
-	c++ $(CFLAGS) -std=c++11 $(OBJECTS) $(T_OBJ) -o $(T_EXEC)
+	c++ $(CFLAGS) -I tests $(OBJECTS) $(T_OBJ) -o $(T_EXEC)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
