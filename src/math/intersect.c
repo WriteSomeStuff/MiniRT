@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 12:26:53 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/04/25 18:09:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 	t_vec	cyl_cross;
 	t_vec	tmp;
 	float	res;
+	float	res2;
 
 	rc_cross = cross_product(&c->orientation, &ray->direction);
 	cyl_cross.vec3 = c->center.vec3 - ray->origin.vec3;
@@ -37,7 +38,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 	tmp.x = dot(&rc_cross, &rc_cross);
 	tmp.y = 2.0f * dot(&rc_cross, &cyl_cross);
 	tmp.z = dot(&cyl_cross, &cyl_cross) - pow(c->radius, 2);
-	if (quadratic_equation(&tmp, &res) == true)
+	if (quadratic_equation(&tmp, &res, &res2) == true)
 	{
 		if (res > 0.0001 && res < col->distance)
 		{
@@ -106,6 +107,7 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 	t_vec	to_sphere;
 	t_vec	tmp;
 	float	res;
+	float	res2;
 
 	tmp.x = 1.0f;
 	while (s->object != INVALID)
@@ -113,7 +115,7 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 		to_sphere.vec3 = ray->origin.vec3 - s->center.vec3;
 		tmp.y = 2.0f * dot(&to_sphere, &ray->direction);
 		tmp.z = dot(&to_sphere, &to_sphere) - pow(s->radius, 2);
-		if (quadratic_equation(&tmp, &res) == true)
+		if (quadratic_equation(&tmp, &res, &res2) == true)
 		{
 			if (res > 0.0001 && res < col->distance)
 				update(ray, SPHERE, (void *)s, res);

@@ -7,4 +7,5 @@ int main()
 	quat_test();
 	test_reflection_result();
 	test_combine_colours();
+	test_quadratic_equation();
 }
