@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/03/31 22:17:56 by vincent       ########   odam.nl         */
+/*   Updated: 2024/04/23 14:22:41 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static void	assign_function_pointers(t_data *data)
 	data->f[SPHERE] = &init_sphere;
 }
 
+/**
+ * @brief highlighting function to track which object is where, background = -1, objects have a number
+ * 
+ * @param data 
+ */
 void	init_map(t_data *data)
 {
 	int16_t	**map;

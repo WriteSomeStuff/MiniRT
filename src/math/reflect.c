@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   quaternions_utils.c                                :+:    :+:            */
+/*   reflect.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/09 11:38:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:46:22 by cschabra      ########   odam.nl         */
+/*   Created: 2024/04/18 11:10:15 by vvan-der      #+#    #+#                 */
+/*   Updated: 2024/04/25 12:27:54 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "vectorsRT.h"
 
-void	print_quat(t_quat quat)
+t_vec	reflect(const t_vec *incoming, const t_vec *normal)
 {
-	printf("scalar: %f, i: %f, j: %f, k: %f\n", quat.scalar, quat.i, quat.j, quat.k);
-}
+	t_vec	outgoing;
+	t_quat	rotation;
 
-t_quat	quat(float real, float x, float y, float z)
-{
-	t_quat	quat;
-
-	quat.real = real;
-	quat.x = x;
-	quat.y = y;
-	quat.z = z;
-	return (quat);
+	outgoing.vec3 = incoming->vec3;
+	rotation = quat(0, normal->x, normal->y, normal->z);
+	rotation.real = angle(incoming, normal);
+	rotate_point(&outgoing, &rotation);
+	return (outgoing);
 }

@@ -3,6 +3,7 @@
 *.a
 .DS_Store
 miniRT
+tester
 .vscode
 *.dSYM
 obj

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/09 18:21:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 12:25:14 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_camera(t_data *data, char **info)
 	verify_info(data, info);
 	data->cam->viewpoint = create_vector(data, info[0]);
 	data->cam->orientation = create_vector(data, info[1]);
-	data->cam->orientation = normalize_vector(&data->cam->orientation);
+	data->cam->orientation = normalize_vector(data->cam->orientation);
 	data->cam->fov = a_to_float(data, info[2]);
 	data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
 }
@@ -63,7 +63,7 @@ void	init_cylinder(t_data *data, char **info)
 	verify_info(data, info);
 	data->cyls[i].center = create_vector(data, info[0]);
 	tmp = create_vector(data, info[1]);
-	data->cyls[i].orientation = normalize_vector(&tmp);
+	data->cyls[i].orientation = normalize_vector(tmp);
 	data->cyls[i].radius = a_to_float(data, info[2]) / 2.0f;
 	data->cyls[i].height = a_to_float(data, info[3]);
 	data->cyls[i].colour = create_vector(data, info[4]);
@@ -75,12 +75,6 @@ void	init_cylinder(t_data *data, char **info)
 	rgb_to_floats(&data->cyls[i].colour);
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
 	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
-	puts("top");
-	print_vector(cyl->top);
-	puts("base");
-	print_vector(cyl->base);
-	puts("center");
-	print_vector(cyl->center);
 	data->cyl_count++;
 }
 
@@ -100,7 +94,8 @@ void	init_plane(t_data *data, char **info)
 	data->planes[i].instance = object_count(data);
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
-	data->planes[i].orientation = normalize_vector(&data->planes[i].orientation);
+	data->planes[i].orientation = normalize_vector(data->planes[i].orientation);
+	data->planes[i].rev_norm.vec3 = data->planes[i].orientation.vec3 * -1;
 	data->plane_count++;
 }
 

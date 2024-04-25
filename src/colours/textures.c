@@ -6,23 +6,52 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/08 12:27:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 12:28:07 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-bool	checkerboard_tex(t_sphere *sphere, t_vec *loc)
+// void	translate(t_sphere *sphere, float *x, float *y)
+// {
+// 	(void)sphere;
+// 	*x = 100 + ((*x) * 100);
+// 	*y = 100 - ((*y) * 100);
+// 	printf("x: %f, y: %f\n", *x, *y);
+// }
+
+bool	b_or_w(float x, float y, float modulus)
+{
+	if ((fabs(fmod(x, modulus)) <= modulus / 2 && fabs(fmod(y, modulus)) <= modulus / 2) ||
+		(fabs(fmod(x, modulus)) > modulus / 2 && fabs(fmod(y, modulus)) > modulus / 2))
+		return (false);
+	return (true);
+}
+
+/* bool	checkerboard_tex(t_sphere *sphere, t_vec *loc)
 {
 	t_vec		sn;
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	factor = 5;
+	float		x = 0.0;
+	float		y = 0.0;
+	// float		z = 0.0;
+	uint32_t	factor = 3;
+	float		modulus = sphere->radius;
 
-	sn.vec3 = sphere->center.vec3 - loc->vec3;
-	x = fabs((sphere->radius + ((sn.x / 2) * sphere->radius)) * factor);
-	y = fabs((sphere->radius - (sphere->radius + (sn.y * sphere->radius))) * factor);
-	if ((x % 2 == 0 && y % 2 == 0) || (x % 2 == 1 && y % 2 == 1))
+	sn.vec3 = loc->vec3 - (sphere->center.vec3 - sphere->radius);
+	x = sn.x * factor;
+	y = sn.y * factor;
+	return (b_or_w(x, y, modulus));
+} */
+
+bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col)
+{
+	t_vec	ray;
+
+	ray.vec3 = sphere->center.vec3 - data->cam->viewpoint.vec3;
+	ray = normalize_vector(ray);
+	float th = radian_to_degree(angle(&col->surface_norm, &ray));
+	printf("%f\n", th);
+	if ((int)th % 2 == 0)
 		return (true);
 	return (false);
 }
@@ -40,7 +69,7 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, int x, int y)
 
 t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
 {
-	t_vec	dir;	
+	t_vec	dir;
 	float	x;
 	float	y;
 

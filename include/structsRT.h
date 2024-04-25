@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/08 16:11:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/23 17:16:35 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 typedef float	t_vec3 __attribute__ ((vector_size(16)));
 typedef float	t_vec4 __attribute__ ((vector_size(16)));
 
-typedef enum s_token		t_token;
 typedef struct s_point		t_point;
 typedef struct s_input		t_input;
 typedef union s_vec			t_vec;
@@ -37,7 +36,7 @@ typedef struct s_sphere		t_sphere;
 typedef struct s_window		t_window;
 typedef struct s_data		t_data;
 
-enum s_token
+typedef enum s_token
 {
 	CYLINDER,
 	PLANE,
@@ -46,7 +45,7 @@ enum s_token
 	CAMERA,
 	LIGHT,
 	INVALID
-};
+}	t_token;
 
 struct s_point
 {
@@ -173,6 +172,7 @@ struct s_plane
 {
 	t_vec			location;
 	t_vec			orientation;
+	t_vec			rev_norm;
 	t_vec			colour;
 	t_token			object;
 	uint32_t		amb_colour;
@@ -200,8 +200,9 @@ struct s_window
 
 struct s_data
 {
-	mlx_image_t		*image;
 	mlx_t			*mlx;
+	mlx_image_t		*highlight;
+	mlx_image_t		*scene;
 	t_input			*input;
 	t_ambient		*ambient;
 	t_camera		*cam;
