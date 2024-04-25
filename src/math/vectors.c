@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:56:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 14:34:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,27 @@ t_vec	normalize_vector(const t_vec vector)
 	return (norm);
 }
 
-float	q_sqrt(float num)
+// float	q_sqrt(float num)
+// {
+// 	t_magic	magic;
+
+// 	magic.y = num;
+// 	magic.i = 0x5F375A86 - (magic.i >> 1);
+// 	magic.y *= 1.5f - (num * 0.5f * magic.y * magic.y);
+// 	return (magic.y);
+// }
+
+t_vec	q_sqrt(t_vec vec)
 {
 	t_magic	magic;
+	float	num;
 
+	num = vec.x * vec.x + vec.y * vec.y + vec.z * vec.z;
 	magic.y = num;
 	magic.i = 0x5F375A86 - (magic.i >> 1);
 	magic.y *= 1.5f - (num * 0.5f * magic.y * magic.y);
-	return (magic.y);
+	vec.vec3 *= magic.y;
+	return (vec);
 }
 
 void	set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2)

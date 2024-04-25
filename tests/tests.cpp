@@ -1,6 +1,6 @@
 #include "tests.h"
 
-int main()
-{
-	// test_get_input();
-}
+// int main()
+// {
+// 	test_normalize_vector();
+// }

@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/25 12:37:53 by cschabra      ########   odam.nl          #
+#    Updated: 2024/04/25 13:54:18 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ CFILES	=	alloc.c \
 			vector_utils.c \
 
 TFILES	=	chey.cpp \
+			vector_tests.cpp \
 			vinny.cpp \
 			tests.cpp
 
