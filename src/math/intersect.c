@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/15 18:55:36 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 12:26:53 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	update(t_ray *ray, t_token type, void *obj, float distance)
 {
 	ray->col->hit = true;
 	ray->col->distance = distance;
-	ray->col->location = scale_vector(&ray->direction, distance);
+	ray->col->location.vec3 = ray->direction.vec3 * distance;
 	ray->col->location.vec3 += ray->origin.vec3;
 	ray->col->obj = obj;
 	ray->col->type = type;
@@ -43,7 +43,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 		{
 			t_vec to_center;
 
-			to_center = scale_vector(&ray->direction, res);
+			to_center.vec3 = ray->direction.vec3 * res;
 			to_center.vec3 += ray->origin.vec3;
 			to_center.vec3 = to_center.vec3 - c->center.vec3;
 			// puts("to center");

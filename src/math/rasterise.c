@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/14 14:42:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/09 13:48:06 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 12:27:06 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec	direction_to_xy(t_data *data, float x, float y)
 	t.z = 1;
 	t.x *= data->cam->fov_correction;
 	t.y *= data->cam->fov_correction;
-	return (normalize_vector(&t));
+	return (normalize_vector(t));
 }
 
 // t_vec	direction_to_xy(t_data *data, float x, float y)

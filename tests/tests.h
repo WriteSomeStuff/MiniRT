@@ -3,15 +3,16 @@
 
 #ifdef __cplusplus
     #define new __new__
+extern "C"
+{
 #endif
 
-#include <assert.h>
 #include "miniRT.h"
 
 #ifdef __cplusplus
     #undef new
+}
 #endif
-
 
 #include <iostream>
 #include <iomanip>
