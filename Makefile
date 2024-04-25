@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/25 12:37:53 by cschabra      ########   odam.nl          #
+#    Updated: 2024/04/25 15:18:09 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ CFILES	=	alloc.c \
 			vectors.c \
 			vector_utils.c \
 
-TFILES	=	chey.cpp \
+TFILES	=	quat_test.cpp \
 			vinny.cpp \
 			tests.cpp
 
