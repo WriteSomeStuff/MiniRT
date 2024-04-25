@@ -35,9 +35,3 @@ void	quat_test()
 	quat_result(vec(1, 1, 1), quat(degree_to_radian(10), 1, 0, 0), vec(1, 0.811, 1.158));
 	std::cout << std::endl;
 }
-
-// int main()
-// {
-// 	quat_test();
-
-// }
