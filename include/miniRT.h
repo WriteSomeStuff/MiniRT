@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/16 13:38:03 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 16:59:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
-uint32_t	ambient_colour(const t_vec *obj_colour, const t_vec *ambient);
-t_vec		reflection_result(const t_vec *c1, const t_vec *c2, float fraction);
-t_vec		combine_colours(const t_vec *c1, const t_vec *c2);
-uint32_t	percentage_to_rgba(const t_vec *f);
+uint32_t	ambient_colour(const t_vec obj_colour, const t_vec ambient);
+t_vec		reflection_result(const t_vec c1, const t_vec c2, float fraction);
+t_vec		combine_colours(const t_vec c1, const t_vec c2);
+uint32_t	percentage_to_rgba(const t_vec f);
+uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
 
 t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
 t_vec		plane_texture(t_plane *plane, t_vec *surface);

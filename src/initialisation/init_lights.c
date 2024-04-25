@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/03/26 16:56:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 17:09:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ void	obj_ambiance(t_data *d, t_cylinder *c, t_plane *p, t_sphere *s)
 	{
 		if (in->token == CYLINDER)
 		{
-			c->amb_colour = ambient_colour(&c->colour, &d->ambient->colour);
+			c->amb_colour = ambient_colour(c->colour, d->ambient->colour);
 			c++;
 		}
 		else if (in->token == PLANE)
 		{
-			p->amb_colour = ambient_colour(&p->colour, &d->ambient->colour);
+			p->amb_colour = ambient_colour(p->colour, d->ambient->colour);
 			p++;
 		}
 		else if (in->token == SPHERE)
 		{
-			s->amb_colour = ambient_colour(&s->colour, &d->ambient->colour);
+			s->amb_colour = ambient_colour(s->colour, d->ambient->colour);
 			s++;
 		}
 		in = in->next;
