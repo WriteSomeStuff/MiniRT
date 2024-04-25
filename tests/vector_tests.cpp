@@ -14,7 +14,7 @@ static bool	is_within(t_vec a, t_vec b)
 	return (false);
 }
 
-void	test_length(t_vec vector, float result)
+static void	test_length(t_vec vector, float result)
 {
 	if (diff(vector_length(vec(0, 0, 0), vector), result) <= PRECISION)
 		std::cout << GREEN << "[OK] ";
@@ -22,7 +22,7 @@ void	test_length(t_vec vector, float result)
 		std::cout << RED << "[FAIL] ";
 }
 
-void	test_normalize(t_vec vector, t_vec result)
+static void	test_normalize(t_vec vector, t_vec result)
 {
 	if (is_within(normalize_vector(vector), result) == true)
 		std::cout << GREEN << "[OK] ";
@@ -30,7 +30,7 @@ void	test_normalize(t_vec vector, t_vec result)
 		std::cout << RED << "[FAIL] ";
 }
 
-void	test_inv_sqrt(t_vec vector, t_vec result)
+static void	test_inv_sqrt(t_vec vector, t_vec result)
 {
 	t_vec	outcome;
 

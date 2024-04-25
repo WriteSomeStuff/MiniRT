@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/18 15:28:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 17:07:11 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 
-static uint32_t	pixel_colour(t_data *data, t_vec *clr, float product)
+uint32_t	pixel_colour(t_data *data, t_vec clr, float product)
 {
 	t_vec	amb;
 
-	amb = reflection_result(clr, &data->ambient->colour, 1);
+	amb = reflection_result(clr, data->ambient->colour, 1);
 	if (product < 0)
 	{
-		return (percentage_to_rgba(&amb));
+		return (percentage_to_rgba(amb));
 	}
 	else
 	{
-		*clr = reflection_result(clr, &data->light->colour, product);
-		*clr = combine_colours(&amb, clr);
-		percentage_to_rgba(clr);
+		clr = reflection_result(clr, data->light->colour, product);
+		clr = combine_colours(amb, clr);
 		return (percentage_to_rgba(clr));
 	}
 }
@@ -54,7 +53,7 @@ static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
 	clr = cylinder_texture(cyl, &col->location);
-	mlx_put_pixel(data->scene, x, y, pixel_colour(data, &clr, product));
+	mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
 	data->map[y][x] = cyl->instance;
 }
 
@@ -69,7 +68,7 @@ static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
 	clr = plane_texture(plane, &col->surface_norm);
-	mlx_put_pixel(data->scene, x, y, pixel_colour(data, &clr, product));
+	mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
 	data->map[y][x] = plane->instance;
 }
 
@@ -91,7 +90,7 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	// return ;
 	data->map[y][x] = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
-	mlx_put_pixel(data->scene, x, y, pixel_colour(data, &clr, product));
+	mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
 }
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
