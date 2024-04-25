@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 18:09:51 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/25 14:20:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool		quadratic_equation(const t_vec *vec, float *result);
 
 float		vector_length(const t_vec origin, const t_vec vector);
 t_vec		normalize_vector(const t_vec vector);
-float		q_sqrt(float num);
+t_vec		q_sqrt(t_vec vec);
 void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
 
 void		print_vector(t_vec vector);

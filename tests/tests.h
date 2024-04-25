@@ -19,5 +19,10 @@ extern "C"
 
 #define RED     "\033[31m"
 #define GREEN   "\033[32m"
+#define RESET	"\e[m"
+
+void	test_normalize_vector();
+void	test_vector_length();
+void	quat_test();
 
 #endif

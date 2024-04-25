@@ -18,7 +18,7 @@ static void	quat_result(t_vec vector, t_quat quat, t_vec result)
 		std::cout << RED << "[FAIL] ";
 }
 
-static void	quat_test()
+void	quat_test()
 {
 	std::cout << RESET << "Rotation test:\n";
 	quat_result(vec(0, 0, 1), quat(degree_to_radian(-60), 1, 0, 0), vec(0, 0.866, 0.5));
