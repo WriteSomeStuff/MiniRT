@@ -8,4 +8,5 @@ int main()
 	test_reflection_result();
 	test_combine_colours();
 	test_quadratic_equation();
+	parse_test();
 }
