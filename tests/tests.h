@@ -26,5 +26,6 @@ void	test_vector_length();
 void	quat_test();
 void	test_reflection_result();
 void	test_combine_colours();
+void	parse_test();
 
 #endif
