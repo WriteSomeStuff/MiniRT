@@ -6,13 +6,25 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 18:09:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/26 15:15:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /*	als we binnenin objects willen wordt de surface normal andersom	*/
+
+static bool	analyze_intersection(t_hit *col, float *a, float *b)
+{
+	if (*b < 0)
+		return (false);
+	if (*a < 0 && *b > 0.0001)
+	{
+		col->inside_obj = true;
+		*a = *b;
+	}
+	return (true);
+}
 
 static void	update(t_ray *ray, t_token type, void *obj, float distance)
 {
@@ -28,9 +40,9 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 {
 	t_vec	rc_cross;
 	t_vec	cyl_cross;
+	t_vec	to_center;
 	t_vec	tmp;
-	float	res;
-	float	res2;
+	float	res[2];
 
 	rc_cross = cross_product(&c->orientation, &ray->direction);
 	cyl_cross.vec3 = c->center.vec3 - ray->origin.vec3;
@@ -38,25 +50,13 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 	tmp.x = dot(&rc_cross, &rc_cross);
 	tmp.y = 2.0f * dot(&rc_cross, &cyl_cross);
 	tmp.z = dot(&cyl_cross, &cyl_cross) - pow(c->radius, 2);
-	if (quadratic_equation(&tmp, &res, &res2) == true)
+	if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
 	{
-		if (res > 0.0001 && res < col->distance)
+		if (analyze_intersection(col, &res[0], &res[1]) == true)
 		{
-			t_vec to_center;
-
-			to_center.vec3 = ray->direction.vec3 * res;
-			to_center.vec3 += ray->origin.vec3;
-			to_center.vec3 = to_center.vec3 - c->center.vec3;
-			// puts("to center");
-			// print_vector(to_center);
-			t_vec tmp;
-
-			tmp.vec3 = c->orientation.vec3;
-			float product = dot(&to_center, &c->orientation);
-			if (fabs(product) <= c->height)
-				update(ray, CYLINDER, (void *)c, res);
-			// if (dot(&col->location, &c->base) <= c->height / 2)
-			// check voor lengte van cylinder
+			to_center.vec3 = ray->direction.vec3 * res[0] + ray->origin.vec3 - c->center.vec3;
+			if (fabs(dot(&to_center, &c->orientation)) <= c->height)
+				update(ray, CYLINDER, (void *)c, res[0]);
 		}
 	}
 }
@@ -102,12 +102,12 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 	}
 }
 
+
 static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 {
 	t_vec	to_sphere;
 	t_vec	tmp;
-	float	res;
-	float	res2;
+	float	res[2];
 
 	tmp.x = 1.0f;
 	while (s->object != INVALID)
@@ -115,10 +115,10 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 		to_sphere.vec3 = ray->origin.vec3 - s->center.vec3;
 		tmp.y = 2.0f * dot(&to_sphere, &ray->direction);
 		tmp.z = dot(&to_sphere, &to_sphere) - pow(s->radius, 2);
-		if (quadratic_equation(&tmp, &res, &res2) == true)
+		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
 		{
-			if (res > 0.0001 && res < col->distance)
-				update(ray, SPHERE, (void *)s, res);
+			if (analyze_intersection(col, &res[0], &res[1]) == true)
+				update(ray, SPHERE, (void *)s, res[0]);
 		}
 		s++;
 	}

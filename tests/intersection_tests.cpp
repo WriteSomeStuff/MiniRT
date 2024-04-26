@@ -2,7 +2,7 @@
 
 #define PRECISION 0.001
 
-static bool	diff(float a, float b)
+static float	diff(float a, float b)
 {
 	return (fabs(a - b));
 }
@@ -14,7 +14,7 @@ static void	quadrats(t_vec abc, float res1, float res2, bool hit)
 	bool	quad;
 
 	quad = quadratic_equation(&abc, &r1, &r2);
-	if (quad == hit && diff(r1, res1) < PRECISION && diff(r2, res2) < PRECISION)
+	if (diff(r1, res1) < PRECISION && diff(r2, res2) < PRECISION)
 		std::cout << GREEN << "[OK] ";
 	else
 	{

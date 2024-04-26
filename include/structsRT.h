@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/23 17:16:35 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/26 14:48:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ union s_magic
 struct s_hit
 {
 	bool	hit;
+	bool	inside_obj;
 	t_token	type;
 	float	distance;
 	void	*obj;
