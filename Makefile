@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/04/25 18:10:00 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/04/29 13:11:56 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ CFILES	=	alloc.c \
 
 TFILES	=	colour_tests.cpp \
 			intersection_tests.cpp \
+			light_tests.cpp \
 			quat_test.cpp \
 			vector_tests.cpp \
 			tests.cpp \
@@ -86,7 +87,7 @@ $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
 	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
-	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) -lm -ldl -lglfw $(LIBS) -o $(T_EXEC)
+	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) -lm -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit $(LIBS) -o $(T_EXEC)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^

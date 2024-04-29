@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/06 15:04:00 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:55:34 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/04/29 13:20:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	invert_quat(t_quat *quat)
 	quat->j *= -1;
 }
 
-static t_vec	rotate(const t_quat *point, const t_quat *angle)
+static t_vec	turn(const t_quat *point, const t_quat *angle)
 {
 	t_quat	result;
 	t_quat	inv_angle;
@@ -50,11 +50,11 @@ static t_vec	rotate(const t_quat *point, const t_quat *angle)
 	return (vec(result.x, result.y, result.z));
 }
 
-void	rotate_point(t_vec *point, t_quat *rotation)
+void	rotate(t_vec *point, t_quat *rotation)
 {
 	t_quat	pt;
 
 	angle_to_vec(rotation, rotation->scalar);
 	pt = quat(1, point->x, point->y, point->z);
-	*point = rotate(&pt, rotation);
+	*point = turn(&pt, rotation);
 }

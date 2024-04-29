@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/26 14:48:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/29 12:55:46 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ struct s_cylinder
 	t_vec			base;
 	t_vec			top;
 	t_vec			orientation;
+	float			reflectivity;
 	float			radius;
 	float			height;
 	t_vec			colour;
@@ -175,6 +176,7 @@ struct s_plane
 	t_vec			orientation;
 	t_vec			rev_norm;
 	t_vec			colour;
+	float			reflectivity;
 	t_token			object;
 	uint32_t		amb_colour;
 	uint16_t		instance;
@@ -186,6 +188,7 @@ struct s_sphere
 	uint32_t		amb_colour;
 	t_vec			center;
 	float			radius;
+	float			reflectivity;
 	t_vec			colour;
 	t_token			object;
 	uint16_t		instance;

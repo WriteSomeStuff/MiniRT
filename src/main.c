@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/25 15:32:19 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/04/29 13:17:37 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int32_t	main(int32_t argc, char **argv)
 }
 
 
-// void	rotate_point(t_vec *pt, const t_vec *ang)
+// void	rotate(t_vec *pt, const t_vec *ang)
 // {
 // 	t_quat	point;
 // 	t_quat	angle;
