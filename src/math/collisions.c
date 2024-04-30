@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 17:07:11 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/30 18:01:12 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	t_vec		to_new;
 
 	cyl = (t_cylinder *)col->obj;
-	to_center.vec3 = col->location.vec3 - cyl->center.vec3;
-	product = dot(&to_center, &cyl->orientation);
-	// if (fabs(product) > fabs(vector_length(&cyl->center, &cyl->base)))
-	// {
-	// 	mlx_put_pixel(data->scene, x, y, 0x000000ff);
-	// 	return ;
-	// }
-	to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
-	set_vector(&col->surface_norm, &to_new, &col->location);
+	if (col->caps == false)
+	{
+		to_center.vec3 = col->location.vec3 - cyl->center.vec3;
+		product = dot(&to_center, &cyl->orientation);
+		to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
+		set_vector(&col->surface_norm, &to_new, &col->location);
+	}
 	set_vector(&light_dir, &col->location, &data->light->source);
 	product = dot(&light_dir, &col->surface_norm);
 	clr = cylinder_texture(cyl, &col->location);

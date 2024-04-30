@@ -26,14 +26,14 @@ void	parse_test()
 	for (int i = 0; i < test.cyl_count; i++)
 	{
 		std::cout << "base: "; print_vector(test.cyls[i].base);
+		std::cout << "top: "; print_vector(test.cyls[i].top);
 		std::cout << "center: "; print_vector(test.cyls[i].center);
-		std::cout << "center: "; print_vector(test.cyls[i].colour);
+		std::cout << "colour: "; print_vector(test.cyls[i].colour);
 		std::cout << "height: " << test.cyls[i].height << std::endl;
 		std::cout << "instance: " << test.cyls[i].instance << std::endl;
 		std::cout << "object t_token nr: " << test.cyls[i].object << std::endl;
 		std::cout << "orientation: "; print_vector(test.cyls[i].orientation);
 		std::cout << "radius: " << test.cyls[i].radius << std::endl;
-		std::cout << "top: "; print_vector(test.cyls[i].top);
 		if (test.cyls[i].tex)
 			std::cout << "Texture found!\n";
 		else

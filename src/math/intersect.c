@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/26 15:15:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/30 18:17:06 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,74 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 		if (analyze_intersection(col, &res[0], &res[1]) == true)
 		{
 			to_center.vec3 = ray->direction.vec3 * res[0] + ray->origin.vec3 - c->center.vec3;
-			if (fabs(dot(&to_center, &c->orientation)) <= c->height)
+			if (fabs(dot(&to_center, &c->orientation)) <= c->height / 2)
+			{
 				update(ray, CYLINDER, (void *)c, res[0]);
+				col->caps = false;
+			}
+		}
+	}
+}
+// merge below functions, double code
+void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c)
+{
+	t_vec	tmp_top;
+	t_vec	rev;
+	t_vec	hit_loc;
+	float	denom;
+	float	distance;
+
+	rev.vec3 = c->orientation.vec3 * -1;
+	denom = dot(&ray->direction, &rev);
+	tmp_top.vec3 = c->top.vec3 - ray->origin.vec3;
+	if (denom > 0.0001)
+	{
+		distance = dot(&tmp_top, &rev) / denom;
+		hit_loc.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
+		if (vector_length(hit_loc, c->top) <= c->radius)
+		{
+			if (distance > 0 && distance < col->distance)
+			{
+				update(ray, CYLINDER, (void *)c, distance);
+				col->surface_norm = c->orientation;
+				col->caps = true;
+			}
 		}
 	}
 }
 
-// static void	hit_caps(t_hit *col, t_ray *ray, const t_cylinder *c)
-// {
-	
-// }
+static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c)
+{
+	t_vec	tmp_bot;
+	t_vec	hit_loc;
+	float	denom;
+	float	distance;
+
+	denom = dot(&ray->direction, &c->orientation);
+	tmp_bot.vec3 = c->base.vec3 - ray->origin.vec3;
+	if (denom > 0.0001)
+	{
+		distance = dot(&tmp_bot, &c->orientation) / denom;
+		hit_loc.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
+		if (vector_length(hit_loc, c->base) <= c->radius)
+		{
+			if (distance > 0 && distance < col->distance)
+			{
+				update(ray, CYLINDER, (void *)c, distance);
+				col->surface_norm.vec3 = c->orientation.vec3 * -1;
+				col->caps = true;
+			}
+		}
+	}
+}
 
 void	intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c)
 {
 	while (c->object != INVALID)
 	{
 		hit_body(col, ray, c);
-		// hit_caps(col, ray, c);
+		hit_bot_cap(col, ray, c);
+		hit_top_cap(col, ray, c);
 		c++;
 	}
 }
