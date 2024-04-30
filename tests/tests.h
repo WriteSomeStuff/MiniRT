@@ -24,6 +24,7 @@ extern "C"
 void	test_normalize_vector();
 void	test_vector_length();
 void	quat_test();
+void	reflect_test();
 void	test_reflection_result();
 void	test_combine_colours();
 void	test_quadratic_equation();

@@ -34,7 +34,7 @@ static void	test_inv_sqrt(t_vec vector, t_vec result)
 {
 	t_vec	outcome;
 
-	outcome = q_sqrt(vector);
+	outcome = norm_vec(vector);
 	if (is_within(outcome, result) == true)
 		std::cout << GREEN << "[OK] ";
 	else

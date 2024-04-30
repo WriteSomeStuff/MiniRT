@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 18:08:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/04/29 13:28:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ bool		quadratic_equation(const t_vec *vec, float *low, float *high);
 
 float		vector_length(const t_vec origin, const t_vec vector);
 t_vec		normalize_vector(const t_vec vector);
-t_vec		q_sqrt(t_vec vec);
+float		inv_sqrt(float num);
+t_vec		norm_vec(t_vec vec);
 void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
 
 void		print_vector(t_vec vector);
@@ -40,7 +41,9 @@ t_vec		create_vector(t_data *data, char *info);
 void		print_quat(t_quat quat);
 t_quat		quat(float real, float x, float y, float z);
 
-void		rotate_point(t_vec *point, t_quat *rotation);
+void		rotate(t_vec *point, t_quat *rotation);
+
+t_vec		reflect(const t_vec incoming, const t_vec normal);
 /*	------------------------------------------------------------------	*/
 
 #endif
