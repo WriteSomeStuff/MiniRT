@@ -13,7 +13,7 @@ static void	reflect_result(t_vec in, t_vec norm, t_vec result)
 {
 	t_vec	res = reflect(in, norm);
 
-	if (check(reflect(in, norm), result) == true)
+	if (check(res, result) == true)
 		std::cout << GREEN << "[OK] ";
 	else
 	{

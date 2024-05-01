@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/29 13:17:37 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/01 18:53:16 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,15 @@ int32_t	main(int32_t argc, char **argv)
 		ft_putendl_fd("Error: incorrect argument count", STDERR_FILENO);
 		return (1);
 	}
-
 	ft_bzero(&data, sizeof(t_data));
 	initialise_window(&data);
 	read_file(&data, argv[1]);
+	print_vector(data.spheres->center);
+	// t_vec tmp = normalize_vector(vec(1, 1, 1));
+	rotate(&data.spheres->center, quat(angle(vec(0, 0, 1), data.cam->orientation), 0, 1, 0));
+	// rotate(&data.spheres->center, quat(angle(data.cam->orientation, vec(0, 0, 1)), 1, 0, 0));
+	// rotate(&data.spheres->center, quat(angle(data.cam->orientation, vec(0, 0, 1)), 0, 0, 1));
+	print_vector(data.spheres->center);
 	// uint32_t factor = 100;
 	// for (uint32_t x = 0; x < data.window->width; x++)
 	// {

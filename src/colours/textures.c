@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 12:28:07 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/01 17:33:39 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col)
 
 	ray.vec3 = sphere->center.vec3 - data->cam->viewpoint.vec3;
 	ray = normalize_vector(ray);
-	float th = radian_to_degree(angle(&col->surface_norm, &ray));
+	float th = radian_to_degree(angle(col->surface_norm, ray));
 	printf("%f\n", th);
 	if ((int)th % 2 == 0)
 		return (true);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/25 18:21:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/01 18:45:15 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ float	pytha_inverse(const float c, const float a)
 	return (sqrt(c * c - a * a));
 }
 
-float	angle(const t_vec *a, const t_vec *b)
+float	angle(const t_vec a, const t_vec b)
 {
+	printf("%f\n", dot(a, b));
+	printf("%f\n", acos(dot(a, b)));
 	return (acos(dot(a, b)));
 }
 

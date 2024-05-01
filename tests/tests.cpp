@@ -10,4 +10,5 @@ int main()
 	test_quadratic_equation();
 	parse_test();
 	reflect_test();
+	rotate_all_test();
 }

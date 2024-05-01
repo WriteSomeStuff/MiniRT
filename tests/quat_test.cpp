@@ -11,7 +11,7 @@ static bool	check(t_vec vector, t_vec result)
 
 static void	quat_result(t_vec vector, t_quat quat, t_vec result)
 {
-	rotate(&vector, &quat);
+	rotate(&vector, quat);
 	if (check(vector, result) == true)
 		std::cout << GREEN << "[OK] ";
 	else

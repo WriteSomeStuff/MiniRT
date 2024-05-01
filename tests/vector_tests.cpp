@@ -7,9 +7,9 @@ static float	diff(float a, float b)
 	return (fabs(a - b));
 }
 
-static bool	is_within(t_vec a, t_vec b)
+static bool	check(t_vec vector, t_vec result)
 {
-	if (fabs(a.x - b.x) < PRECISION && fabs(a.y - b.y) < PRECISION && fabs(a.z - b.z) < PRECISION)
+	if (fabs(vector.x - result.x) < PRECISION && fabs(vector.y - result.y) < PRECISION && fabs(vector.z - result.z) < PRECISION)
 		return (true);
 	return (false);
 }
@@ -24,7 +24,7 @@ static void	test_length(t_vec vector, float result)
 
 static void	test_normalize(t_vec vector, t_vec result)
 {
-	if (is_within(normalize_vector(vector), result) == true)
+	if (check(normalize_vector(vector), result) == true)
 		std::cout << GREEN << "[OK] ";
 	else
 		std::cout << RED << "[FAIL] ";
@@ -35,7 +35,7 @@ static void	test_inv_sqrt(t_vec vector, t_vec result)
 	t_vec	outcome;
 
 	outcome = norm_vec(vector);
-	if (is_within(outcome, result) == true)
+	if (check(outcome, result) == true)
 		std::cout << GREEN << "[OK] ";
 	else
 	{
@@ -76,5 +76,31 @@ void	test_vector_length()
 	test_length(vec(-1, -4, 5.5), 6.8738635);
 	test_length(vec(-1, 0, 100), 100.00499);
 	test_length(vec(4000, -7000, 9999), 12844.454);
+	std::cout << std::endl;
+}
+
+static void	rotation_result(t_vec og_cam, t_vec new_cam, t_vec result)
+{
+	t_vec	res;
+	
+	res = rotate_all_objects(og_cam, new_cam);
+	if (check(res, result) == true)
+		std::cout << GREEN << "[OK] ";
+	else
+	{
+		std::cout << RED << "[FAIL]\n";
+		std::cout << "expected: ";
+		print_vector(result);
+		std::cout << "received: ";
+		print_vector(res);
+	}
+}
+
+void	rotate_all_test()
+{
+	std::cout << RESET << "Vector for rotation test:\n";
+	rotation_result(vec(1, 0, 0), vec(0, 0, 1), vec(-1, 0, 1));
+	rotation_result(vec(-0.1, 0, 1), vec(0, 0, 1), vec(0.1, 0, 0));
+	rotation_result(vec(1, 1, -1), vec(0, 0, 1), vec(-1, -1, 2));
 	std::cout << std::endl;
 }
