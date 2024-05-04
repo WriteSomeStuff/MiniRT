@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/01 17:48:22 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/04 14:18:24 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 /*	------------------------------------------------------------------	*/
 t_vec		vec(float x, float y, float z);
 float		dot(const t_vec a, const t_vec b);
-t_vec		cross_product(const t_vec a, const t_vec b);
+t_vec		cross(const t_vec a, const t_vec b);
 
 float		angle(const t_vec a, const t_vec b);
 bool		quadratic_equation(const t_vec *vec, float *low, float *high);
@@ -44,7 +44,6 @@ t_quat		quat(float real, float x, float y, float z);
 void		rotate(t_vec *point, t_quat rotation);
 
 t_vec		reflect(const t_vec incoming, const t_vec normal);
-t_vec		rotate_all_objects(t_vec cam, t_vec direction);
 /*	------------------------------------------------------------------	*/
 
 #endif

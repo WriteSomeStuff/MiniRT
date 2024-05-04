@@ -79,28 +79,40 @@ void	test_vector_length()
 	std::cout << std::endl;
 }
 
-static void	rotation_result(t_vec og_cam, t_vec new_cam, t_vec result)
+static void	check_translated(t_vec moved, t_vec expected)
 {
-	t_vec	res;
-	
-	res = rotate_all_objects(og_cam, new_cam);
-	if (check(res, result) == true)
+	if (check(moved, expected) == true)
 		std::cout << GREEN << "[OK] ";
 	else
 	{
 		std::cout << RED << "[FAIL]\n";
 		std::cout << "expected: ";
-		print_vector(result);
+		print_vector(expected);
 		std::cout << "received: ";
-		print_vector(res);
+		print_vector(moved);
 	}
 }
 
 void	rotate_all_test()
 {
-	std::cout << RESET << "Vector for rotation test:\n";
-	rotation_result(vec(1, 0, 0), vec(0, 0, 1), vec(-1, 0, 1));
-	rotation_result(vec(-0.1, 0, 1), vec(0, 0, 1), vec(0.1, 0, 0));
-	rotation_result(vec(1, 1, -1), vec(0, 0, 1), vec(-1, -1, 2));
+	t_data	d1;
+	t_data	d2;
+	char	str1[] = "tests/scenes/cam1.rt";
+	char	str2[] = "tests/scenes/cam1_norm.rt";
+
+	ft_bzero(&d1, sizeof(t_data));
+	ft_bzero(&d2, sizeof(t_data));
+	std::cout << RESET << "Normalize scene test:\n";
+	read_file(&d1, str1);
+	read_file(&d2, str2);
+	normalize_scene(&d1);
+	check_translated(d1.cyls[0].center, d2.cyls[0].center);
+	check_translated(d1.cyls[0].base, d2.cyls[0].base);
+	check_translated(d1.cyls[0].top, d2.cyls[0].top);
+	check_translated(d1.cyls[0].orientation, d2.cyls[0].orientation);
+	check_translated(d1.light->source, d2.light->source);
+	check_translated(d1.planes[0].location, d2.planes[0].location);
+	check_translated(d1.planes[0].orientation, d2.planes[0].orientation);
+	check_translated(d1.spheres[0].center, d2.spheres[0].center);
 	std::cout << std::endl;
 }

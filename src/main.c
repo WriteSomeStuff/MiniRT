@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/01 18:53:16 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/04 13:43:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	initialise_window(t_data *data)
 	data->window = w;
 }
 
+
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data		data;
@@ -54,23 +55,7 @@ int32_t	main(int32_t argc, char **argv)
 	ft_bzero(&data, sizeof(t_data));
 	initialise_window(&data);
 	read_file(&data, argv[1]);
-	print_vector(data.spheres->center);
-	// t_vec tmp = normalize_vector(vec(1, 1, 1));
-	rotate(&data.spheres->center, quat(angle(vec(0, 0, 1), data.cam->orientation), 0, 1, 0));
-	// rotate(&data.spheres->center, quat(angle(data.cam->orientation, vec(0, 0, 1)), 1, 0, 0));
-	// rotate(&data.spheres->center, quat(angle(data.cam->orientation, vec(0, 0, 1)), 0, 0, 1));
-	print_vector(data.spheres->center);
-	// uint32_t factor = 100;
-	// for (uint32_t x = 0; x < data.window->width; x++)
-	// {
-	// 	for (uint32_t y = 0; y < data.window->height; y++)
-	// 	{
-	// 		if ((x % factor < factor / 2 && + y % factor < factor / 2) || (x % factor >= factor / 2 && y % factor >= factor / 2))
-	// 			mlx_put_pixel(data.scene, x, y, 0xffffffff);
-	// 		else
-	// 			mlx_put_pixel(data.scene, x, y, 0x0);
-	// 	}
-	// }
+	normalize_scene(&data);
 	draw_something(&data, 0, 0);
 
 	mlx_loop_hook(data.mlx, ft_hook, &data);
@@ -80,18 +65,3 @@ int32_t	main(int32_t argc, char **argv)
 	clean_up(&data);
 	return (0);
 }
-
-
-// void	rotate(t_vec *pt, const t_vec *ang)
-// {
-// 	t_quat	point;
-// 	t_quat	angle;
-// 	t_vec	new;
-
-// 	point = vector_to_quat(pt);
-// 	angle = vector_to_quat(ang);
-// 	point = rotate(&point, &angle);
-// 	new = quat_to_vector(&point);
-// 	print_vector(new);
-// 	printf("length: %f\n", vector_length(NULL, &new));
-// }

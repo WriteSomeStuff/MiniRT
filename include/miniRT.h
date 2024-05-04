@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/25 16:59:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/04 14:18:26 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-# define WIDTH 2650
-# define HEIGHT 1440
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PI 3.14159265359
 # define FOREVER 1
 
@@ -66,6 +66,8 @@ void		init_sphere(t_data *data, char **info);
 
 void		init_map(t_data *data);
 void		read_file(t_data *data, char *location);
+void		normalize_scene(t_data *data);
+void		translate_objects(t_data *data, t_vec amount);
 /*	------------------------------------------------------------------	*/
 
 /*	Math	*/

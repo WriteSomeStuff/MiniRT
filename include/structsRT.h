@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/04/30 18:19:52 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/04 14:23:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 typedef float	t_vec3 __attribute__ ((vector_size(16)));
 typedef float	t_vec4 __attribute__ ((vector_size(16)));
 
-typedef struct s_point		t_point;
 typedef struct s_input		t_input;
 typedef union s_vec			t_vec;
 typedef union s_quat		t_quat;
@@ -46,12 +45,6 @@ typedef enum s_token
 	LIGHT,
 	INVALID
 }	t_token;
-
-struct s_point
-{
-	float	x;
-	float	y;
-};
 
 struct s_input
 {

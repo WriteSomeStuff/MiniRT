@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/01 17:32:15 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/04 13:15:56 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 	t_vec	tmp;
 	float	res[2];
 
-	rc_cross = cross_product(c->orientation, ray->direction);
+	rc_cross = cross(c->orientation, ray->direction);
 	cyl_cross.vec3 = c->center.vec3 - ray->origin.vec3;
-	cyl_cross = cross_product(cyl_cross, c->orientation);
+	cyl_cross = cross(cyl_cross, c->orientation);
 	tmp.x = dot(rc_cross, rc_cross);
 	tmp.y = 2.0f * dot(rc_cross, cyl_cross);
 	tmp.z = dot(cyl_cross, cyl_cross) - pow(c->radius, 2);

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/01 16:56:41 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/04 13:15:56 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ float	dot(const t_vec a, const t_vec b)
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-t_vec	cross_product(const t_vec a, const t_vec b)
+t_vec	cross(const t_vec a, const t_vec b)
 {
 	t_vec	cross;
 
