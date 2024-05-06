@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/04 14:18:26 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/06 16:12:55 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
 
 /*	Hooks	*/
 /*	------------------------------------------------------------------	*/
-void		ft_hook(void *param);
+void		rt_keys(mlx_key_data_t keydata, void *param);
+void		rt_scroll(double xdelta, double ydelta, void *param);
 void		rt_resize(int32_t width, int32_t height, void *param);
 void		rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p);
 /*	------------------------------------------------------------------	*/

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/04 14:23:53 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/06 17:59:01 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ struct s_data
 	t_window		*window;
 	char			*line;
 	int16_t			**map;
+	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
 	int32_t			plane_count;

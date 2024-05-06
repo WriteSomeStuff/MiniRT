@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/06 13:17:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/06 18:05:14 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	normalize_scene(t_data *data)
 
 	translate_objects(data, data->cam->viewpoint);
 	t = cross(data->cam->orientation, vec(0, 0, 1));
+	t = normalize_vector(t);
 	turn = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
 	if (turn.real == 0)
 		return ;
