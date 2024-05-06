@@ -1,12 +1,8 @@
-- Test / maybe fix planes
-
-- Construct cylinder
+- Handle inside cylinder
 
 - add ray bounce support
 
 - Mouse, resize & key hook implementations
-
-- translation and rotation transformation to objects, lights and cameras
 
 - leaks & segfaults & norm 'n stuff
 
