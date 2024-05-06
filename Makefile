@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/04 13:56:01 by vincent       ########   odam.nl          #
+#    Updated: 2024/05/06 12:42:57 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,10 +87,10 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
-	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit $(LIBS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
 
 $(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
-	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) -lm -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit $(LIBS) -o $(T_EXEC)
+	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) -lm -ldl -lglfw $(LIBS) -o $(T_EXEC)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
