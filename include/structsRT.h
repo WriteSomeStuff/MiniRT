@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/06 15:21:34 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/07 13:08:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,7 @@ struct s_data
 	t_vec			**ray_directions;
 	char			*line;
 	int16_t			**map;
+	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
 	int32_t			plane_count;
