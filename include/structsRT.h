@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/07 13:08:48 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/07 18:02:03 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_input		t_input;
 typedef union s_vec			t_vec;
 typedef union s_quat		t_quat;
 typedef struct s_texture	t_texture;
+typedef struct s_pixel		t_pixel;
 typedef union s_magic		t_magic;
 typedef struct s_hit		t_hit;
 typedef struct s_ray		t_ray;
@@ -117,6 +118,7 @@ struct s_hit
 	float	distance;
 	void	*obj;
 	t_vec	location;
+	t_vec	colour;
 	t_vec	surface_norm;
 };
 
@@ -177,6 +179,13 @@ struct s_plane
 	mlx_texture_t	*tex;
 };
 
+struct s_pixel
+{
+	t_vec			ray_direction;
+	t_vec			colour;
+	int16_t			obj_num;
+};
+
 struct s_sphere
 {
 	uint32_t		amb_colour;
@@ -209,9 +218,8 @@ struct s_data
 	t_plane			*planes;
 	t_sphere		*spheres;
 	t_window		*window;
-	t_vec			**ray_directions;
+	t_pixel			**pix;
 	char			*line;
-	int16_t			**map;
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;

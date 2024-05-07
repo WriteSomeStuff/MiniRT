@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/06 16:17:36 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/07 17:31:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,21 @@ static void	highlight_object(t_data *data, int16_t num)
 			x = 0;
 			while (x < data->window->width)
 			{
-				if (data->map[y][x] != num)
+				if (data->pix[y][x].obj_num != num)
 				{
-					if (x < data->window->width - 2 && data->map[y][x + 2] == num)
+					if (x < data->window->width - 2 && data->pix[y][x + 2].obj_num == num)
 					{
 						mlx_put_pixel(data->highlight, x, y, clr);
 					}
-					if (x > 1 && data->map[y][x - 2] == num)
+					if (x > 1 && data->pix[y][x - 2].obj_num == num)
 					{
 						mlx_put_pixel(data->highlight, x, y, clr);
 					}
-					if (y < data->window->height - 2 && data->map[y + 2][x] == num)
+					if (y < data->window->height - 2 && data->pix[y + 2][x].obj_num == num)
 					{
 						mlx_put_pixel(data->highlight, x, y, clr);
 					}
-					if (y > 1 && data->map[y - 2][x] == num)
+					if (y > 1 && data->pix[y - 2][x].obj_num == num)
 					{
 						mlx_put_pixel(data->highlight, x, y, clr);
 					}
@@ -129,6 +129,6 @@ void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)
 		mlx_get_mouse_pos(data->mlx, &x, &y);
 		// if (selected == -2)
 		// 	unselect(data);
-		highlight_object(data, data->map[y][x]);
+		highlight_object(data, data->pix[y][x].obj_num);
 	}
 }

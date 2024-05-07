@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/06 16:12:55 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/07 13:22:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ float		radian_to_degree(const float radian);
 float		pythagoras(const float a, const float b);
 float		pytha_inverse(const float c, const float a);
 
-t_vec		direction_to_xy(t_data *data, float x, float y);
+void		allocate_rays(t_data *data, int32_t width, int32_t height);
+void		cast_rays(t_data *data);
 /*	------------------------------------------------------------------	*/
 
 /*	Utilities	*/

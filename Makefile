@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/06 12:42:57 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/05/07 18:10:03 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g3 #-fsanitize=address 
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -46,7 +46,6 @@ CFILES	=	alloc.c \
 			parsing.c \
 			quaternions_utils.c \
 			quaternions.c \
-			rasterise.c \
 			reflect.c \
 			textures.c \
 			translate_objects.c \

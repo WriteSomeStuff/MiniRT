@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 14:22:41 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/07 17:32:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,6 @@ static void	assign_function_pointers(t_data *data)
 	data->f[LIGHT] = &init_light;
 	data->f[PLANE] = &init_plane;
 	data->f[SPHERE] = &init_sphere;
-}
-
-/**
- * @brief highlighting function to track which object is where, background = -1, objects have a number
- * 
- * @param data 
- */
-void	init_map(t_data *data)
-{
-	int16_t	**map;
-	uint32_t	i;
-
-	i = 0;
-	if (data->map != NULL)
-		free_2d((void ***)&data->map);
-	map = rt_malloc(data, (data->window->height + 1) * sizeof(int16_t *));
-	data->map = map;
-	while (i < data->window->height)
-	{
-		map[i] = rt_malloc(data, data->window->width * sizeof(int16_t));
-		i++;
-	}
-	map[i] = NULL;
-	data->map = map;
 }
 
 void	read_file(t_data *data, char *location)

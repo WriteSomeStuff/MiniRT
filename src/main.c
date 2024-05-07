@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/07 13:09:09 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/07 13:27:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,17 @@ void	initialise_window(t_data *data)
 int32_t	main(int32_t argc, char **argv)
 {
 	t_data	data;
-	t_vec	tmp;
 
 	if (argc != 2)
 	{
 		ft_putendl_fd("Error: incorrect argument count", STDERR_FILENO);
 		return (1);
 	}
-	for (int i = 0; i < 10; i++)
-	{
-		tmp = random_vector();
-		print_vector(tmp);
-	}
-	exit(0);
 	ft_bzero(&data, sizeof(t_data));
 	initialise_window(&data);
 	read_file(&data, argv[1]);
 	normalize_scene(&data);
+	cast_rays(&data);
 	draw_something(&data, 0, 0);
 
 	mlx_key_hook(data.mlx, rt_keys, &data);

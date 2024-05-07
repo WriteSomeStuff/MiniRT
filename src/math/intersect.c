@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/04 13:15:56 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/07 18:12:48 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 	}
 }
 
-
 static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 {
 	t_vec	to_sphere;
@@ -177,7 +176,7 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 
 void find_closest_object(t_data *data, t_hit *col, t_ray *ray)
 {
-	ft_bzero(col, sizeof(t_hit));
+	// ft_bzero(col, sizeof(t_hit));
 	col->type = INVALID;
 	col->distance = FLT_MAX;
 	intersect_cylinders(col, ray, data->cyls);
