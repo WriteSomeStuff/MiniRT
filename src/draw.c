@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/07 18:11:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/10 15:47:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,22 +57,23 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	i = 0;
 	ft_bzero(ray->col, sizeof(t_hit));
 	ray->col->colour = vec(1, 1, 1);
-	ray->col->type = INVALID;
-	ray->col->distance = FLT_MAX;
 	while (sum(ray->col->colour) > THRESHHOLD)
 	{
+		ray->col->hit = false;
 		product = -1;
 		find_closest_object(data, ray->col, ray);
 		if (i == 0)
 		{
 			if (ray->col->hit == false)
 				return (false);
+			draw_collision(data, ray->col, x, y);
 			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 1);
 			i++;
 		}
-		if (ray->col->hit == false || ray->col->type == LIGHT)
+		else if (ray->col->hit == false || ray->col->type == LIGHT)
 			break ;
-		draw_collision(data, ray->col, x, y);
+		else
+			draw_collision(data, ray->col, x, y);
 		while (product < 0)
 		{
 			dir = random_vector();
@@ -80,8 +81,6 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		}
 		ray->direction = dir;
 		ray->origin = ray->col->location;
-		print_vector(ray->direction);
-		print_vector(dir);
 	}
 	if (ray->col->hit == false)
 	{
@@ -107,17 +106,12 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 			i = 0;
 			ray.origin.vec3 = data->cam->viewpoint.vec3;
 			ray.direction = data->pix[y][x].ray_direction;
-			while (i < NUM_RAYS)
+			while (i < NUM_RAYS && bouncy_castle(data, &ray, x, y) == true)
 			{
-				if (bouncy_castle(data, &ray, x, y) == false)
-				{
-					data->pix[y][x].colour = vec(0, 0, 0);
-					break ;
-				}
 				data->pix[y][x].colour.vec3 += col.colour.vec3;
 				i++;
 			}
-			data->pix[y][x].colour.vec3 /= NUM_RAYS;
+			data->pix[y][x].colour.vec3 /= (float)i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
 			x++;
 		}

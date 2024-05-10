@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/07 18:12:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/10 15:50:43 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	clr = cylinder_texture(cyl, &col->location);
 	// mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
 	data->pix[y][x].obj_num = cyl->instance;
-	col->colour = combine_colours(col->colour, clr);
+	col->colour = reflection_result(col->colour, clr, 1);
 }
 
 static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
@@ -69,7 +69,7 @@ static void	plane(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	clr = plane_texture(plane, &col->surface_norm);
 	// mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
 	data->pix[y][x].obj_num = plane->instance;
-	col->colour = combine_colours(col->colour, clr);
+	col->colour = reflection_result(col->colour, clr, 1);
 }
 
 static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
@@ -91,7 +91,7 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	data->pix[y][x].obj_num = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
 	// mlx_put_pixel(data->scene, x, y, pixel_colour(data, clr, product));
-	col->colour = combine_colours(col->colour, clr);
+	col->colour = reflection_result(col->colour, clr, 1);
 }
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
@@ -99,6 +99,5 @@ void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 	static void	(*ptr[3])(t_data *, t_hit *, uint32_t, uint32_t) = \
 		{&cylinder, &plane, &sphere};
 
-	puts("HI");
 	ptr[col->type](data, col, x, y);
 }
