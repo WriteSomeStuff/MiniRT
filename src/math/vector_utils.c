@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/06 17:00:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/10 18:09:41 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ t_vec	random_vector()
 	t_vec	random;
 
 	srand((int)clock());
-	random = vec(rand() % 2000 - 1000, rand() % 2000 - 1000, rand() % 1000);
+	random = vec(rand() % 2000 - 1000, rand() % 2000 - 1000, rand() % 2000 - 1000);
 	return (norm_vec(random));
 }
