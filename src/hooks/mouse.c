@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/07 17:31:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:09:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static void	highlight_object(t_data *data, int16_t num)
 		}
 	}
 	mlx_image_to_window(data->mlx, data->highlight, 0, 0);
-	// img_to_win(data);
 }
 
 void	rt_resize(int32_t width, int32_t height, void *param)

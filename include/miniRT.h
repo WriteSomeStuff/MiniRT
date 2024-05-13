@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/07 13:22:53 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 14:42:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		init_ambient(t_data *data, char **info);
 void		obj_ambiance(t_data *d, t_cylinder *c, t_plane *p, t_sphere *s);
 void		init_light(t_data *data, char **info);
 
+int16_t		object_count(t_data *data);
 void		init_objects(t_data *data, t_input *input);
 void		init_camera(t_data *data, char **info);
 void		init_cylinder(t_data *data, char **info);

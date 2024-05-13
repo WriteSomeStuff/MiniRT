@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/10 15:50:43 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:08:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 
-uint32_t	pixel_colour(t_data *data, t_vec clr, float product)
+/* uint32_t	pixel_colour(t_data *data, t_vec clr, float product)
 {
 	t_vec	amb;
 
@@ -29,7 +29,7 @@ uint32_t	pixel_colour(t_data *data, t_vec clr, float product)
 		clr = combine_colours(amb, clr);
 		return (percentage_to_rgba(clr));
 	}
-}
+} */
 
 static void	cylinder(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 {
@@ -96,8 +96,8 @@ static void	sphere(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 
 void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 {
-	static void	(*ptr[3])(t_data *, t_hit *, uint32_t, uint32_t) = \
-		{&cylinder, &plane, &sphere};
+	static void	(*ptr[4])(t_data *, t_hit *, uint32_t, uint32_t) = \
+		{&cylinder, &plane, &sphere, &sphere};
 
 	ptr[col->type](data, col, x, y);
 }

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/10 15:57:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:10:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int32_t	main(int32_t argc, char **argv)
 	draw_something(&data, 0, 0);
 
 	mlx_key_hook(data.mlx, rt_keys, &data);
-	mlx_mouse_hook(data.mlx, rt_select, &data);
+	// mlx_mouse_hook(data.mlx, rt_select, &data);
 	mlx_scroll_hook(data.mlx, rt_scroll, &data);
 	mlx_resize_hook(data.mlx, &rt_resize, (void *)&data);
 	mlx_loop(data.mlx);

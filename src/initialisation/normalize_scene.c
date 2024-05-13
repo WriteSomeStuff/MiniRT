@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/06 18:05:14 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/13 14:45:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ static void	rotate_cylinders(t_cylinder *c, t_quat rotation)
 		rotate(&c->orientation, rotation);
 		c++;
 	}
-}
-
-static void	rotate_lights(t_light *l, t_quat rotation)
-{
-	rotate(&l->source, rotation);
 }
 
 static void	rotate_planes(t_plane *p, t_quat rotation)
@@ -61,7 +56,6 @@ void	normalize_scene(t_data *data)
 	if (turn.real == 0)
 		return ;
 	rotate_cylinders(data->cyls, turn);
-	rotate_lights(data->light, turn);
 	rotate_planes(data->planes, turn);
 	rotate_spheres(data->spheres, turn);
 	data->cam->orientation = vec(0, 0, 1);

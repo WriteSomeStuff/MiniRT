@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/10 17:12:53 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/13 14:32:12 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
 		{
 			if (analyze_intersection(col, &res[0], &res[1]) == true)
-				update(ray, SPHERE, (void *)s, res[0]);
+				update(ray, s->object, (void *)s, res[0]);
 		}
 		s++;
 	}
@@ -176,7 +176,6 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 
 void find_closest_object(t_data *data, t_hit *col, t_ray *ray)
 {
-	// ft_bzero(col, sizeof(t_hit));
 	col->type = INVALID;
 	col->distance = FLT_MAX;
 	intersect_cylinders(col, ray, data->cyls);

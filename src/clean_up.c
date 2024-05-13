@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/07 17:24:04 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:00:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	clean_up(t_data *data)
 	clear_list(&data->input);
 	free(data->ambient);
 	free(data->cam);
-	free(data->light);
 	free_cylinders(&data->cyls, data->cyl_count);
 	free_planes(&data->planes, data->plane_count);
 	free_spheres(&data->spheres, data->sphere_count);

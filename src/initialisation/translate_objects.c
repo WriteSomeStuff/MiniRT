@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:51:55 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/04 14:26:39 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/13 14:46:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,4 @@ void	translate_objects(t_data *data, t_vec amount)
 	translate_cylinders(data->cyls, amount);
 	translate_planes(data->planes, amount);
 	translate_spheres(data->spheres, amount);
-	data->light->source.vec3 -= amount.vec3;
 }

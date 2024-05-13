@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/07 18:02:03 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:05:49 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ typedef enum s_token
 	CYLINDER,
 	PLANE,
 	SPHERE,
+	LIGHT,
 	AMBIENT,
 	CAMERA,
-	LIGHT,
 	INVALID
 }	t_token;
 
@@ -159,13 +159,6 @@ struct s_cylinder
 	mlx_texture_t	*tex;
 };
 
-struct s_light
-{
-	t_vec		source;
-	float		luminosity;
-	t_vec		colour;
-};
-
 struct s_plane
 {
 	t_vec			location;
@@ -214,7 +207,6 @@ struct s_data
 	t_ambient		*ambient;
 	t_camera		*cam;
 	t_cylinder		*cyls;
-	t_light			*light;
 	t_plane			*planes;
 	t_sphere		*spheres;
 	t_window		*window;
