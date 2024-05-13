@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 15:46:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 18:16:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,18 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		{
 			if (ray->col->hit == false)
 				return (false);
+			draw_collision(data, ray->col, x, y);
 			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 1);
 			i++;
 		}
-		else if (ray->col->hit == false || ray->col->type == LIGHT)
+		else if (ray->col->hit == false)
 			break ;
-		draw_collision(data, ray->col, x, y);
+		else
+			draw_collision(data, ray->col, x, y);
+		if (ray->col->type == LIGHT)
+			break ;
 		dir = random_vector();
-		while (fabs(radian_to_degree(angle(dir, ray->col->surface_norm))) > 90)
+		while (radian_to_degree(angle(dir, ray->col->surface_norm)) > 90)
 		{
 			dir = random_vector();
 		}
@@ -97,9 +101,10 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 		x = 0;
 		while (x < data->window->width)
 		{
-			i = 1;
+			i = 0;
 			ray.origin.vec3 = data->cam->viewpoint.vec3;
 			ray.direction = data->pix[y][x].ray_direction;
+			col.colour = vec(1, 1, 1);
 			while (i < NUM_RAYS && bouncy_castle(data, &ray, x, y) == true)
 			{
 				ray.origin.vec3 = data->cam->viewpoint.vec3;
@@ -108,7 +113,7 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 				col.colour = vec(1, 1, 1);
 				i++;
 			}
-			data->pix[y][x].colour.vec3 += col.colour.vec3;
+			// data->pix[y][x].colour.vec3 += col.colour.vec3;
 			if (i > 0)
 				data->pix[y][x].colour.vec3 /= (float)i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));

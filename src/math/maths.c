@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 14:03:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 18:19:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ float	pytha_inverse(const float c, const float a)
 {
 	return (sqrt(c * c - a * a));
 }
+
+/*	Returns R.A.D.I.A.N.S	*/
 
 float	angle(const t_vec a, const t_vec b)
 {
