@@ -6,16 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 15:21:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/13 15:46:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 1
-
-int count;
-int fn_count;
+#define NUM_RAYS 10
 
 static float	sum(t_vec vector)
 {
@@ -57,9 +54,6 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	int		i;
 
 	i = 0;
-	ft_bzero(ray->col, sizeof(t_hit));
-	ray->col->colour = vec(1, 1, 1);
-	fn_count++;
 	while (sum(ray->col->colour) > THRESHHOLD)
 	{
 		ray->col->hit = false;
@@ -68,26 +62,22 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		{
 			if (ray->col->hit == false)
 				return (false);
-			draw_collision(data, ray->col, x, y);
 			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 1);
 			i++;
 		}
 		else if (ray->col->hit == false || ray->col->type == LIGHT)
 			break ;
-		else
-			draw_collision(data, ray->col, x, y);
+		draw_collision(data, ray->col, x, y);
 		dir = random_vector();
 		while (fabs(radian_to_degree(angle(dir, ray->col->surface_norm))) > 90)
 		{
 			dir = random_vector();
-			count++;
 		}
 		ray->direction = dir;
 		ray->origin = ray->col->location;
 	}
 	if (ray->col->hit == false)
 	{
-		// first_hit = vec(0,0,0);
 		ray->col->colour = first_hit;
 	}
 	return (true);
@@ -99,30 +89,32 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 	t_hit	col;
 	int		i;
 
-	count = 0;
-	fn_count = 0;
 	ft_bzero(&ray, sizeof(t_ray));
-	ray.col = &col;
 	ft_bzero(&col, sizeof(t_hit));
+	ray.col = &col;
 	while (y < data->window->height)
 	{
 		x = 0;
 		while (x < data->window->width)
 		{
-			i = 0;
+			i = 1;
 			ray.origin.vec3 = data->cam->viewpoint.vec3;
 			ray.direction = data->pix[y][x].ray_direction;
 			while (i < NUM_RAYS && bouncy_castle(data, &ray, x, y) == true)
 			{
+				ray.origin.vec3 = data->cam->viewpoint.vec3;
+				ray.direction = data->pix[y][x].ray_direction;
 				data->pix[y][x].colour.vec3 += col.colour.vec3;
+				col.colour = vec(1, 1, 1);
 				i++;
 			}
-			data->pix[y][x].colour.vec3 /= (float)i;
+			data->pix[y][x].colour.vec3 += col.colour.vec3;
+			if (i > 0)
+				data->pix[y][x].colour.vec3 /= (float)i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
 			x++;
 		}
 		y++;
 	}
 	puts("DONE BITCHES");
-	printf("r_vec count: %d, fncount: %d\n", count, fn_count);
 }
