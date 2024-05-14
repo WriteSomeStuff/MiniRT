@@ -42,11 +42,11 @@ void	parse_test()
 	}
 	std::cout << "---------------------------------\n";
 
-	std::cout << "Light\n";
-	std::cout << "colour: "; print_vector(test.light->colour);
-	std::cout << "luminosity: " << test.light->luminosity << std::endl;
-	std::cout << "source: "; print_vector(test.light->source);
-	std::cout << "---------------------------------\n";
+	// std::cout << "Light\n";
+	// std::cout << "colour: "; print_vector(test.light->colour);
+	// std::cout << "luminosity: " << test.light->luminosity << std::endl;
+	// std::cout << "source: "; print_vector(test.light->source);
+	// std::cout << "---------------------------------\n";
 	
 	std::cout << "Planes\n";
 	std::cout << "plane count: " << test.plane_count << std::endl;

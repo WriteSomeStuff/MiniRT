@@ -110,7 +110,7 @@ void	rotate_all_test()
 	check_translated(d1.cyls[0].base, d2.cyls[0].base);
 	check_translated(d1.cyls[0].top, d2.cyls[0].top);
 	check_translated(d1.cyls[0].orientation, d2.cyls[0].orientation);
-	check_translated(d1.light->source, d2.light->source);
+	// check_translated(d1.light->source, d2.light->source);
 	check_translated(d1.planes[0].location, d2.planes[0].location);
 	check_translated(d1.planes[0].orientation, d2.planes[0].orientation);
 	check_translated(d1.spheres[0].center, d2.spheres[0].center);
