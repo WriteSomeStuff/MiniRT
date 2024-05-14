@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/14 15:03:32 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/14 17:12:31 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static float	sum(t_vec vector)
 bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	t_vec	first_hit;
-	t_vec	dir;
 	int		i;
 
 	i = 0;
@@ -74,12 +73,11 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		{
 			return (true);
 		}
-		dir = random_vector();
-		while (radian_to_degree(angle(dir, ray->col->surface_norm)) > 90)
+		ray->direction = random_vector();
+		if (dot(ray->direction, ray->col->surface_norm) < 0)
 		{
-			dir = random_vector();
+			ray->direction.vec3 *= -1;
 		}
-		ray->direction = dir;
 		ray->origin = ray->col->location;
 	}
 	if (ray->col->hit == false)
@@ -89,15 +87,19 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	return (true);
 }
 
+#include "time.h"
+
 void	draw_something(t_data *data, uint32_t x, uint32_t y)
 {
 	t_ray	ray;
 	t_hit	col;
 	float	i;
+	clock_t start, end;
 
 	ft_bzero(&ray, sizeof(t_ray));
 	ft_bzero(&col, sizeof(t_hit));
 	ray.col = &col;
+	start = clock();
 	while (y < data->window->height)
 	{
 		x = 0;
@@ -113,16 +115,9 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 				ray.origin.vec3 = data->cam->viewpoint.vec3;
 				ray.direction = data->pix[y][x].ray_direction;
 				data->pix[y][x].colour.vec3 += col.colour.vec3;
-				// if (col.type == LIGHT)
-				// {
-				// 	data->pix[y][x].colour = vec(1, 1, 1);
-				// 	print_vector(data->pix[y][x].colour);
-				// 	break ;
-				// }
 				col.colour = vec(1, 1, 1);
 				i += 0.2;
 			}
-			// data->pix[y][x].colour.vec3 += col.colour.vec3;
 			if (i >= 1)
 				data->pix[y][x].colour.vec3 /= i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
@@ -131,4 +126,6 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 		y++;
 	}
 	puts("DONE BITCHES");
+	end = clock();
+	printf("runtime: %ld ms\n", (end - start) / 1000);
 }
