@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 18:16:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/14 15:03:32 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 10
+#define NUM_RAYS 100
 
 static float	sum(t_vec vector)
 {
@@ -63,7 +63,7 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			if (ray->col->hit == false)
 				return (false);
 			draw_collision(data, ray->col, x, y);
-			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 1);
+			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 0.2);
 			i++;
 		}
 		else if (ray->col->hit == false)
@@ -71,7 +71,9 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		else
 			draw_collision(data, ray->col, x, y);
 		if (ray->col->type == LIGHT)
-			break ;
+		{
+			return (true);
+		}
 		dir = random_vector();
 		while (radian_to_degree(angle(dir, ray->col->surface_norm)) > 90)
 		{
@@ -91,7 +93,7 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 {
 	t_ray	ray;
 	t_hit	col;
-	int		i;
+	float	i;
 
 	ft_bzero(&ray, sizeof(t_ray));
 	ft_bzero(&col, sizeof(t_hit));
@@ -107,15 +109,22 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 			col.colour = vec(1, 1, 1);
 			while (i < NUM_RAYS && bouncy_castle(data, &ray, x, y) == true)
 			{
+				col.type = INVALID;
 				ray.origin.vec3 = data->cam->viewpoint.vec3;
 				ray.direction = data->pix[y][x].ray_direction;
 				data->pix[y][x].colour.vec3 += col.colour.vec3;
+				// if (col.type == LIGHT)
+				// {
+				// 	data->pix[y][x].colour = vec(1, 1, 1);
+				// 	print_vector(data->pix[y][x].colour);
+				// 	break ;
+				// }
 				col.colour = vec(1, 1, 1);
-				i++;
+				i += 0.2;
 			}
 			// data->pix[y][x].colour.vec3 += col.colour.vec3;
-			if (i > 0)
-				data->pix[y][x].colour.vec3 /= (float)i;
+			if (i >= 1)
+				data->pix[y][x].colour.vec3 /= i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
 			x++;
 		}

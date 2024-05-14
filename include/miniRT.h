@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/13 17:43:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/14 14:39:44 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define HEIGHT 1080
 # define PI 3.14159265359
 # define FOREVER 1
+# define OFFSET 0.0001f
+
 
 void		draw_something(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);

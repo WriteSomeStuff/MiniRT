@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 15:08:14 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/14 14:59:00 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void	draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y)
 		{&cylinder, &plane, &sphere, &sphere};
 
 	ptr[col->type](data, col, x, y);
+	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }
