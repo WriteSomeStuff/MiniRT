@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/14 17:12:31 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/14 18:20:30 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 				ray.direction = data->pix[y][x].ray_direction;
 				data->pix[y][x].colour.vec3 += col.colour.vec3;
 				col.colour = vec(1, 1, 1);
-				i += 0.2;
+				i += 1;
 			}
 			if (i >= 1)
 				data->pix[y][x].colour.vec3 /= i;
