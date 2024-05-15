@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/15 16:32:45 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/15 20:10:29 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	clean_up(t_data *data)
 	free_2d((void ***)&data->pix);
 	free(data->window);
 	free(data->line);
+	free(data->threads);
 	close(data->fd);
 	pthread_mutex_init(&data->mutex, NULL);
 	pthread_mutex_destroy(&data->mutex);

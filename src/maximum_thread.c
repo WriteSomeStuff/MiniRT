@@ -6,11 +6,13 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/15 17:52:49 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/15 20:09:11 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+long ts;
 
 static void	*start_thread(void *d)
 {
@@ -23,7 +25,7 @@ static void	*start_thread(void *d)
 	if (data->go == false)
 		return (NULL);
 	pthread_mutex_unlock(&data->mutex);
-	while (i < THREADS)
+	while (i < ts)
 	{
 		if (pthread_self()->__sig == data->threads[i]->__sig)
 		{
@@ -37,7 +39,7 @@ static void	*start_thread(void *d)
 
 static void	join_threads(t_data *data, pthread_t *threads, int num)
 {
-	if (num == THREADS)
+	if (num == ts)
 		data->go = true;
 	pthread_mutex_unlock(&data->mutex);
 	while (num >= 0)
@@ -63,13 +65,14 @@ void	init_threads(t_data *data)
 	pthread_t	*threads;
 
 	i = 0;
+	ts = sysconf(_SC_NPROCESSORS_ONLN);
 	start = get_time();
 	if (pthread_mutex_init(&data->mutex, NULL) == -1)
 		exit_error(data, "mutex failed to initialize");
-	threads = rt_calloc(data, THREADS * sizeof(pthread_t));
+	threads = rt_calloc(data, ts * sizeof(pthread_t));
 	data->threads = threads;
 	pthread_mutex_lock(&data->mutex);
-	while (i < THREADS)
+	while (i < ts)
 	{
 		if (pthread_create(&threads[i], NULL, &start_thread, data) == -1)
 		{
@@ -82,5 +85,5 @@ void	init_threads(t_data *data)
 	pthread_mutex_destroy(&data->mutex);
 	free_and_null((void **)&data->threads);
 	end = get_time();
-	printf("runtime: %ld ms\n", (end - start) / 1000);
+	printf("runtime: %.2f sec\n", (float)(end - start) / 1000000.0f);
 }

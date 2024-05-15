@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/15 17:53:11 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/15 20:10:58 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.0001f
-# define THREADS 4
+// # define THREADS 4
 
+extern long ts;
 
 void		draw_something(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);

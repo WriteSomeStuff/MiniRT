@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/15 17:40:23 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/15 20:08:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		{
 			return (true);
 		}
-		ray->direction = random_vector();
+		if (ray->col->type == PLANE)
+			ray->direction = reflect(ray->direction, ray->col->surface_norm);
+		else
+			ray->direction = random_vector();
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
 		{
 			ray->direction.vec3 *= -1;
 		}
 		ray->origin = ray->col->location;
+		ray->col->colour.vec3 *= 0.95f;
 	}
 	if (ray->col->hit == false)
 	{
@@ -93,6 +97,6 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
 			x++;
 		}
-		y += THREADS;
+		y += ts;
 	}
 }
