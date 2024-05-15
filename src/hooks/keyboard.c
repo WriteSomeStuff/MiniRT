@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/06 18:04:22 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/14 22:46:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	handle_pressed_object(t_data * data)
+/* void	handle_pressed_object(t_data * data)
 {
 	t_vec	t;
 	t_quat	turn;
@@ -22,7 +22,7 @@ void	handle_pressed_object(t_data * data)
 	t = normalize_vector(t);
 	turn = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
 	
-}
+} */
 
 void	handle_press(t_data *data, t_vec v, int32_t which)
 {

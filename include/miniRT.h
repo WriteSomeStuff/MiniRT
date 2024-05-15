@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/14 14:39:44 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/15 17:53:11 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 
 # include "libft.h"
 # include "get_next_line_rt.h"
+# include <pthread.h>
 # include "structsRT.h"
 # include "vectorsRT.h"
 # include <MLX42/MLX42.h>
 # include <float.h>
 # include <math.h>
 # include <sys/types.h>
+# include <sys/time.h>
 # include <sys/stat.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define PI 3.14159265359
+# define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.0001f
+# define THREADS 4
 
 
 void		draw_something(t_data *data, uint32_t x, uint32_t y);
@@ -68,10 +71,12 @@ void		init_cylinder(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
-void		init_map(t_data *data);
+// void		init_map(t_data *data);
 void		read_file(t_data *data, char *location);
 void		normalize_scene(t_data *data);
 void		translate_objects(t_data *data, t_vec amount);
+
+void		init_threads(t_data *data);
 /*	------------------------------------------------------------------	*/
 
 /*	Math	*/

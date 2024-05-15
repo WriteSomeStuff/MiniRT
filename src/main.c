@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/13 15:10:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/15 17:32:36 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int32_t	main(int32_t argc, char **argv)
 	read_file(&data, argv[1]);
 	normalize_scene(&data);
 	cast_rays(&data);
-	draw_something(&data, 0, 0);
+	init_threads(&data);
+	// draw_something(&data, 0, 0);
 
 	mlx_key_hook(data.mlx, rt_keys, &data);
 	// mlx_mouse_hook(data.mlx, rt_select, &data);

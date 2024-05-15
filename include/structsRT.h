@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/13 15:05:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/15 17:11:47 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,12 @@ struct s_window
 
 struct s_data
 {
+	char			*line;
 	mlx_t			*mlx;
 	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
+	pthread_t		*threads;
+	bool			go;
 	t_input			*input;
 	t_ambient		*ambient;
 	t_camera		*cam;
@@ -211,12 +214,12 @@ struct s_data
 	t_sphere		*spheres;
 	t_window		*window;
 	t_pixel			**pix;
-	char			*line;
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
 	int32_t			plane_count;
 	int32_t			sphere_count;
+	pthread_mutex_t	mutex;
 	void			(*f[6])(t_data *, char **);
 };
 

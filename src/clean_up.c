@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 15:00:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/15 16:32:45 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ void	clean_up(t_data *data)
 	free(data->window);
 	free(data->line);
 	close(data->fd);
+	pthread_mutex_init(&data->mutex, NULL);
+	pthread_mutex_destroy(&data->mutex);
 	// mlx_free_image(data->scene);
 	mlx_close_window(data->mlx);
 	mlx_terminate(data->mlx);

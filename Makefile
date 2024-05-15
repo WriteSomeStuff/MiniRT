@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/14 17:04:04 by cschabra      ########   odam.nl          #
+#    Updated: 2024/05/15 17:45:37 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g3 #-fsanitize=address 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g3 #-fsanitize=address
+LFLAGS	= -lm -ldl -lglfw
+OS		= $(shell uname)
 
 LIBFT	= 42lib/libft
 LIBMLX	= 42lib/MLX42
@@ -41,6 +43,7 @@ CFILES	=	alloc.c \
 			list_adding.c \
 			list_navigation.c \
 			maths.c \
+			maximum_thread.c \
 			mouse.c \
 			normalize_scene.c \
 			parsing.c \
@@ -71,6 +74,10 @@ OBJECTS	= $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:%.c=%.o)))
 M_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(MAIN:%.c=%.o)))
 T_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(TFILES:%.cpp=%.o)))
 
+ifeq ($(OS), Darwin)
+LFLAGS	+= -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit
+endif
+
 all: $(NAME)
 
 test: $(T_EXEC)
@@ -86,10 +93,10 @@ $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
 $(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
-	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) -lm -ldl -lglfw $(LIBS) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) $(LFLAGS) $(LIBS) -o $(NAME) 
 
 $(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
-	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) -lm -ldl -lglfw $(LIBS) -o $(T_EXEC)
+	c++ $(CFLAGS) -I $(T_DIR) -std=c++11 $(OBJECTS) $(T_OBJ) $(LFLAGS) $(LIBS) -o $(T_EXEC)
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
