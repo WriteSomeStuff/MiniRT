@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/16 15:43:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/16 17:55:15 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static float	sum(t_vec vector)
 	return (vector.x + vector.y + vector.z);
 }
 
-bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	t_vec	first_hit;
 	int		i;
@@ -34,7 +34,9 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		if (i == 0)
 		{
 			if (ray->col->hit == false)
+			{
 				return (false);
+			}
 			draw_collision(data, ray->col, x, y);
 			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 0.2);
 			i++;
@@ -44,24 +46,18 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		else
 			draw_collision(data, ray->col, x, y);
 		if (ray->col->type == LIGHT)
-		{
 			return (true);
-		}
 		if (ray->col->type == PLANE)
 			ray->direction = reflect(ray->direction, ray->col->surface_norm);
 		else
 			ray->direction = random_vector();
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
-		{
 			ray->direction.vec3 *= -1;
-		}
 		ray->origin = ray->col->location;
 		ray->col->colour.vec3 *= 0.95f;
 	}
 	if (ray->col->hit == false)
-	{
 		ray->col->colour = first_hit;
-	}
 	return (true);
 }
 
@@ -83,7 +79,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			ray.origin.vec3 = data->cam->viewpoint.vec3;
 			ray.direction = data->pix[y][x].ray_direction;
 			col.colour = vec(1, 1, 1);
-			while (i < NUM_RAYS && bouncy_castle(data, &ray, x, y) == true)
+			while (i < NUM_RAYS && multi_bounce(data, &ray, x, y) == true)
 			{
 				col.type = INVALID;
 				ray.origin.vec3 = data->cam->viewpoint.vec3;
