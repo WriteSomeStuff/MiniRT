@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/14 14:37:53 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/16 17:36:58 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,10 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
 		{
 			if (analyze_intersection(col, &res[0], &res[1]) == true)
-				update(ray, s->object, (void *)s, res[0]);
+			{
+				if (res[0] < col->distance)
+					update(ray, s->object, (void *)s, res[0]);
+			}
 		}
 		s++;
 	}
