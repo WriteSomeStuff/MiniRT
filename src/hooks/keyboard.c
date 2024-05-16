@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/14 22:46:54 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/16 14:49:07 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_press(t_data *data, t_vec v, int32_t which)
 	}
 	else
 		translate_objects(data, v);
-	draw_something(data, 0, 0);	
+	draw(data);
 }
 
 void	rt_keys(mlx_key_data_t keydata, void *param)

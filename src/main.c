@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/15 20:10:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/16 15:01:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	initialise_window(t_data *data)
 	t_window	*w;
 
 	w = rt_calloc(data, sizeof(t_window));
-	data->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	data->mlx = mlx_init(WIDTH, HEIGHT, "miniRT", false);
 	if (data->mlx == NULL)
 	{
 		exit_error(data, ": mlx failed to initialise");
@@ -56,13 +56,11 @@ int32_t	main(int32_t argc, char **argv)
 	read_file(&data, argv[1]);
 	normalize_scene(&data);
 	cast_rays(&data);
-	init_threads(&data);
-	// draw_something(&data, 0, 0);
+	draw(&data);
 
 	mlx_key_hook(data.mlx, rt_keys, &data);
-	// mlx_mouse_hook(data.mlx, rt_select, &data);
+	mlx_mouse_hook(data.mlx, rt_select, &data);
 	mlx_scroll_hook(data.mlx, rt_scroll, &data);
-	mlx_resize_hook(data.mlx, &rt_resize, (void *)&data);
 	mlx_loop(data.mlx);
 	clean_up(&data);
 	return (0);

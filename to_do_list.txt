@@ -1,8 +1,6 @@
 - Handle inside cylinder
 
-- add ray bounce support
-
-- Mouse, resize & key hook implementations
+- Mouse & key hook implementations
 
 - leaks & segfaults & norm 'n stuff
 
@@ -10,7 +8,6 @@
 {
 	- specular reflection
 	- textures
-	- rotation/translation in real time
 	- phong model
 	- extra shape(s)
 }

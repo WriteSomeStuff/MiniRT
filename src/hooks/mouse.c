@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/13 15:09:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/16 15:04:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	rt_scroll(double xdelta, double ydelta, void *param)
 		else
 			data->cam->fov += ydelta;
 		data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
-		draw_something(data, 0, 0);
+		cast_rays(data);
+		draw(data);
 		// recalculate rays instead of ^ 
 	}
 }
@@ -101,18 +102,6 @@ static void	highlight_object(t_data *data, int16_t num)
 		}
 	}
 	mlx_image_to_window(data->mlx, data->highlight, 0, 0);
-}
-
-void	rt_resize(int32_t width, int32_t height, void *param)
-{
-	t_data	*data;
-
-	printf("w: %d, h: %d\n", width, height);
-	data = (t_data *)param;	
-	data->window->width = width;
-	data->window->height = height;
-	data->window->aspect_ratio = (float)height / width;
-	draw_something(data, 0, 0);
 }
 
 void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)

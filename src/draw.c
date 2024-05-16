@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/15 20:08:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/16 15:43:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "miniRT.h"
 #include "pthread.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 100
+#define NUM_RAYS 10
 
 static float	sum(t_vec vector)
 {
@@ -65,7 +65,7 @@ bool	bouncy_castle(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	return (true);
 }
 
-void	draw_something(t_data *data, uint32_t x, uint32_t y)
+void	render(t_data *data, uint32_t x, uint32_t y)
 {
 	t_ray		ray;
 	t_hit		col;
@@ -95,6 +95,7 @@ void	draw_something(t_data *data, uint32_t x, uint32_t y)
 			if (i >= 1)
 				data->pix[y][x].colour.vec3 /= i;
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
+			data->pix[y][x].colour.vec3 *= 0;
 			x++;
 		}
 		y += ts;

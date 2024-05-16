@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/15 20:10:58 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/16 14:48:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 extern long ts;
 
-void		draw_something(t_data *data, uint32_t x, uint32_t y);
+void		render(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);
 
 /*	Colours	*/
@@ -43,7 +43,7 @@ uint32_t	ambient_colour(const t_vec obj_colour, const t_vec ambient);
 t_vec		reflection_result(const t_vec c1, const t_vec c2, float fraction);
 t_vec		combine_colours(const t_vec c1, const t_vec c2);
 uint32_t	percentage_to_rgba(const t_vec f);
-uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
+// uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
 
 t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
 t_vec		plane_texture(t_plane *plane, t_vec *surface);
@@ -54,7 +54,6 @@ t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
 /*	------------------------------------------------------------------	*/
 void		rt_keys(mlx_key_data_t keydata, void *param);
 void		rt_scroll(double xdelta, double ydelta, void *param);
-void		rt_resize(int32_t width, int32_t height, void *param);
 void		rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p);
 /*	------------------------------------------------------------------	*/
 
@@ -77,7 +76,7 @@ void		read_file(t_data *data, char *location);
 void		normalize_scene(t_data *data);
 void		translate_objects(t_data *data, t_vec amount);
 
-void		init_threads(t_data *data);
+void		draw(t_data *data);
 /*	------------------------------------------------------------------	*/
 
 /*	Math	*/
