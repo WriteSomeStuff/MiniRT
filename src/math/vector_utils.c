@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/10 18:09:41 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/16 17:53:08 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ t_vec	cross(const t_vec a, const t_vec b)
 	cross.y = a.z * b.x - a.x * b.z;
 	cross.z = a.x * b.y - a.y * b.x;
 	return (cross);
+}
+
+static long	get_time(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((long)time.tv_sec * 1000000 + time.tv_usec);
+}
+
+
+int	r_num()
+{
+	return (((int)get_time() * 747796405) % (360 * 360));
 }
 
 t_vec	random_vector()

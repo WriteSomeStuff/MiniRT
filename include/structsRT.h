@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/15 20:09:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/16 16:53:37 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ struct s_data
 	t_sphere		*spheres;
 	t_window		*window;
 	t_pixel			**pix;
+	t_vec			**directions;
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
