@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:25:25 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/16 17:47:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/19 12:01:02 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,28 @@ static t_vec	single_ray(t_data *data, float x, float y)
 	return (normalize_vector(t));
 }
 
-static void	allocate_directions(t_data *data)
-{
-	t_vec	**dirs;
-	int		i;
-	int		j;
+// static void	allocate_directions(t_data *data)
+// {
+// 	t_vec	**dirs;
+// 	int		i;
+// 	int		j;
 
-	i = 0;
-	dirs = rt_malloc(data, 361 * sizeof(t_vec *));
-	while (i < 360)
-	{
-		j = 0;
-		dirs[i] = rt_malloc(data, 360 * sizeof(t_vec));
-		while (j < 360)
-		{
-			dirs[i][j] = vec(0, 0, 1);
-			rotate(&dirs[i][j], quat());
-		}
-		i++;
-	}
-	dirs[i] = NULL;
-	data->directions = dirs;
-}
+// 	i = 0;
+// 	dirs = rt_malloc(data, 361 * sizeof(t_vec *));
+// 	while (i < 360)
+// 	{
+// 		j = 0;
+// 		dirs[i] = rt_malloc(data, 360 * sizeof(t_vec));
+// 		while (j < 360)
+// 		{
+// 			dirs[i][j] = vec(0, 0, 1);
+// 			rotate(&dirs[i][j], quat());
+// 		}
+// 		i++;
+// 	}
+// 	dirs[i] = NULL;
+// 	data->directions = dirs;
+// }
 
 static void	allocate_rays(t_data *data, int32_t width, int32_t height)
 {
@@ -73,8 +73,8 @@ void	cast_rays(t_data *data)
 
 	y = 0;
 	allocate_rays(data, data->window->width, data->window->height);
-	if (data->directions == NULL)
-		allocate_directions(data);
+	// if (data->directions == NULL)
+	// 	allocate_directions(data);
 	while (y < data->window->height)
 	{
 		x = 0;

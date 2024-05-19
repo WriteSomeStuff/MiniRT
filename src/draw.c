@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/16 17:55:15 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/19 14:13:31 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "miniRT.h"
 #include "pthread.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 10
+#define NUM_RAYS 100
 
 static float	sum(t_vec vector)
 {
@@ -51,6 +51,8 @@ static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			ray->direction = reflect(ray->direction, ray->col->surface_norm);
 		else
 			ray->direction = random_vector();
+		// if (dot(ray->direction, ray->col->surface_norm) == 0)
+		// 	ray->direction = norm_vec(vec(ray->direction.x - 1.0, ray->direction.y, ray->direction.z));
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
 			ray->direction.vec3 *= -1;
 		ray->origin = ray->col->location;

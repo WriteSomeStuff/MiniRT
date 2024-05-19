@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/16 22:39:16 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/19 13:59:31 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,32 @@ t_vec	cross(const t_vec a, const t_vec b)
 	return (cross);
 }
 
-static long	get_time(void)
+/*	Generates a pseudo-random number without using too much computational power	*/
+
+float	prn(uint32_t seed)
+{
+	uint32_t	result;
+
+	seed = seed * 747796405 + 2891336453;
+	result = ((seed >> ((seed >> 28) + 4)) ^ seed) * 277803737;
+	result = (result >> 22) ^ result;
+	return (((float)result / 4294967295.0) * 2.0 - 1.0);
+}
+
+static uint32_t	generate_seed(void)
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return ((long)time.tv_sec * 1000000 + time.tv_usec);
-}
-
-
-int	r_num()
-{
-	return (((int)get_time() * 747796405) % (360 * 360));
+	return ((uint32_t)time.tv_usec);
 }
 
 t_vec	random_vector()
 {
-	t_vec	random;
+	t_vec		random;
+	static uint32_t	seed = 0;
 
-	srand((int)clock());
-	random = vec(rand() % 2000 - 1000, rand() % 2000 - 1000, rand() % 2000 - 1000);
+	seed += generate_seed();
+	random = vec(prn(seed), prn(seed * 2), prn(seed * 3));
 	return (norm_vec(random));
 }
