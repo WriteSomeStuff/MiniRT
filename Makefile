@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/16 15:05:40 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/05/19 16:25:32 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ CFILES	=	alloc.c \
 			quaternions_utils.c \
 			quaternions.c \
 			reflect.c \
+			select.c \
 			textures.c \
 			translate_objects.c \
 			utils.c \

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/16 22:40:02 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/19 16:03:54 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ struct s_hit
 	bool	inside_obj;
 	bool	caps;
 	t_token	type;
+	int16_t	obj_num;
 	float	distance;
 	void	*obj;
 	t_vec	location;

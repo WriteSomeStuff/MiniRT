@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/19 12:01:57 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/19 16:11:22 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 extern long ts;
 
 void		render(t_data *data, uint32_t x, uint32_t y);
-void		draw_collision(t_data *data, t_hit *col, uint32_t x, uint32_t y);
+void		draw_collision(t_hit *col);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/

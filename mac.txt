@@ -1,1 +1,0 @@
--Ofast -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -pthread -lm -framework OpenGL -framework Cocoa -framework IOKit

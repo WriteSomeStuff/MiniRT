@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/16 15:04:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/19 16:25:17 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,84 +39,9 @@ void	rt_scroll(double xdelta, double ydelta, void *param)
 		else
 			data->cam->fov += ydelta;
 		data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
+		/* 	This seems bugged	*/
 		cast_rays(data);
 		draw(data);
-		// recalculate rays instead of ^ 
 	}
 }
 
-static void	highlight_object(t_data *data, int16_t num)
-{
-	static bool	highlighted = false;
-	uint32_t	x;
-	uint32_t	y;
-	long		clr;
-
-	y = 0;
-	if (highlighted == false)
-	{
-		clr = 0xffffffff;
-		highlighted = true;
-		while (y < data->window->height)
-		{
-			x = 0;
-			while (x < data->window->width)
-			{
-				if (data->pix[y][x].obj_num != num)
-				{
-					if (x < data->window->width - 2 && data->pix[y][x + 2].obj_num == num)
-					{
-						mlx_put_pixel(data->highlight, x, y, clr);
-					}
-					if (x > 1 && data->pix[y][x - 2].obj_num == num)
-					{
-						mlx_put_pixel(data->highlight, x, y, clr);
-					}
-					if (y < data->window->height - 2 && data->pix[y + 2][x].obj_num == num)
-					{
-						mlx_put_pixel(data->highlight, x, y, clr);
-					}
-					if (y > 1 && data->pix[y - 2][x].obj_num == num)
-					{
-						mlx_put_pixel(data->highlight, x, y, clr);
-					}
-				}
-				x++;
-			}
-			y++;
-		}
-	}
-	else
-	{
-		clr = 0x0;
-		highlighted = false;
-		while (y < data->window->height)
-		{
-			x = 0;
-			while (x < data->window->width)
-			{
-				mlx_put_pixel(data->highlight, x, y, clr);
-				x++;
-			}
-			y++;
-		}
-	}
-	mlx_image_to_window(data->mlx, data->highlight, 0, 0);
-}
-
-void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)
-{
-	t_data		*data;
-	int32_t		x;
-	int32_t		y;
-
-	(void)m;
-	data = (t_data *)p;
-	if (btn == MLX_MOUSE_BUTTON_LEFT && act == MLX_RELEASE)
-	{
-		mlx_get_mouse_pos(data->mlx, &x, &y);
-		// if (selected == -2)
-		// 	unselect(data);
-		highlight_object(data, data->pix[y][x].obj_num);
-	}
-}
