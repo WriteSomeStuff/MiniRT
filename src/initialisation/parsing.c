@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/13 14:45:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/20 12:45:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	alloc_objects(t_data *data, t_input *input)
 		obj[i] = count_objects(input, i);
 		i++;
 	}
-	if (obj[AMBIENT] != 1 || obj[CAMERA] != 1 || obj[LIGHT] != 1)
+	if (obj[AMBIENT] != 1 || obj[CAMERA] != 1 || obj[LIGHT] < 1)
 		exit_error(data, ": incompatible file input");
 	data->ambient = rt_calloc(data, obj[AMBIENT] * sizeof(t_ambient));
 	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));

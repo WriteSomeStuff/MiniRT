@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/19 16:11:22 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/20 14:22:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.0001f
+# define OFFSET 0.00001f
 // # define THREADS 4
 
 extern long ts;
