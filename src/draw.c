@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/20 19:18:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/21 16:37:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,21 @@
 #include "miniRT.h"
 #include "pthread.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 100
+#define NUM_RAYS 200
 
 static float	sum(t_vec vector)
 {
 	return (vector.x + vector.y + vector.z);
+}
+
+static void		clamp(t_vec *colour)
+{
+	if (colour->x > NUM_RAYS)
+		colour->x = NUM_RAYS;
+	if (colour->y > NUM_RAYS)
+		colour->y = NUM_RAYS;
+	if (colour->z > NUM_RAYS)
+		colour->z = NUM_RAYS;
 }
 
 static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
@@ -39,27 +49,30 @@ static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 				return (false);
 			}
 			draw_collision(ray->col);
+			first_hit = ray->col->colour;
 			data->pix[y][x].obj_num = ray->col->obj_num;
-			first_hit = reflection_result(ray->col->colour, data->ambient->colour, 0.2);
 			i++;
 		}
 		else if (ray->col->hit == false)
-			break ;
+		{
+			ray->col->colour = vec(0, 0, 0);
+			// return (true);
+		}
 		else
 			draw_collision(ray->col);
 		if (ray->col->type == LIGHT)
-			return (true);
-		if (ray->col->type == PLANE)
-			ray->direction = reflect(ray->direction, ray->col->surface_norm);
-		else
-			ray->direction = random_vector();
+			break ;
+		// if (ray->col->type == PLANE)
+		// 	ray->direction = reflect(ray->direction, ray->col->surface_norm);
+		// else
+		ray->direction = random_vector();
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
 			ray->direction.vec3 *= -1;
 		ray->origin = ray->col->location;
-		ray->col->colour.vec3 *= 0.95f;
+		// ray->col->colour.vec3 *= 0.95f;
 	}
-	if (ray->col->hit == false)
-		ray->col->colour = first_hit;
+	// clamp(&ray->col->colour);
+	ray->col->colour = combine_colours(reflection_result(first_hit, data->ambient->colour, 1), ray->col->colour);
 	return (true);
 }
 
@@ -91,7 +104,11 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 				i++;
 			}
 			if (i >= 1)
+			{
+				data->pix[y][x].colour.vec3 *= 4;
+				clamp(&data->pix[y][x].colour);
 				data->pix[y][x].colour.vec3 /= i;
+			}
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
 			data->pix[y][x].colour.vec3 *= 0;
 			x++;

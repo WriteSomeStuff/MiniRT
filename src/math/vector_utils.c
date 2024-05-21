@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/20 14:03:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/21 13:56:54 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_vec	cross(const t_vec a, const t_vec b)
 
 float	prn()
 {
-	uint32_t	result;
+	uint32_t		result;
 	static uint32_t	seed = 0;
 
 	seed = seed * 747796405 + 2891336453;
@@ -52,19 +52,10 @@ float	prn()
 	return (((float)result / 4294967295.0) * 2.0 - 1.0);
 }
 
-/* static uint32_t	generate_seed(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return ((uint32_t)time.tv_usec);
-} */
-
 t_vec	random_vector()
 {
 	t_vec		random;
 
-	// seed += generate_seed();
 	random = vec(prn(), prn(), prn());
 	return (norm_vec(random));
 }

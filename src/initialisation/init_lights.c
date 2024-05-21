@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/13 14:44:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/21 15:54:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	init_light(t_data *data, char **info)
 	data->spheres[i].center = create_vector(data, info[0]);
 	data->spheres[i].colour = create_vector(data, info[2]);
 	data->spheres[i].colour.vec3 *= a_to_float(data, info[1]);
+	// data->spheres[i].colour.vec3 *= 5;
 	if (info[3] != NULL)
 		data->spheres[i].radius = a_to_float(data, info[3]) / 2.0f;
 	data->spheres[i].object = LIGHT;
