@@ -77,6 +77,7 @@ T_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(TFILES:%.cpp=%.o)))
 
 ifeq ($(OS), Darwin)
 LFLAGS	+= -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit
+# LFLAGS	+= -lm -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit
 endif
 
 all: $(NAME)
