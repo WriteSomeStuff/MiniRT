@@ -105,7 +105,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			}
 			if (i >= 1)
 			{
-				data->pix[y][x].colour.vec3 *= 8;
+				data->pix[y][x].colour.vec3 *= 4;
 				clamp(&data->pix[y][x].colour);
 				data->pix[y][x].colour.vec3 /= i;
 			}
