@@ -14,7 +14,7 @@
 #include "miniRT.h"
 #include "pthread.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 200
+#define NUM_RAYS 100
 
 static float	sum(t_vec vector)
 {
@@ -105,7 +105,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			}
 			if (i >= 1)
 			{
-				data->pix[y][x].colour.vec3 *= 4;
+				data->pix[y][x].colour.vec3 *= 8;
 				clamp(&data->pix[y][x].colour);
 				data->pix[y][x].colour.vec3 /= i;
 			}
@@ -116,3 +116,40 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 		y += ts;
 	}
 }
+
+// void	add_arrays(t_data *data, uint32_t x, uint32_t y)
+// {
+// 	while (y < data->window->height)
+// 	{
+// 		x = 0;
+// 		while (x < data->window->width)
+// 		{
+// 			data->pix[y][x].colour.vec3 += data->pix[y][x].colour.vec3;
+// 			clamp(&data->pix[y][x].colour);
+// 			x++;
+// 		}
+// 		y += ts;
+// 	}
+// }
+
+// void	test_multiple_renders(t_data *data, uint32_t x, uint32_t y)
+// {
+// 	uint32_t	i = 0;
+
+// 	while (i < 10)
+// 	{	render(data, 0, y);
+// 		add_arrays(data, 0, y);
+// 		i++;
+// 	}
+// 	while (y < data->window->height)
+// 	{
+// 		x = 0;
+// 		while (x < data->window->width)
+// 		{
+// 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
+// 			data->pix[y][x].colour.vec3 *= 0;
+// 			x++;
+// 		}
+// 		y += ts;
+// 	}
+// }

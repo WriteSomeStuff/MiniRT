@@ -25,8 +25,8 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 750
+# define HEIGHT 750
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.00001f
@@ -34,6 +34,7 @@
 
 extern long ts;
 
+// void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
 void		render(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_hit *col);
 

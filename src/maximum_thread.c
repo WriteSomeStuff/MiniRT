@@ -30,6 +30,7 @@ static void	*start_thread(void *d)
 		if (pthread_self() == data->threads[i])
 		{
 			render(data, 0, i);
+			// test_multiple_renders(data, 0, i);
 			return (NULL);
 		}
 		i++;
