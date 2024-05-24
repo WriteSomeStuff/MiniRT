@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/24 15:21:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:38:59 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void		find_closest_object(t_data *data, t_hit *col, t_ray *ray);
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
 float		pythagoras(const float a, const float b);
-float		pytha_inverse(const float c, const float a);
 
 // void		allocate_rays(t_data *data, int32_t width, int32_t height);
 void		cast_rays(t_data *data);

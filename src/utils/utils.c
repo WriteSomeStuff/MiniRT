@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/05 18:26:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:40:21 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,6 @@
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void	print_vector(t_vec vector)
-{
-	printf("%lf %lf %lf\n", vector.x, vector.y, vector.z);
-}
-
-void	print_2d_charray(char **array)
-{
-	int	i;
-
-	i = 0;
-	printf("args: ");
-	if (array == NULL)
-	{
-		printf("%p\n", array);
-		return ;
-	}
-	printf("\n");
-	while (array[i] != NULL)
-	{
-		printf("String [%d]: %s\n", i, array[i]);
-		i++;
-	}
-	printf("String [%d]: %s\n", i, array[i]);
-}
-
-void	rgb_to_floats(t_vec *rgb)
-{
-	rgb->r /= 255;
-	rgb->g /= 255;
-	rgb->b /= 255;
 }
 
 t_vec	create_vector(t_data *data, char *info)

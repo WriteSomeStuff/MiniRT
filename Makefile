@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/19 16:25:32 by vincent       ########   odam.nl          #
+#    Updated: 2024/05/24 16:40:35 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,11 @@ CFILES	=	alloc.c \
 			cast_rays.c \
 			collisions.c \
 			colours.c \
-			cube.c \
 			clean_up.c \
+			DELETE_LATER.c \
 			draw.c \
+			exit.c \
+			free.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
 			keyboard.c \
@@ -69,7 +71,7 @@ MAIN	= 	main.c
 
 SRC_DIR	= src
 T_DIR	= tests
-OBJ_DIR	= $(SRC_DIR)/obj
+OBJ_DIR	= obj
 OBJECTS	= $(addprefix $(OBJ_DIR)/,$(notdir $(CFILES:%.c=%.o)))
 
 M_OBJ	= $(addprefix $(OBJ_DIR)/,$(notdir $(MAIN:%.c=%.o)))

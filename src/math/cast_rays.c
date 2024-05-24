@@ -6,21 +6,21 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:25:25 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/19 15:44:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 16:42:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static t_vec	single_ray(t_data *data, float x, float y)
+static t_vec	single_ray(t_data *d, float x, float y)
 {
 	t_vec	t;
 
-	t.x = (2 * ((x + 0.5f) / data->mlx->width) - 1);
-	t.y = (1 - (2 * ((y + 0.5f) / data->mlx->height))) * data->window->aspect_ratio;
+	t.x = (2 * ((x + 0.5f) / d->mlx->width) - 1);
+	t.y = (1 - (2 * ((y + 0.5f) / d->mlx->height))) * d->window->aspect_ratio;
 	t.z = 1;
-	t.x *= data->cam->fov_correction;
-	t.y *= data->cam->fov_correction;
+	t.x *= d->cam->fov_correction;
+	t.y *= d->cam->fov_correction;
 	return (normalize_vector(t));
 }
 

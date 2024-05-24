@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:16:03 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:43:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static float	sum(t_vec vector)
 	return (vector.x + vector.y + vector.z);
 }
 
-static void		clamp(t_vec *colour)
+static void	clamp(t_vec *colour)
 {
 	if (colour->x > NUM_RAYS)
 		colour->x = NUM_RAYS;

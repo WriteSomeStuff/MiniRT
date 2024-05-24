@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/19 16:11:14 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 16:42:42 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 static void	cylinder(t_hit *col)
 {
 	t_cylinder	*cyl;
-	// t_vec		light_dir;
 	t_vec		clr;
 	float		product;
 	t_vec		to_center;
@@ -50,8 +49,8 @@ static void	plane(t_hit *col)
 static void	sphere(t_hit *col)
 {
 	t_sphere	*sphere;
-	t_vec	clr;
-	
+	t_vec		clr;
+
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
