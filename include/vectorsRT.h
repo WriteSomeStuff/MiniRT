@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/19 13:54:11 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 21:17:49 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_vec		create_vector(t_data *data, char *info);
 /*	------------------------------------------------------------------	*/
 void		print_quat(t_quat quat);
 t_quat		quat(float real, float x, float y, float z);
-t_vec		random_vector();
+t_vec		random_vector(t_data *data, uint32_t id);
 
 void		rotate(t_vec *point, t_quat rotation);
 

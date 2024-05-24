@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 18:50:09 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/24 21:34:41 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	if (ray->col->hit == false)
 	{
 		data->pix[y][x].obj_num = -1;
+		data->pix[y][x].colour = vec(0, 0, 0);
 		return ;
 	}
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	data->pix[y][x].location = ray->col->location;
 	data->pix[y][x].surface_norm = ray->col->surface_norm;
 	data->pix[y][x].colour = ray->col->colour;
+	// printf("%d\n", ray->col->type);
 	draw_collision(ray->col);
 	data->pix[y][x].ambient = reflection_result(ray->col->colour, data->ambient->colour, 1);
 	while (sum(ray->col->colour) > THRESHHOLD)
@@ -75,8 +77,13 @@ void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		ray->direction = reflect(ray->direction, ray->col->surface_norm);
 		find_closest_object(data, ray->col, ray);
 		if (ray->col->hit == false)
-			return ;
+		{
+			data->pix[y][x].specular = vec(0, 0, 0);
+			break ;
+		}
 		draw_collision(ray->col);
+		if (ray->col->type == LIGHT)
+			break ;
 		ray->col->colour.vec3 *= 0.99f;
 	}
 	ray->col->reflectivity = 1 - ray->col->reflectivity;
@@ -121,7 +128,6 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 				while (i < NUM_RAYS)
 				{
 					ray.direction = data->pix[y][x].ray_direction;
-					col.type = INVALID;
 					multi_bounce(data, &ray, x, y, tmp);
 					i++;
 				}
