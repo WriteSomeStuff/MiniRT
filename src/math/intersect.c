@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/19 16:05:41 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 18:17:51 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 			if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
 			{
 				update(ray, CYLINDER, (void *)c, res[0]);
+				col->reflectivity = c->reflectivity;
 				col->caps = false;
 			}
 		}
@@ -84,6 +85,7 @@ void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c)
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
+				col->reflectivity = c->reflectivity;
 				col->surface_norm = c->orientation;
 				col->caps = true;
 			}
@@ -109,6 +111,7 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c)
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
+				col->reflectivity = c->reflectivity;
 				col->surface_norm.vec3 = c->orientation.vec3 * -1;
 				col->caps = true;
 			}
@@ -143,6 +146,7 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, PLANE, (void *)p, distance);
+				col->reflectivity = p->reflectivity;
 				if (denom > 0)
 					col->surface_norm = p->rev_norm;
 				else
@@ -170,7 +174,10 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 			if (analyze_intersection(col, &res[0], &res[1]) == true)
 			{
 				if (res[0] < col->distance)
+				{
 					update(ray, s->object, (void *)s, res[0]);
+					col->reflectivity = s->reflectivity;
+				}
 			}
 		}
 		s++;

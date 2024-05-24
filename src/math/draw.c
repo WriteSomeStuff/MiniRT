@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:43:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 18:50:09 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,56 +31,75 @@ static void	clamp(t_vec *colour)
 		colour->z = NUM_RAYS;
 }
 
-static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y, uint32_t tmp)
+static void	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y, uint32_t tmp)
 {
-	t_vec	first_hit;
-	int		i;
-
-	i = 0;
 	while (sum(ray->col->colour) > THRESHHOLD)
 	{
 		ray->col->hit = false;
-		find_closest_object(data, ray->col, ray);
-		if (i == 0)
-		{
-			if (ray->col->hit == false)
-			{
-				data->pix[y][x].obj_num = -1;
-				return (false);
-			}
-			draw_collision(ray->col);
-			first_hit = ray->col->colour;
-			data->pix[y][x].obj_num = ray->col->obj_num;
-			i++;
-		}
-		else if (ray->col->hit == false)
-		{
-			ray->col->colour = vec(0, 0, 0);
-			// return (true);
-		}
-		else
-			draw_collision(ray->col);
-		if (ray->col->type == LIGHT)
-			break ;
-		if (ray->col->type == PLANE)
-			ray->direction = reflect(ray->direction, ray->col->surface_norm);
-		else
-			ray->direction = random_vector(data, tmp);
+		ray->direction = random_vector(data, tmp);
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
 			ray->direction.vec3 *= -1;
+		find_closest_object(data, ray->col, ray);
+		if (ray->col->hit == false)
+		{
+			ray->col->colour = vec(0, 0, 0);
+			break ;
+		}
+		draw_collision(ray->col);
+		if (ray->col->type == LIGHT)
+			break ;
 		ray->origin = ray->col->location;
-		ray->col->colour.vec3 *= 0.95f;
+		ray->col->colour.vec3 *= 0.98f;
 	}
-	// clamp(&ray->col->colour);
-	ray->col->colour = combine_colours(reflection_result(first_hit, data->ambient->colour, 1), ray->col->colour);
-	return (true);
+	data->pix[y][x].diffuse.vec3 += ray->col->colour.vec3;
+	ray->col->colour = vec(1, 1, 1);
+}
+
+void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+{
+	find_closest_object(data, ray->col, ray);
+	if (ray->col->hit == false)
+	{
+		data->pix[y][x].obj_num = -1;
+		return ;
+	}
+	data->pix[y][x].obj_num = ray->col->obj_num;
+	data->pix[y][x].location = ray->col->location;
+	data->pix[y][x].surface_norm = ray->col->surface_norm;
+	data->pix[y][x].colour = ray->col->colour;
+	draw_collision(ray->col);
+	data->pix[y][x].ambient = reflection_result(ray->col->colour, data->ambient->colour, 1);
+	while (sum(ray->col->colour) > THRESHHOLD)
+	{
+		ray->origin = ray->col->location;
+		ray->direction = reflect(ray->direction, ray->col->surface_norm);
+		find_closest_object(data, ray->col, ray);
+		if (ray->col->hit == false)
+			return ;
+		draw_collision(ray->col);
+		ray->col->colour.vec3 *= 0.99f;
+	}
+	ray->col->reflectivity = 1 - ray->col->reflectivity;
+	data->pix[y][x].ambient.vec3 *= ray->col->reflectivity;
+	ray->origin = data->cam->viewpoint;
+	ray->direction = data->pix[y][x].ray_direction;
+	ray->col->colour = vec(1, 1, 1);
+}
+
+static uint32_t	total(t_vec c1, t_vec c2, t_vec c3)
+{
+	t_vec	res;
+
+	res = combine_colours(c1, c2);
+	res = combine_colours(res, c3);
+	return (percentage_to_rgba(res));
 }
 
 void	render(t_data *data, uint32_t x, uint32_t y)
 {
 	t_ray		ray;
 	t_hit		col;
-	float		i;
+	uint32_t	i;
 	uint32_t	tmp;
 
 	tmp = y;
@@ -93,46 +112,29 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 		while (x < data->window->width)
 		{
 			i = 0;
-			ray.origin.vec3 = data->cam->viewpoint.vec3;
+			ray.origin = data->cam->viewpoint;
 			ray.direction = data->pix[y][x].ray_direction;
 			col.colour = vec(1, 1, 1);
-			while (i < NUM_RAYS && multi_bounce(data, &ray, x, y, tmp) == true)
+			specular_light(data, &ray, x, y);
+			if (data->pix[y][x].obj_num != -1)
 			{
-				col.type = INVALID;
-				ray.origin.vec3 = data->cam->viewpoint.vec3;
-				ray.direction = data->pix[y][x].ray_direction;
-				data->pix[y][x].colour.vec3 += col.colour.vec3;
-				col.colour = vec(1, 1, 1);
-				i++;
+				while (i < NUM_RAYS)
+				{
+					ray.direction = data->pix[y][x].ray_direction;
+					col.type = INVALID;
+					multi_bounce(data, &ray, x, y, tmp);
+					i++;
+				}
+				data->pix[y][x].diffuse.vec3 *= 4;
+				clamp(&data->pix[y][x].diffuse);
+				data->pix[y][x].diffuse.vec3 /= NUM_RAYS;
 			}
-			if (i >= 1)
-			{
-				// data->pix[y][x].colour.vec3 *= 4;
-				clamp(&data->pix[y][x].colour);
-				data->pix[y][x].colour.vec3 /= i;
-			}
-			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
-			data->pix[y][x].colour.vec3 *= 0;
+			mlx_put_pixel(data->scene, x, y, total(data->pix[y][x].diffuse, data->pix[y][x].specular, data->pix[y][x].ambient));
 			x++;
 		}
 		y += data->num_threads;
 	}
 }
-
-// void	add_arrays(t_data *data, uint32_t x, uint32_t y)
-// {
-// 	while (y < data->window->height)
-// 	{
-// 		x = 0;
-// 		while (x < data->window->width)
-// 		{
-// 			data->pix[y][x].colour.vec3 += data->pix[y][x].colour.vec3;
-// 			clamp(&data->pix[y][x].colour);
-// 			x++;
-// 		}
-// 		y += ts;
-// 	}
-// }
 
 // void	test_multiple_renders(t_data *data, uint32_t x, uint32_t y)
 // {

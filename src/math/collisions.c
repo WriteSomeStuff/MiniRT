@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:42:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 18:19:06 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	cylinder(t_hit *col)
 	}
 	clr = cylinder_texture(cyl, &col->location);
 	col->obj_num = cyl->instance;
-	col->colour = reflection_result(col->colour, clr, 1);
+	col->colour = reflection_result(col->colour, clr, col->reflectivity);
 }
 
 static void	plane(t_hit *col)
@@ -43,7 +43,7 @@ static void	plane(t_hit *col)
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, &col->surface_norm);
 	col->obj_num = plane->instance;
-	col->colour = reflection_result(col->colour, clr, 1);
+	col->colour = reflection_result(col->colour, clr, col->reflectivity);
 }
 
 static void	sphere(t_hit *col)
@@ -55,7 +55,7 @@ static void	sphere(t_hit *col)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
-	col->colour = reflection_result(col->colour, clr, 1);
+	col->colour = reflection_result(col->colour, clr, col->reflectivity);
 }
 
 void	draw_collision(t_hit *col)

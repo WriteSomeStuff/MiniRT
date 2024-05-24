@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/24 15:22:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 18:34:20 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ struct s_hit
 	t_token	type;
 	int16_t	obj_num;
 	float	distance;
+	float	reflectivity;
 	void	*obj;
 	t_vec	location;
 	t_vec	colour;
@@ -176,7 +177,12 @@ struct s_plane
 struct s_pixel
 {
 	t_vec			ray_direction;
+	t_vec			ambient;
+	t_vec			diffuse;
+	t_vec			specular;
 	t_vec			colour;
+	t_vec			location;
+	t_vec			surface_norm;
 	int16_t			obj_num;
 };
 
