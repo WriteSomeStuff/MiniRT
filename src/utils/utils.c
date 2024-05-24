@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/04/05 18:26:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:46:54 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,14 @@ static void	check_texture(t_data *data, char *str)
 	close(fd);
 }
 
+static void	tex_and_reflect_check(t_data *data, char **info, int32_t x)
+{
+	if (ft_strncmp("r:", info[x], 2) == 0 && (info[x + 1] == NULL || ft_strncmp("t:", info[x + 1], 2)))
+		return ;
+	if (info[x + 1] == NULL && ft_strncmp("t:", info[x], 2) == 0)
+		check_texture(data, &info[x][2]);
+}
+
 void	verify_info(t_data *data, char **info)
 {
 	int32_t	x;
@@ -107,12 +115,7 @@ void	verify_info(t_data *data, char **info)
 	while (info[x] != NULL)
 	{
 		y = 0;
-		if (info[x + 1] == NULL && ft_strncmp("t:", info[x], 2) == 0)
-		{
-			check_texture(data, &info[x][2]);
-			break ;
-		}
-		while (info[x][y] != '\0')
+		while (info[x][y] != '\0' && info[x][y] != 'r')
 		{
 			if (info[x][y] == '-' && ft_isdigit(info[x][y + 1]) == false)
 				exit_error(data, ": no digit after \"-\" sign");
@@ -127,4 +130,5 @@ void	verify_info(t_data *data, char **info)
 		}
 		x++;
 	}
+	tex_and_reflect_check(data, info, --x);
 }

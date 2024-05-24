@@ -29,8 +29,8 @@ static double	ft_pow_fl(double number, int power)
 
 static int	check_input(t_data *data, const char *str, float *c, int i)
 {
-	if (ft_strlen(str) >= 9)
-		exit_error(data, ": number doesn't fit in a float");
+	if (ft_strlen(str) >= 9 || str[i] == '\0')
+		exit_error(data, ": invalid input number");
 	if (str[i] == '-')
 	{
 		*c *= -1;
