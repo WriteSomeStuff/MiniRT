@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/13 14:45:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:20:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	rotate_planes(t_plane *p, t_quat rotation)
 	{
 		rotate(&p->location, rotation);
 		rotate(&p->orientation, rotation);
+		p->rev_norm.vec3 = p->orientation.vec3 * -1;
 		p++;
 	}
 }
@@ -47,17 +48,17 @@ static void	rotate_spheres(t_sphere *s, t_quat rotation)
 void	normalize_scene(t_data *data)
 {
 	t_vec	t;
-	t_quat	turn;
+	t_quat	rotation;
 
 	translate_objects(data, data->cam->viewpoint);
 	t = cross(data->cam->orientation, vec(0, 0, 1));
 	t = normalize_vector(t);
-	turn = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
-	if (turn.real == 0)
+	rotation = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
+	if (rotation.real == 0)
 		return ;
-	rotate_cylinders(data->cyls, turn);
-	rotate_planes(data->planes, turn);
-	rotate_spheres(data->spheres, turn);
+	rotate_cylinders(data->cyls, rotation);
+	rotate_planes(data->planes, rotation);
+	rotate_spheres(data->spheres, rotation);
 	data->cam->orientation = vec(0, 0, 1);
 	data->cam->viewpoint = vec(0, 0, 0);
 }

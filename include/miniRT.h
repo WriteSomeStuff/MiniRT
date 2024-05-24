@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/20 14:22:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 15:21:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # define FOREVER 1
 # define OFFSET 0.00001f
 // # define THREADS 4
-
-extern long ts;
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
 void		render(t_data *data, uint32_t x, uint32_t y);

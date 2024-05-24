@@ -6,13 +6,11 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/16 14:48:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 15:23:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-long ts;
 
 static void	*start_thread(void *d)
 {
@@ -25,7 +23,7 @@ static void	*start_thread(void *d)
 	if (data->go == false)
 		return (NULL);
 	pthread_mutex_unlock(&data->mutex);
-	while (i < ts)
+	while (i < data->num_threads)
 	{
 		if (pthread_self() == data->threads[i])
 		{
@@ -38,9 +36,9 @@ static void	*start_thread(void *d)
 	return (NULL);
 }
 
-static void	join_threads(t_data *data, pthread_t *threads, int num)
+static void	join_threads(t_data *data, pthread_t *threads, uint32_t num)
 {
-	if (num == ts)
+	if (num == data->num_threads)
 		data->go = true;
 	pthread_mutex_unlock(&data->mutex);
 	while (num > 0)
@@ -61,28 +59,28 @@ static long	get_time(void)
 
 void	draw(t_data *data)
 {
-	int			i;
+	uint32_t	i;
 	long		start, end;
-	pthread_t	*threads;
 
 	i = 0;
-	ts = sysconf(_SC_NPROCESSORS_ONLN);
+	data->num_threads = sysconf(_SC_NPROCESSORS_ONLN);
+	if (data->num_threads > 16)
+		data->num_threads = 16;
 	start = get_time();
 	if (pthread_mutex_init(&data->mutex, NULL) == -1)
 		exit_error(data, "mutex failed to initialize");
-	threads = rt_calloc(data, ts * sizeof(pthread_t));
-	data->threads = threads;
+	data->threads = rt_calloc(data, data->num_threads * sizeof(pthread_t));
 	pthread_mutex_lock(&data->mutex);
-	while (i < ts)
+	while (i < data->num_threads)
 	{
-		if (pthread_create(&threads[i], NULL, &start_thread, data) == -1)
+		if (pthread_create(&data->threads[i], NULL, &start_thread, data) == -1)
 		{
-			join_threads(data, threads, i);
+			join_threads(data, data->threads, i);
 			exit_error(data, "failed to create thread");
 		}
 		i++;
 	}
-	join_threads(data, threads, i);
+	join_threads(data, data->threads, i);
 	pthread_mutex_destroy(&data->mutex);
 	free_and_null((void **)&data->threads);
 	end = get_time();

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/21 16:37:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 16:16:03 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "miniRT.h"
 #include "pthread.h"
 #define THRESHHOLD 0.1
-#define NUM_RAYS 100
+#define NUM_RAYS 10
 
 static float	sum(t_vec vector)
 {
@@ -31,7 +31,7 @@ static void		clamp(t_vec *colour)
 		colour->z = NUM_RAYS;
 }
 
-static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y, uint32_t tmp)
 {
 	t_vec	first_hit;
 	int		i;
@@ -62,14 +62,14 @@ static bool	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			draw_collision(ray->col);
 		if (ray->col->type == LIGHT)
 			break ;
-		// if (ray->col->type == PLANE)
-		// 	ray->direction = reflect(ray->direction, ray->col->surface_norm);
-		// else
-		ray->direction = random_vector();
+		if (ray->col->type == PLANE)
+			ray->direction = reflect(ray->direction, ray->col->surface_norm);
+		else
+			ray->direction = random_vector(data, tmp);
 		if (dot(ray->direction, ray->col->surface_norm) < 0)
 			ray->direction.vec3 *= -1;
 		ray->origin = ray->col->location;
-		// ray->col->colour.vec3 *= 0.95f;
+		ray->col->colour.vec3 *= 0.95f;
 	}
 	// clamp(&ray->col->colour);
 	ray->col->colour = combine_colours(reflection_result(first_hit, data->ambient->colour, 1), ray->col->colour);
@@ -81,7 +81,9 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 	t_ray		ray;
 	t_hit		col;
 	float		i;
+	uint32_t	tmp;
 
+	tmp = y;
 	ft_bzero(&ray, sizeof(t_ray));
 	ft_bzero(&col, sizeof(t_hit));
 	ray.col = &col;
@@ -94,7 +96,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			ray.origin.vec3 = data->cam->viewpoint.vec3;
 			ray.direction = data->pix[y][x].ray_direction;
 			col.colour = vec(1, 1, 1);
-			while (i < NUM_RAYS && multi_bounce(data, &ray, x, y) == true)
+			while (i < NUM_RAYS && multi_bounce(data, &ray, x, y, tmp) == true)
 			{
 				col.type = INVALID;
 				ray.origin.vec3 = data->cam->viewpoint.vec3;
@@ -105,7 +107,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			}
 			if (i >= 1)
 			{
-				data->pix[y][x].colour.vec3 *= 4;
+				// data->pix[y][x].colour.vec3 *= 4;
 				clamp(&data->pix[y][x].colour);
 				data->pix[y][x].colour.vec3 /= i;
 			}
@@ -113,7 +115,7 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			data->pix[y][x].colour.vec3 *= 0;
 			x++;
 		}
-		y += ts;
+		y += data->num_threads;
 	}
 }
 

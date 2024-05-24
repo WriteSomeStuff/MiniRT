@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/19 16:03:54 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 15:22:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ struct s_data
 	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
 	pthread_t		*threads;
+	uint32_t			num_threads;
+	uint32_t		seed[16];
 	bool			go;
 	t_input			*input;
 	t_ambient		*ambient;

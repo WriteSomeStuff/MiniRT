@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/16 14:49:07 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 15:39:20 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,31 @@
 	
 } */
 
-void	handle_press(t_data *data, t_vec v, int32_t which)
+static void	move(t_data *data, t_vec v)
 {
-	// if (data->selected != -1 && which == 1)
-	// {
-	// 	// rotation
-	// }
-	// else if (data->selected != -1 && which == 2)
-	// 	// translation
-	if (which == 1)
+	translate_objects(data, v);
+	draw(data);
+}
+
+static void	turn_camera(t_data *data, keys_t key)
+{
+	if (key == MLX_KEY_LEFT)
 	{
-		data->cam->orientation = v;
-		normalize_scene(data);
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), 0, 1, 0));
 	}
-	else
-		translate_objects(data, v);
+	if (key == MLX_KEY_RIGHT)
+	{
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), 0, 1, 0));
+	}
+	if (key == MLX_KEY_UP)
+	{
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), 1, 0, 0));
+	}
+	if (key == MLX_KEY_DOWN)
+	{
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), 1, 0, 0));
+	}
+	normalize_scene(data);
 	draw(data);
 }
 
@@ -49,20 +59,15 @@ void	rt_keys(mlx_key_data_t keydata, void *param)
 	data = (t_data *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit_success(data);
-	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_RELEASE)
-		handle_press(data, normalize_vector(vec(0, 0.25, 1)), 1);
-	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_RELEASE)
-		handle_press(data, normalize_vector(vec(0, -0.25, 1)), 1);
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_RELEASE)
-		handle_press(data, normalize_vector(vec(-0.25, 0, 1)), 1);
-	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_RELEASE)
-		handle_press(data, normalize_vector(vec(0.25, 0, 1)), 1);
+	if (keydata.key >= MLX_KEY_RIGHT && keydata.key <= MLX_KEY_UP && \
+		keydata.action == MLX_RELEASE)
+		turn_camera(data, keydata.key);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
-		handle_press(data, vec(0, 0, 0.25), 2);
+		move(data, vec(0, 0, 0.25));
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
-		handle_press(data, vec(0, 0, -0.25), 2);
+		move(data, vec(0, 0, -0.25));
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
-		handle_press(data, vec(-0.25, 0, 0), 2);
+		move(data, vec(-0.25, 0, 0));
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
-		handle_press(data, vec(0.25, 0, 0), 2);
+		move(data, vec(0.25, 0, 0));
 }
