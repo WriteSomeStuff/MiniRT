@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:25:25 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:42:17 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/24 17:06:51 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	allocate_rays(t_data *data, int32_t width, int32_t height)
 	pixels = rt_malloc(data, (height + 1) * sizeof(t_pixel *));
 	while (i < height)
 	{
-		pixels[i] = rt_malloc(data, width * sizeof(t_pixel));
+		pixels[i] = rt_calloc(data, width * sizeof(t_pixel));
 		i++;
 	}
 	pixels[i] = NULL;
