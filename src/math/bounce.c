@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 10:55:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/26 12:01:49 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/26 13:18:59 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].diffuse.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
-	// data->pix[y][x].diffuse.vec3 *= 2;
-	data->pix[y][x].diffuse.vec3 *= ray->col->reflectivity;
+	data->pix[y][x].diffuse.vec3 *= ray->col->absorption;
 	data->pix[y][x].diffuse.vec3 /= NUM_RAYS;
 }

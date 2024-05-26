@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 22:15:03 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/26 12:41:10 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	cylinder(t_hit *col)
 	}
 	clr = cylinder_texture(cyl, &col->location);
 	col->obj_num = cyl->instance;
-	col->colour = reflection_result(col->colour, clr, col->reflectivity);
+	col->colour = reflection_result(col->colour, clr, col->absorption);
 }
 
 static void	plane(t_hit *col)
@@ -43,7 +43,7 @@ static void	plane(t_hit *col)
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, &col->surface_norm);
 	col->obj_num = plane->instance;
-	col->colour = reflection_result(col->colour, clr, col->reflectivity);
+	col->colour = reflection_result(col->colour, clr, col->absorption);
 }
 
 static void	sphere(t_hit *col)
@@ -58,7 +58,7 @@ static void	sphere(t_hit *col)
 	if (col->type == LIGHT)
 		col->colour = reflection_result(col->colour, clr, 1);
 	else
-		col->colour = reflection_result(col->colour, clr, col->reflectivity);
+		col->colour = reflection_result(col->colour, clr, col->absorption);
 }
 
 void	draw_collision(t_hit *col)

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/26 11:53:17 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/26 12:14:28 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ struct s_hit
 	int16_t	obj_num;
 	float	distance;
 	float	reflectivity;
+	float	absorption;
 	void	*obj;
 	t_vec	location;
 	t_vec	colour;
@@ -213,7 +214,7 @@ struct s_data
 	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
 	pthread_t		*threads;
-	uint32_t			num_threads;
+	uint32_t		num_threads;
 	uint32_t		seed[16];
 	bool			go;
 	t_input			*input;
