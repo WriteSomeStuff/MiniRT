@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 21:27:14 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/24 22:15:03 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ static void	sphere(t_hit *col)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
-	col->colour = reflection_result(col->colour, clr, col->reflectivity);
+	if (col->type == LIGHT)
+		col->colour = reflection_result(col->colour, clr, 1);
+	else
+		col->colour = reflection_result(col->colour, clr, col->reflectivity);
 }
 
 void	draw_collision(t_hit *col)
@@ -63,8 +66,6 @@ void	draw_collision(t_hit *col)
 	static void	(*ptr[4])(t_hit *) = \
 		{&cylinder, &plane, &sphere, &sphere};
 
-	if (col->type > 3)
-		printf("collision type: %d\n", col->type);
 	ptr[col->type](col);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }

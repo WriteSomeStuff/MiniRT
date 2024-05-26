@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:38:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/26 11:23:56 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.00001f
-// # define THREADS 4
+# define THRESHHOLD 0.1
+# define NUM_RAYS 100
+# define MAX_BOUNCES 50
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
 void		render(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_hit *col);
+void		multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
+float		sum(t_vec vector);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/

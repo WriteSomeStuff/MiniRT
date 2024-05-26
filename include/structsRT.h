@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/24 18:34:20 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/26 11:53:17 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,8 @@ struct s_pixel
 	t_vec			ambient;
 	t_vec			diffuse;
 	t_vec			specular;
-	t_vec			colour;
+	t_vec			obj_clr;
+	t_vec			pix_clr;
 	t_vec			location;
 	t_vec			surface_norm;
 	int16_t			obj_num;

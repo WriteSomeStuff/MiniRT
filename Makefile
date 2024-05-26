@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/24 21:36:49 by vincent       ########   odam.nl          #
+#    Updated: 2024/05/26 12:06:55 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 
 CFILES	=	alloc.c \
 			a_to_float.c \
+			bounce.c \
 			cast_rays.c \
 			collisions.c \
 			colours.c \
@@ -58,6 +59,10 @@ CFILES	=	alloc.c \
 			utils.c \
 			vectors.c \
 			vector_utils.c \
+
+HFILES	=	miniRT.h \
+			structsRT.h \
+			vectorsRT.h \
 
 TFILES	=	colour_tests.cpp \
 			intersection_tests.cpp \
@@ -96,7 +101,7 @@ $(MLXOUT):
 $(LIBFT)/libft.a:
 	$(MAKE) -C $(LIBFT)
 
-$(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(M_OBJ)
+$(NAME): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(HFILES) $(M_OBJ)
 	$(CC) $(CFLAGS) $(OBJECTS) $(M_OBJ) $(LFLAGS) $(LIBS) -o $(NAME) 
 
 $(T_EXEC): $(LIBS) $(OBJ_DIR) $(OBJECTS) $(T_OBJ)
