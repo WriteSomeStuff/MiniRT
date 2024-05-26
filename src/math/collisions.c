@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/26 12:41:10 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/26 13:26:27 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 
-static void	cylinder(t_hit *col)
+static void	cylinder(t_hit *col, float reflection)
 {
 	t_cylinder	*cyl;
 	t_vec		clr;
@@ -32,10 +32,10 @@ static void	cylinder(t_hit *col)
 	}
 	clr = cylinder_texture(cyl, &col->location);
 	col->obj_num = cyl->instance;
-	col->colour = reflection_result(col->colour, clr, col->absorption);
+	col->colour = reflection_result(col->colour, clr, reflection);
 }
 
-static void	plane(t_hit *col)
+static void	plane(t_hit *col, float reflection)
 {
 	t_plane	*plane;
 	t_vec	clr;
@@ -43,10 +43,10 @@ static void	plane(t_hit *col)
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, &col->surface_norm);
 	col->obj_num = plane->instance;
-	col->colour = reflection_result(col->colour, clr, col->absorption);
+	col->colour = reflection_result(col->colour, clr, reflection);
 }
 
-static void	sphere(t_hit *col)
+static void	sphere(t_hit *col, float reflection)
 {
 	t_sphere	*sphere;
 	t_vec		clr;
@@ -58,14 +58,14 @@ static void	sphere(t_hit *col)
 	if (col->type == LIGHT)
 		col->colour = reflection_result(col->colour, clr, 1);
 	else
-		col->colour = reflection_result(col->colour, clr, col->absorption);
+		col->colour = reflection_result(col->colour, clr, reflection);
 }
 
-void	draw_collision(t_hit *col)
+void	draw_collision(t_hit *col, float reflection)
 {
-	static void	(*ptr[4])(t_hit *) = \
+	static void	(*ptr[4])(t_hit *, float) = \
 		{&cylinder, &plane, &sphere, &sphere};
 
-	ptr[col->type](col);
+	ptr[col->type](col, reflection);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }
