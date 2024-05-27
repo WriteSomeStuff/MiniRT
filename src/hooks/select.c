@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/19 16:25:08 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/19 16:31:42 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/27 11:36:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	highlight_object(t_data *data, int16_t num)
 	uint32_t	y;
 
 	y = 0;
-	if (num == -1 || num == data->selected)
+	if (data->selected != -1)
 	{
 		un_highlight(data);
 		return ;
