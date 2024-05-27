@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/26 14:09:37 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/27 17:36:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,24 @@
 
 static void	clamp(t_vec *colour)
 {
-	if (colour->x > NUM_RAYS)
-		colour->x = NUM_RAYS;
-	if (colour->y > NUM_RAYS)
-		colour->y = NUM_RAYS;
-	if (colour->z > NUM_RAYS)
-		colour->z = NUM_RAYS;
+	if (colour->x > 1.0f)
+	{
+		colour->y *= 1.0f / colour->x;
+		colour->z *= 1.0f / colour->x;
+		colour->x = 1.0f;
+	}
+	if (colour->y > 1.0f)
+	{
+		colour->x *= 1.0f / colour->x;
+		colour->z *= 1.0f / colour->x;
+		colour->y = 1.0f;
+	}
+	if (colour->z > 1.0f)
+	{
+		colour->x *= 1.0f / colour->x;
+		colour->y *= 1.0f / colour->x;
+		colour->z = 1.0f;
+	}
 }
 
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
@@ -36,7 +48,7 @@ static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
 			data->ambient->colour, ray->col->absorption);
 		if (ray->col->type == LIGHT)
-			ray->col->reflectivity = 1;
+			data->pix[y][x].pix_clr = ray->col->colour;
 	}
 	data->pix[y][x].obj_num = ray->col->obj_num;
 }
@@ -45,6 +57,8 @@ void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	uint32_t	bounces;
 
+	data->pix[y][x].specular = vec(0, 0, 0);
+	return ;
 	bounces = 0;
 	ray->col->colour.vec3 = vec(1, 1, 1).vec3 * ray->col->reflectivity;
 	while (bounces < MAX_BOUNCES && ray->col->hit == true && ray->col->type != LIGHT)
@@ -98,25 +112,31 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 		{
 			reset_ray(data, &ray, x, y);
 			initial_hit(data, &ray, x, y);
-			specular_light(data, &ray, x, y);
 			if (col.obj_num != -1 && col.type != LIGHT)
 			{
+				specular_light(data, &ray, x, y);
 				multi_bounce(data, &ray, x, y);
+				clamp(&data->pix[y][x].diffuse);
+				data->pix[y][x].pix_clr = total(data->pix[y][x].diffuse, \
+					data->pix[y][x].specular, data->pix[y][x].ambient);
+				// if (y % data->num_threads == 0)
+				// {
+				// 	static int i = 0;
+				// 	puts("diffuse");
+				// 	print_vector(data->pix[y][x].diffuse);
+				// 	puts("colour");
+				// 	print_vector(data->pix[y][x].pix_clr);
+				// 	puts("specular");
+				// 	print_vector(data->pix[y][x].specular);
+				// 	puts("ambient");
+				// 	print_vector(data->pix[y][x].ambient);
+				// 	i++;
+				// 	if (i == 10)
+				// 		exit(0);
+				// }
 			}
-			clamp(&data->pix[y][x].diffuse);
-			data->pix[y][x].pix_clr = total(data->pix[y][x].diffuse, \
-				data->pix[y][x].specular, data->pix[y][x].ambient);
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
-			// if (x == y && x % 10 == 0)
-			// {
-			// 	puts("colour");
-			// 	puts("specular");
-			// 	print_vector(data->pix[y][x].specular);
-			// 	puts("diffuse");
-			// 	print_vector(data->pix[y][x].diffuse);
-			// 	puts("ambient");
-			// 	print_vector(data->pix[y][x].ambient);
-			// }
+			data->pix[y][x].pix_clr.vec3 *= 0;
 			x++;
 		}
 		y += data->num_threads;

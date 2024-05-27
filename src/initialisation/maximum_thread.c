@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/24 15:23:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/27 17:29:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static void	*start_thread(void *d)
 	data = (t_data *)d;
 	pthread_mutex_lock(&data->mutex);
 	if (data->go == false)
+	{
+		pthread_mutex_unlock(&data->mutex);
 		return (NULL);
+	}
 	pthread_mutex_unlock(&data->mutex);
 	while (i < data->num_threads)
 	{

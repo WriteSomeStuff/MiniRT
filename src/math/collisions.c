@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/26 13:26:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/27 17:39:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void	draw_collision(t_hit *col, float reflection)
 	static void	(*ptr[4])(t_hit *, float) = \
 		{&cylinder, &plane, &sphere, &sphere};
 
+	if (col->hit == false)
+	{
+		col->colour = vec(0, 0, 0);
+		return ;
+	}
 	ptr[col->type](col, reflection);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }

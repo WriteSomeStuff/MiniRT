@@ -6,16 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/26 12:07:36 by vincent       ########   odam.nl          #
+#    Updated: 2024/05/27 17:07:25 by vvan-der      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
-
-#-L"/opt/homebrew/Cellar/glfw/3.3.8/lib/" -framework OpenGL -framework Cocoa -framework IOKit
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -pthread $(HEADERS) -g3 #-fsanitize=address  #-Ofast -flto 
+CFLAGS	= -Wall -Wextra -Werror -pthread $(HEADERS) -g3 #-fsanitize=thread  #-Ofast -flto 
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 

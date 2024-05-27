@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 10:55:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/26 14:08:24 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/27 17:13:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,12 @@ static void	setup(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 {
 	ray->origin = ray->col->location;
-	ray->col->hit = false;
 	ray->direction.vec3 = random_vector(data, id).vec3 + ray->col->surface_norm.vec3;
 	ray->direction = norm_vec(ray->direction);
 	if (dot(ray->direction, ray->col->surface_norm) < 0)
 		ray->direction.vec3 *= -1;
 	find_closest_object(data, ray->col, ray);
-	if (ray->col->hit == true)
-	{
-		draw_collision(ray->col, ray->col->absorption);
-		ray->col->colour.vec3 *= 0.98f;
-	}
-	else
-		ray->col->colour = vec(0, 0, 0);
+	draw_collision(ray->col, ray->col->absorption);
 }
 
 void	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
@@ -64,6 +57,5 @@ void	multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].diffuse.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
-	data->pix[y][x].diffuse.vec3 *= 4;
 	data->pix[y][x].diffuse.vec3 /= NUM_RAYS;
 }
