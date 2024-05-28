@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/27 17:36:30 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 11:28:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	uint32_t	bounces;
 
-	data->pix[y][x].specular = vec(0, 0, 0);
-	return ;
+	// data->pix[y][x].specular = vec(0, 0, 0);
+	// return ;
 	bounces = 0;
 	ray->col->colour.vec3 = vec(1, 1, 1).vec3 * ray->col->reflectivity;
 	while (bounces < MAX_BOUNCES && ray->col->hit == true && ray->col->type != LIGHT)

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/01 17:33:39 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:52:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,38 @@ t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
 	return (pixel_to_clrvec(cyl->tex, (int)x * 4, (int)y * 4));
 }
 
-t_vec	plane_texture(t_plane *plane, t_vec *loc)
+t_vec	plane_texture(t_plane *plane, t_vec loc)
 {
-	t_vec		dir;
-	uint32_t	x;
-	uint32_t	y;
+	t_vec	dir;
+	float	ang;
+	int32_t	x;
+	int32_t	y;
 
 	if (plane->tex == NULL)
 		return (plane->colour);
-	dir.vec3 = loc->vec3 - plane->location.vec3;
-	x = (uint32_t)(fabs(dir.x) * 100);
-	y = (uint32_t)(fabs(dir.y) * 100);
-	return (pixel_to_clrvec(plane->tex, (x * 4) % 360, (y * 4) % 360));
+	ang = angle(plane->orientation, vec(0, 0, 1));
+	dir.vec3 = loc.vec3 - plane->location.vec3;
+	dir = norm_vec(dir);
+	t_vec or = plane->orientation;
+	or.vec3 *= -1;
+	rotate(&loc, quat(ang, cross(or, dir)));
+	x = loc.x - plane->location.x;
+	if (x < 0)
+	{
+		x *= -1;
+		x = plane->tex->width - x % plane->tex->width;
+	}
+	else
+		x = x % plane->tex->width;
+	y = loc.y - plane->location.y;
+	if (y < 0)
+	{
+		y *= -1;
+		y = plane->tex->height - y % plane->tex->height;
+	}
+	else
+		y = y % plane->tex->height;
+	return (pixel_to_clrvec(plane->tex, x * 4, y * 4));
 }
 
 t_vec	sphere_texture(t_sphere *sphere, t_vec *sn)

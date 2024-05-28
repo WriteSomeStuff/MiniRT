@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/27 11:33:28 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:28:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static void	rotate_spheres(t_sphere *s, t_quat rotation)
 
 void	normalize_scene(t_data *data)
 {
-	t_vec	t;
+	t_vec	turn;
 	t_quat	rotation;
 
 	data->selected = -1;
 	translate_objects(data, data->cam->viewpoint);
-	t = cross(data->cam->orientation, vec(0, 0, 1));
-	t = normalize_vector(t);
-	rotation = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
+	turn = cross(data->cam->orientation, vec(0, 0, 1));
+	turn = normalize_vector(turn);
+	rotation = quat(angle(vec(0, 0, 1), data->cam->orientation), turn);
 	if (rotation.real == 0)
 		return ;
 	rotate_cylinders(data->cyls, rotation);

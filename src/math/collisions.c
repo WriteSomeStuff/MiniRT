@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/27 17:39:27 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:33:27 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	plane(t_hit *col, float reflection)
 	t_vec	clr;
 
 	plane = (t_plane *)col->obj;
-	clr = plane_texture(plane, &col->surface_norm);
+	clr = plane_texture(plane, col->location);
 	col->obj_num = plane->instance;
 	col->colour = reflection_result(col->colour, clr, reflection);
 }

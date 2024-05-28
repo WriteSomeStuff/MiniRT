@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/27 17:18:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:40:04 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 10
+# define NUM_RAYS 100
 # define MAX_BOUNCES 50
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
@@ -49,7 +49,7 @@ uint32_t	percentage_to_rgba(const t_vec f);
 // uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
 
 t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
-t_vec		plane_texture(t_plane *plane, t_vec *surface);
+t_vec		plane_texture(t_plane *plane, t_vec loc);
 t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
 /*	------------------------------------------------------------------	*/
 

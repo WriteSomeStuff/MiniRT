@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:38:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/04/23 17:46:22 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:26:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	print_quat(t_quat quat)
 	printf("scalar: %f, i: %f, j: %f, k: %f\n", quat.scalar, quat.i, quat.j, quat.k);
 }
 
-t_quat	quat(float real, float x, float y, float z)
+t_quat	quat(float real, t_vec vec)
 {
 	t_quat	quat;
 
 	quat.real = real;
-	quat.x = x;
-	quat.y = y;
-	quat.z = z;
+	quat.x = vec.x;
+	quat.y = vec.y;
+	quat.z = vec.z;
 	return (quat);
 }

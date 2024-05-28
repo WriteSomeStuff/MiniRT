@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/11/06 15:04:00 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/01 17:49:29 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:28:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	rotate(t_vec *point, t_quat rotation)
 	t_quat	pt;
 
 	angle_to_vec(&rotation, rotation.scalar);
-	pt = quat(1, point->x, point->y, point->z);
+	pt = quat(1, *point);
 	*point = turn(&pt, &rotation);
 }

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/24 17:07:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:45:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	verify_info(t_data *data, char **info)
 	while (info[x] != NULL)
 	{
 		y = 0;
-		while (info[x][y] != '\0' && info[x][y] != 'r')
+		while (info[x][y] != '\0' && info[x][y] != 'r' && info[x][y] != 't')
 		{
 			if (info[x][y] == '-' && ft_isdigit(info[x][y + 1]) == false)
 				exit_error(data, ": no digit after \"-\" sign");

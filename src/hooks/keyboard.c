@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 15:39:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/28 14:27:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ static void	turn_camera(t_data *data, keys_t key)
 {
 	if (key == MLX_KEY_LEFT)
 	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(-15), 0, 1, 0));
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), vec(0, 1, 0)));
 	}
 	if (key == MLX_KEY_RIGHT)
 	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(15), 0, 1, 0));
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), vec(0, 1, 0)));
 	}
 	if (key == MLX_KEY_UP)
 	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(-15), 1, 0, 0));
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), vec(1, 0, 0)));
 	}
 	if (key == MLX_KEY_DOWN)
 	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(15), 1, 0, 0));
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), vec(1, 0, 0)));
 	}
 	normalize_scene(data);
 	draw(data);
