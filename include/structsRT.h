@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/26 12:14:28 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/29 12:24:34 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ struct s_pixel
 	t_vec			pix_clr;
 	t_vec			location;
 	t_vec			surface_norm;
+	float			reflectivity;
+	float			absorption;
 	int16_t			obj_num;
 };
 

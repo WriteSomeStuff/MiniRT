@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/27 16:23:21 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/29 12:23:16 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c)
 			{
 				update(ray, CYLINDER, (void *)c, res[0]);
 				col->reflectivity = c->reflectivity;
-				col->absorption = 1 - c->reflectivity;
 				col->caps = false;
 			}
 		}
@@ -87,7 +86,6 @@ void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
 				col->reflectivity = c->reflectivity;
-				col->absorption = 1 - c->reflectivity;
 				col->surface_norm = c->orientation;
 				col->caps = true;
 			}
@@ -149,7 +147,6 @@ static void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 			{
 				update(ray, PLANE, (void *)p, distance);
 				col->reflectivity = p->reflectivity;
-				col->absorption = 1 - p->reflectivity;
 				if (denom > 0)
 					col->surface_norm = p->rev_norm;
 				else
@@ -180,7 +177,6 @@ static void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 				{
 					update(ray, s->object, (void *)s, res[0]);
 					col->reflectivity = s->reflectivity;
-					col->absorption = 1 - s->reflectivity;
 				}
 			}
 		}
@@ -196,4 +192,5 @@ void find_closest_object(t_data *data, t_hit *col, t_ray *ray)
 	intersect_cylinders(col, ray, data->cyls);
 	intersect_planes(col, ray, data->planes);
 	intersect_spheres(col, ray, data->spheres);
+	col->absorption = 1 - col->reflectivity;
 }
