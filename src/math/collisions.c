@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/31 18:12:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/31 19:23:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ static void	cylinder(t_hit *col, float absorption, float reflectivity)
 		set_vector(&col->surface_norm, &to_new, &col->location);
 	}
 	clr = cylinder_texture(cyl, &col->location);
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	diffuse = reflection_result(col->colour, clr, absorption);
-	if (col->type == LIGHT)
-		col->colour = reflection_result(col->colour, clr, 1);
-	else
-		col->colour.vec3 = specular.vec3 + diffuse.vec3;
+	if (col->type != LIGHT)
+	{
+		specular.vec3 = col->colour.vec3 * reflectivity;
+		diffuse = reflection_result(col->colour, clr, absorption);
+		clr.vec3 = specular.vec3 + diffuse.vec3;
+	}
+	col->colour = reflection_result(clr, col->colour, 1);
 }
 
 static void	plane(t_hit *col, float absorption, float reflectivity)
@@ -71,12 +72,13 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
 	clr = sphere_texture(sphere, &col->surface_norm);
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	diffuse = reflection_result(col->colour, clr, absorption);
-	if (col->type == LIGHT)
-		col->colour = reflection_result(col->colour, clr, 1);
-	else
-		col->colour.vec3 = specular.vec3 + diffuse.vec3;
+	if (col->type != LIGHT)
+	{
+		specular.vec3 = col->colour.vec3 * reflectivity;
+		diffuse = reflection_result(col->colour, clr, absorption);
+		clr.vec3 = specular.vec3 + diffuse.vec3;
+	}
+	col->colour = reflection_result(clr, col->colour, 1);
 }
 
 void	draw_collision(t_hit *col, float absorption, float reflectivity)
