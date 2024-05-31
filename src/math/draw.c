@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/30 17:44:36 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/31 19:05:16 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,22 @@
 #include "miniRT.h"
 #include "pthread.h"
 
-/* static void	clamp(t_vec *colour)
+static void	clamp(t_vec *colour)
 {
+	// colour->vec3 *= 4;
 	if (colour->x > 1.0f)
 	{
-		colour->y *= 1.0f / colour->x;
-		colour->z *= 1.0f / colour->x;
-		colour->x = 1.0f;
+		colour->vec3 /= colour->x;
 	}
 	if (colour->y > 1.0f)
 	{
-		colour->x *= 1.0f / colour->x;
-		colour->z *= 1.0f / colour->x;
-		colour->y = 1.0f;
+		colour->vec3 /= colour->y;
 	}
 	if (colour->z > 1.0f)
 	{
-		colour->x *= 1.0f / colour->x;
-		colour->y *= 1.0f / colour->x;
-		colour->z = 1.0f;
+		colour->vec3 /= colour->z;
 	}
-} */
+}
 
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
@@ -52,6 +47,7 @@ static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].surface_norm = ray->col->surface_norm;
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
 			data->ambient->colour, ray->col->absorption);
+		data->pix[y][x].obj_clr.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
 	}
 }
 
@@ -80,9 +76,12 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			if (col.hit == true && col.type != LIGHT)
 			{
 				trace(data, &ray, x, y);
-				data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
+				clamp(&data->pix[y][x].pix_clr);
+				// data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 			}
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
+			// if (data->pix[y][x].obj_num == 0 && sum(data->pix[y][x].pix_clr) > THRESHHOLD)
+			// 	print_vector(data->pix[y][x].pix_clr);
 			data->pix[y][x].pix_clr.vec3 *= 0;
 			x++;
 		}
