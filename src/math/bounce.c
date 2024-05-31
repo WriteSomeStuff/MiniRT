@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 10:55:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/30 18:13:03 by vincent       ########   odam.nl         */
+/*   Updated: 2024/05/31 16:11:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			bounces++;
 			ray->origin = ray->col->location;
 		}
+		if (ray->col->type == LIGHT)
+			print_vector(ray->col->colour);
 		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
