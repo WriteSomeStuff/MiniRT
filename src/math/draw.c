@@ -6,15 +6,15 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/29 12:33:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/30 17:44:36 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "time.h"
 #include "miniRT.h"
 #include "pthread.h"
-/* 
-static void	clamp(t_vec *colour)
+
+/* static void	clamp(t_vec *colour)
 {
 	if (colour->x > 1.0f)
 	{
@@ -39,7 +39,7 @@ static void	clamp(t_vec *colour)
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col, 1);
+	draw_collision(ray->col, ray->col->absorption, ray->col->reflectivity);
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 		data->pix[y][x].pix_clr = ray->col->colour;
@@ -53,42 +53,6 @@ static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
 			data->ambient->colour, ray->col->absorption);
 	}
-}
-
-void	specular_light(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
-{
-	uint32_t	bounces;
-
-	// data->pix[y][x].specular = vec(0, 0, 0);
-	// return ;
-	bounces = 0;
-	printf("refl: %f abs: %f\n", ray->col->reflectivity, ray->col->absorption);
-	ray->col->colour = vec(ray->col->reflectivity, ray->col->reflectivity, ray->col->reflectivity);
-	// print_vector(ray->col->colour);
-	while (sum(ray->col->colour) > THRESHHOLD && bounces < MAX_BOUNCES && ray->col->hit == true && ray->col->type != LIGHT)
-	{
-		ray->col->hit = false;
-		ray->origin = ray->col->location;
-		ray->direction = reflect(ray->direction, ray->col->surface_norm);
-		if (dot(ray->direction, ray->col->surface_norm) < 0)
-			ray->direction.vec3 *= -1;
-		find_closest_object(data, ray->col, ray);
-		draw_collision(ray->col, ray->col->reflectivity);
-		bounces++;
-	}
-	if (bounces != MAX_BOUNCES)
-		data->pix[y][x].specular = ray->col->colour;
-	// ray->col->colour = vec(0, 0, 0);
-	// clamp(&data->pix[y][x].specular);
-}
-
-static t_vec	total(t_vec c1, t_vec c2, t_vec c3)
-{
-	t_vec	res;
-
-	res = combine_colours(c1, c2);
-	res = combine_colours(res, c3);
-	return (res);
 }
 
 static void	reset_ray(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
@@ -113,29 +77,10 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 		{
 			reset_ray(data, &ray, x, y);
 			initial_hit(data, &ray, x, y);
-			if (col.obj_num != -1 && col.type != LIGHT)
+			if (col.hit == true && col.type != LIGHT)
 			{
-				specular_light(data, &ray, x, y);
-				multi_bounce(data, &ray, x, y);
-				// clamp(&data->pix[y][x].diffuse);
-				data->pix[y][x].pix_clr = total(data->pix[y][x].diffuse, \
-					data->pix[y][x].specular, data->pix[y][x].ambient);
-				// if (y % data->num_threads == 0 && sum(data->pix[y][x].specular) > THRESHHOLD)
-				// {
-				// 	static int i = 0;
-				// 	puts("specular");
-				// 	print_vector(data->pix[y][x].specular);
-				// 	puts("diffuse");
-				// 	print_vector(data->pix[y][x].diffuse);
-				// 	puts("colour");
-				// 	print_vector(data->pix[y][x].pix_clr);
-				// 	puts("\n");
-				// 	// puts("ambient");
-				// 	// print_vector(data->pix[y][x].ambient);
-				// 	i++;
-				// 	if (i == 10)
-				// 		exit(0);
-				// }
+				trace(data, &ray, x, y);
+				data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 			}
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
 			data->pix[y][x].pix_clr.vec3 *= 0;

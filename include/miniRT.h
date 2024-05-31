@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/28 16:15:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/30 17:40:56 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
 void		render(t_data *data, uint32_t x, uint32_t y);
-void		draw_collision(t_hit *col, float reflection);
-void		multi_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
+void		draw_collision(t_hit *col, float absorption, float reflectivity);
+void		trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
 float		sum(t_vec vector);
 
 /*	Colours	*/

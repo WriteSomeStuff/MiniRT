@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/29 12:24:34 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/05/30 18:20:18 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,6 @@ struct s_pixel
 {
 	t_vec			ray_direction;
 	t_vec			ambient;
-	t_vec			diffuse;
-	t_vec			specular;
 	t_vec			obj_clr;
 	t_vec			pix_clr;
 	t_vec			location;
