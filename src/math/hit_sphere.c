@@ -1,0 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   hit_sphere.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: vincent <vincent@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
+/*   Updated: 2024/06/01 12:59:17 by vincent       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "miniRT.h"
+
+void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
+{
+	t_vec	to_sphere;
+	t_vec	tmp;
+	float	res[2];
+
+	tmp.x = 1.0f;
+	while (s->object != INVALID)
+	{
+		to_sphere.vec3 = ray->origin.vec3 - s->center.vec3;
+		tmp.y = 2.0f * dot(to_sphere, ray->direction);
+		tmp.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
+		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
+		{
+			if (analyze_intersection(&res[0], &res[1]) == true)
+			{
+				if (res[0] < col->distance)
+				{
+					update(ray, s->object, (void *)s, res[0]);
+					col->reflectivity = s->reflectivity;
+					if (res[1] < 0)
+						col->inside_obj = true;
+				}
+			}
+		}
+		s++;
+	}
+}

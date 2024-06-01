@@ -6,14 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/05/27 17:07:25 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/06/01 13:04:20 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -pthread $(HEADERS) -g3 #-fsanitize=thread  #-Ofast -flto 
+CFLAGS	= -Wall -Wextra -Werror -pthread $(HEADERS) -g3 #-fsanitize=address  #-Ofast -flto 
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 
@@ -26,7 +26,6 @@ LIBS	= $(LIBFT)/libft.a $(MLXOUT)
 
 CFILES	=	alloc.c \
 			a_to_float.c \
-			bounce.c \
 			cast_rays.c \
 			collisions.c \
 			colours.c \
@@ -37,6 +36,10 @@ CFILES	=	alloc.c \
 			free.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
+			hit_cylinder.c \
+			hit_plane.c \
+			hit_sphere.c \
+			hit_torus.c \
 			keyboard.c \
 			init_lights.c \
 			init_objects.c \
@@ -53,6 +56,7 @@ CFILES	=	alloc.c \
 			reflect.c \
 			select.c \
 			textures.c \
+			trace.c \
 			translate_objects.c \
 			utils.c \
 			vectors.c \

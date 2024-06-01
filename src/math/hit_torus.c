@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   quaternions_utils.c                                :+:    :+:            */
+/*   hit_torus.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
+/*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/04/09 11:38:26 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/01 11:22:28 by vincent       ########   odam.nl         */
+/*   Created: 2024/06/01 11:57:29 by vincent       #+#    #+#                 */
+/*   Updated: 2024/06/01 12:58:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "vectorsRT.h"
 
-t_quat	quat(float real, t_vec vec)
+/* void	intersect_donuts(t_hit *col, t_ray *ray, const t_sphere *d)
 {
-	t_quat	quat;
 
-	quat.real = real;
-	quat.x = vec.x;
-	quat.y = vec.y;
-	quat.z = vec.z;
-	return (quat);
+	while (d->object != INVALID)
+	{
+		
+		d++;
+	}
 }
+ */

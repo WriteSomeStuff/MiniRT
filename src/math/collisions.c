@@ -6,13 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/31 19:23:12 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/01 15:47:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-bool	checkerboard_tex(t_data *data, t_sphere *sphere, t_hit *col);
 
 static void	cylinder(t_hit *col, float absorption, float reflectivity)
 {
@@ -71,7 +69,7 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
-	clr = sphere_texture(sphere, &col->surface_norm);
+	clr = sphere_texture(sphere, col->surface_norm);
 	if (col->type != LIGHT)
 	{
 		specular.vec3 = col->colour.vec3 * reflectivity;

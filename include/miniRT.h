@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/31 19:23:45 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/01 16:01:57 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 720
-# define HEIGHT 720
+# define WIDTH 1080
+# define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 1000
+# define NUM_RAYS 100
 # define MAX_BOUNCES 25
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
@@ -39,7 +39,13 @@ void		render(t_data *data, uint32_t x, uint32_t y);
 void		draw_collision(t_hit *col, float absorption, float reflectivity);
 void		trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
 float		sum(t_vec vector);
+void		update(t_ray *ray, t_token type, void *obj, float distance);
+float		hit_flat_surface(float *distance, t_ray *ray, t_vec point, t_vec orientation);
+bool		analyze_intersection(float *a, float *b);
 
+void		intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c);
+void		intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
+void		intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
 uint32_t	ambient_colour(const t_vec obj_colour, const t_vec ambient);
@@ -50,7 +56,7 @@ uint32_t	percentage_to_rgba(const t_vec f);
 
 t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
 t_vec		plane_texture(t_plane *plane, t_vec loc);
-t_vec		sphere_texture(t_sphere *sphere, t_vec *surface);
+t_vec		sphere_texture(t_sphere *sphere, t_vec location);
 /*	------------------------------------------------------------------	*/
 
 /*	Hooks	*/

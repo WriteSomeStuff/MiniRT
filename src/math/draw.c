@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/31 19:26:52 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/01 15:39:51 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,8 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			if (col.hit == true && col.type != LIGHT)
 			{
 				trace(data, &ray, x, y);
-				// clamp(&data->pix[y][x].pix_clr);
-				// data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 			}
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
-			// if (data->pix[y][x].obj_num == 0 && sum(data->pix[y][x].pix_clr) > THRESHHOLD)
-			// 	print_vector(data->pix[y][x].pix_clr);
 			data->pix[y][x].pix_clr.vec3 *= 0;
 			x++;
 		}

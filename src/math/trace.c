@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   bounce.c                                           :+:    :+:            */
+/*   trace.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
@@ -77,7 +77,7 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			ray->origin = ray->col->location;
 			ray->col->colour.vec3 *= 0.95f;
 		}
-		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3 * 10.0f;
+		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
 	data->pix[y][x].pix_clr.vec3 /= (float)NUM_RAYS;

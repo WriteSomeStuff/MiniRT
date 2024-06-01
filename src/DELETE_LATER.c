@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/24 16:40:10 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:40:28 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/01 11:22:31 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,9 @@ void	print_2d_charray(char **array)
 		i++;
 	}
 	printf("String [%d]: %s\n", i, array[i]);
+}
+
+void	print_quat(t_quat quat)
+{
+	printf("scalar: %f, i: %f, j: %f, k: %f\n", quat.scalar, quat.i, quat.j, quat.k);
 }
