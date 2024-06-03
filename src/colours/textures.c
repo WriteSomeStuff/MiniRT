@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/01 17:02:15 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/01 20:26:07 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	rotate(&loc, quat(ang, dir));
 	// print_vector(loc);
 	// exit(0);
-	// x = (plane->location.x - loc.x) * plane->tex->width / 5;
-	// y = (plane->location.y - loc.y) * plane->tex->height / 5;
-	x = (plane->location.x - loc.x);
-	y = (plane->location.y - loc.y);
+	x = (plane->location.x - loc.x) * plane->tex->width / 5;
+	y = (plane->location.y - loc.y) * plane->tex->height / 5;
+	// x = (plane->location.x - loc.x);
+	// y = (plane->location.y - loc.y);
 	if (x < 0)
 	{
 		x *= -1;
@@ -102,8 +102,8 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	else
 		y = fmod(y, plane->tex->height);
 	// printf("x: %f, y: %f\n", x, y);
-	return (checkerboard_tex((uint32_t)x, (uint32_t)y));
-	// return (pixel_to_clrvec(plane->tex, (int)x * 4, (int)y * 4));
+	// return (checkerboard_tex((uint32_t)x, (uint32_t)y));
+	return (pixel_to_clrvec(plane->tex, (int)x * 4, (int)y * 4));
 }
 
 t_vec	sphere_texture(t_sphere *sphere, t_vec loc)
