@@ -19,7 +19,7 @@ float	sum(t_vec vector)
 
 static void	clamp(t_vec *colour)
 {
-	// colour->vec3 *= 4;
+	colour->vec3 *= 4;
 	if (colour->x > 1.0f)
 	{
 		colour->vec3 /= colour->x;
@@ -75,7 +75,7 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			bounce(data, ray, y % data->num_threads);
 			// bounces++;
 			ray->origin = ray->col->location;
-			ray->col->colour.vec3 *= 0.95f;
+			// ray->col->colour.vec3 *= 0.95f;
 		}
 		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3;
 		rays++;

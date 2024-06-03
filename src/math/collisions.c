@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/01 15:47:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/03 14:55:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 		specular.vec3 = col->colour.vec3 * reflectivity;
 		diffuse = reflection_result(col->colour, clr, absorption);
 		clr.vec3 = specular.vec3 + diffuse.vec3;
+		// clr = combine_colours(specular, diffuse);
 	}
 	col->colour = reflection_result(clr, col->colour, 1);
 }
