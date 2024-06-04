@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/03 17:12:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/04 12:21:30 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 100
+# define NUM_RAYS 1000
 # define MAX_BOUNCES 25
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);

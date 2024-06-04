@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/03 17:54:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/04 12:24:29 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,15 @@ t_vec	checkerboard_tex(uint32_t x, uint32_t y)
 		return (vec(1, 1, 1));	
 }
 
-static t_vec	pixel_to_clrvec(mlx_texture_t *t, int x, int y)
+static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 {
 	t_vec		clr;
 
+	// printf("x:%u, y:%u, width:%u, height: %u\n", x, y, t->width, t->height);
+	if (x >= t->width || y >= t->height)
+	{
+		printf("x: %d y: %d\n", x, y);
+	}
 	clr.r = t->pixels[y * 4 * t->width + x * 4];
 	clr.g = t->pixels[y * 4 * t->width + x * 4 + 1];
 	clr.b = t->pixels[y * 4 * t->width + x * 4 + 2];
@@ -77,15 +82,11 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	rotate(&loc, quat(ang, dir));
 	x = (plane->location.x - loc.x) * plane->tex->width / 5;
 	y = (plane->location.y - loc.y) * plane->tex->height / 5;
-	// x = (plane->location.x - loc.x);
-	// y = (plane->location.y - loc.y);
-	// printf("width: %d, height: %d\n", plane->tex->width, plane->tex->height);
-	// exit(0);
 	if (x < 0.0f)
 	{
 		x *= -1;
 		x = fmod(x, plane->tex->width);
-		x = plane->tex->width - x;
+		x = plane->tex->width - x - 1;
 	}
 	else
 		x = fmod(x, plane->tex->width);
@@ -93,13 +94,12 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	{
 		y *= -1;
 		y = fmod(y, plane->tex->height);
-		y = plane->tex->height - y;
+		y = plane->tex->height - y - 1;
 	}
 	else
 		y = fmod(y, plane->tex->height);
-	printf("x: %f (int)%d, y: %f (int)%d\n", x, (int)x, y, (int)y);
 	// return (checkerboard_tex((uint32_t)x, (uint32_t)y));
-	return (pixel_to_clrvec(plane->tex, (int)x, (int)y));
+	return (pixel_to_clrvec(plane->tex, (uint32_t)x, (uint32_t)y));
 }
 
 t_vec	sphere_texture(t_sphere *sphere, t_vec loc)
