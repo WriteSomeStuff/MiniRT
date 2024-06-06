@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/31 17:17:57 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/05 19:19:09 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ float	prn(uint32_t *id)
 	result = ((*id >> ((*id >> 28) + 4)) ^ *id) * 277803737;
 	result = (result >> 22) ^ result;
 	*id = result;
-	// printf("%f\n", ((float)(result / 4294967295.0)) * 2.0 - 1.0);
 	return (((float)(result / 4294967295.0)) * 2.0 - 1.0);
 }
 

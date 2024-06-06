@@ -19,7 +19,10 @@ float	sum(t_vec vector)
 
 static void	clamp(t_vec *colour)
 {
-	colour->vec3 *= 4;
+	// colour->vec3 *= 4;
+	colour->x = pow(colour->x, 1 / 2.2);
+	colour->y = pow(colour->y, 1 / 2.2);
+	colour->z = pow(colour->z, 1 / 2.2);
 	if (colour->x > 1.0f)
 	{
 		colour->vec3 /= colour->x;
@@ -51,6 +54,8 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	new_dir = random_vector(data, id);
 	if (dot(new_dir, ray->col->surface_norm) < 0)
 		new_dir.vec3 *= -1;
+	new_dir.vec3 += ray->col->surface_norm.vec3;
+	new_dir = norm_vec(new_dir);
 	new_dir.vec3 *= ray->col->absorption;
 	new_dir.vec3 += reflect(ray->direction, ray->col->surface_norm).vec3 * ray->col->reflectivity;
 	ray->direction = norm_vec(new_dir);
@@ -62,18 +67,19 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 
 void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
-	// uint32_t	bounces;
+	uint32_t	bounces;
 	uint32_t	rays;
 
 	rays = 0;
+	// bounces = 0;
 	while (rays < NUM_RAYS)
 	{
 		setup(data, ray, x, y);
-		// bounces = 0;
-		while (sum(ray->col->colour) > THRESHHOLD && ray->col->type != LIGHT)
+		bounces = 0;
+		while (bounces < MAX_BOUNCES && sum(ray->col->colour) > THRESHHOLD && ray->col->type != LIGHT)
 		{
 			bounce(data, ray, y % data->num_threads);
-			// bounces++;
+			bounces++;
 			ray->origin = ray->col->location;
 			// ray->col->colour.vec3 *= 0.95f;
 		}
@@ -81,6 +87,6 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		rays++;
 	}
 	data->pix[y][x].pix_clr.vec3 /= (float)NUM_RAYS;
-	clamp(&data->pix[y][x].pix_clr);
 	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
+	clamp(&data->pix[y][x].pix_clr);
 }

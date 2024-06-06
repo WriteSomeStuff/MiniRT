@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/04 12:24:29 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/05 16:50:55 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 {
 	t_vec		clr;
 
-	// printf("x:%u, y:%u, width:%u, height: %u\n", x, y, t->width, t->height);
 	if (x >= t->width || y >= t->height)
 	{
 		printf("x: %d y: %d\n", x, y);

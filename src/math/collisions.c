@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/03 14:55:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/05 16:40:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	cylinder(t_hit *col, float absorption, float reflectivity)
 		to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
 		set_vector(&col->surface_norm, &to_new, &col->location);
 	}
+	if (col->inside_obj == true)
+		col->surface_norm.vec3 *= -1;
 	clr = cylinder_texture(cyl, &col->location);
 	if (col->type != LIGHT)
 	{
@@ -69,13 +71,14 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
+	if (col->inside_obj == true)
+		col->surface_norm.vec3 *= -1;
 	clr = sphere_texture(sphere, col->surface_norm);
 	if (col->type != LIGHT)
 	{
 		specular.vec3 = col->colour.vec3 * reflectivity;
 		diffuse = reflection_result(col->colour, clr, absorption);
 		clr.vec3 = specular.vec3 + diffuse.vec3;
-		// clr = combine_colours(specular, diffuse);
 	}
 	col->colour = reflection_result(clr, col->colour, 1);
 }

@@ -6,13 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/01 12:58:50 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/05 19:20:37 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-/*	als we binnenin objects willen wordt de surface normal andersom	*/
 
 bool	analyze_intersection(float *a, float *b)
 {
@@ -20,7 +18,7 @@ bool	analyze_intersection(float *a, float *b)
 
 	if (*b < 0)
 		return (false);
-	if (*a < 0 && *b > OFFSET)
+	if (*a < 0 && *b > 0)
 	{
 		tmp = *a;
 		*a = *b;
