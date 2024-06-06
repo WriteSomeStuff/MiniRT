@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/28 14:27:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/06 11:32:10 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ void	rt_keys(mlx_key_data_t keydata, void *param)
 		keydata.action == MLX_RELEASE)
 		turn_camera(data, keydata.key);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_RELEASE)
-		move(data, vec(0, 0, 0.25));
+		move(data, vec(0, 0, 1));
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_RELEASE)
-		move(data, vec(0, 0, -0.25));
+		move(data, vec(0, 0, -1));
 	if (keydata.key == MLX_KEY_A && keydata.action == MLX_RELEASE)
-		move(data, vec(-0.25, 0, 0));
+		move(data, vec(-1, 0, 0));
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
-		move(data, vec(0.25, 0, 0));
+		move(data, vec(1, 0, 0));
 }

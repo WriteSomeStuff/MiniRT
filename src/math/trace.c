@@ -52,8 +52,6 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	t_vec	new_dir;
 
 	new_dir = random_vector(data, id);
-	if (dot(new_dir, ray->col->surface_norm) < 0)
-		new_dir.vec3 *= -1;
 	new_dir.vec3 += ray->col->surface_norm.vec3;
 	new_dir = norm_vec(new_dir);
 	new_dir.vec3 *= ray->col->absorption;

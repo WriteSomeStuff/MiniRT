@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/19 16:25:17 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/06 11:32:27 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	rt_scroll(double xdelta, double ydelta, void *param)
 	(void)xdelta;
 	if (ydelta != 0)
 	{
-		ydelta *= -5;
+		ydelta *= -10;
 		if (ydelta + data->cam->fov < 0)
 			data->cam->fov = 0;
 		else if (ydelta + data->cam->fov > 180)
