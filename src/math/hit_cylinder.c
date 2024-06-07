@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/05 16:53:18 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/07 12:11:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c)
 		{
 			if (hits[0] < 0 || hits[1] < 0 || hits[2] < 0 || hits[3] < 0)
 				col->inside_obj = true;
+			else
+				col->inside_obj = false;
 		}
 		c++;
 	}

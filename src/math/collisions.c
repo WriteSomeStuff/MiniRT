@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/05 16:40:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/07 12:20:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	cylinder(t_hit *col, float absorption, float reflectivity)
 	if (col->type != LIGHT)
 	{
 		specular.vec3 = col->colour.vec3 * reflectivity;
-		diffuse = reflection_result(col->colour, clr, absorption);
+		// diffuse = reflection_result(col->colour, clr, absorption);
+		diffuse.vec3 = clr.vec3 * absorption;
 		clr.vec3 = specular.vec3 + diffuse.vec3;
 	}
 	col->colour = reflection_result(clr, col->colour, 1);
@@ -55,7 +56,8 @@ static void	plane(t_hit *col, float absorption, float reflectivity)
 	if (col->type != LIGHT)
 	{
 		specular.vec3 = col->colour.vec3 * reflectivity;
-		diffuse = reflection_result(col->colour, clr, absorption);
+		// diffuse = reflection_result(col->colour, clr, absorption);
+		diffuse.vec3 = clr.vec3 * absorption;
 		clr.vec3 = specular.vec3 + diffuse.vec3;
 	}
 	col->colour = reflection_result(clr, col->colour, 1);
@@ -77,7 +79,8 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 	if (col->type != LIGHT)
 	{
 		specular.vec3 = col->colour.vec3 * reflectivity;
-		diffuse = reflection_result(col->colour, clr, absorption);
+		// diffuse = reflection_result(col->colour, clr, absorption);
+		diffuse.vec3 = clr.vec3 * absorption;
 		clr.vec3 = specular.vec3 + diffuse.vec3;
 	}
 	col->colour = reflection_result(clr, col->colour, 1);

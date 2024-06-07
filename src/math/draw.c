@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/03 14:44:12 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/07 11:18:04 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		data->pix[y][x].surface_norm = ray->col->surface_norm;
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
 			data->ambient->colour, ray->col->absorption);
-		data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
+		// data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
 	}
 }
 
