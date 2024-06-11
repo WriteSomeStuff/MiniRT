@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/01 12:59:17 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/11 18:22:54 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 	tmp.x = 1.0f;
 	while (s->object != INVALID)
 	{
-		to_sphere.vec3 = ray->origin.vec3 - s->center.vec3;
-		tmp.y = 2.0f * dot(to_sphere, ray->direction);
+		to_sphere.vec3 = s->center.vec3 - ray->origin.vec3;
+		tmp.y = 2.0f * -dot(to_sphere, ray->direction);
 		tmp.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
 		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
 		{

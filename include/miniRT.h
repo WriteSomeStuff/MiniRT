@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/06 16:07:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/11 17:40:36 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 100
+# define NUM_RAYS 50
 # define MAX_BOUNCES 25
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
 void		render(t_data *data, uint32_t x, uint32_t y);
-void		draw_collision(t_hit *col, float absorption, float reflectivity);
+void		draw_collision(t_hit *col);
 void		trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
 float		sum(t_vec vector);
 void		update(t_ray *ray, t_token type, void *obj, float distance);

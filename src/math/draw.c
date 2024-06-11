@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/07 11:18:04 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/11 18:11:45 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col, ray->col->absorption, ray->col->reflectivity);
+	draw_collision(ray->col);
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 		data->pix[y][x].pix_clr = ray->col->colour;
