@@ -50,16 +50,12 @@ static void	setup(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 {
 	ray->direction = random_vector(data, id);
-	// print_vector(new_dir);
 	ray->direction.vec3 += ray->col->surface_norm.vec3;
 	ray->direction = norm_vec(ray->direction);
-	// new_dir.vec3 *= ray->col->absorption;
-	// new_dir.vec3 += reflect(ray->direction, ray->col->surface_norm).vec3 * ray->col->reflectivity;
-	// ray->direction = norm_vec(new_dir);
 	if (dot(ray->direction, ray->col->surface_norm) < 0)
 		ray->direction.vec3 *= -1;
 	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col);
+	draw_collision(data, ray->col);
 }
 
 // static void	specular()
@@ -73,7 +69,6 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	uint32_t	rays;
 
 	rays = 0;
-	bounces = 0;
 	while (rays < NUM_RAYS)
 	{
 		setup(data, ray, x, y);
@@ -83,7 +78,6 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			bounce(data, ray, y % data->num_threads);
 			bounces++;
 			ray->origin = ray->col->location;
-			ray->col->colour.vec3 *= 0.9f;
 		}
 		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3;
 		rays++;

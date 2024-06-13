@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:34:15 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/13 11:41:55 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void	free_spheres(t_sphere **spheres, uint32_t amount)
 void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
-	free(data->ambient);
 	free(data->cam);
 	free_cylinders(&data->cyls, data->cyl_count);
 	free_planes(&data->planes, data->plane_count);

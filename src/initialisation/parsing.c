@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/20 12:45:13 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/13 12:33:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ static void	alloc_objects(t_data *data, t_input *input)
 	}
 	if (obj[AMBIENT] != 1 || obj[CAMERA] != 1 || obj[LIGHT] < 1)
 		exit_error(data, ": incompatible file input");
-	data->ambient = rt_calloc(data, obj[AMBIENT] * sizeof(t_ambient));
 	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));
 	data->cyls = rt_calloc(data, (obj[CYLINDER] + 1) * sizeof(t_cylinder));
+	data->lights = rt_calloc(data, (obj[LIGHT] + 1) * sizeof(t_light));
 	data->planes = rt_calloc(data, (obj[PLANE] + 1) * sizeof(t_plane));
-	data->spheres = rt_calloc(data, (obj[SPHERE] + obj[LIGHT] + 1) * sizeof(t_sphere));
+	data->spheres = rt_calloc(data, (obj[SPHERE] + 1) * sizeof(t_sphere));
 	init_objects(data, input);
 }
 

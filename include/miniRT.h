@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/11 17:40:36 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/13 12:15:56 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,19 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 720
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 50
-# define MAX_BOUNCES 25
+# define NUM_RAYS 20
+# define MAX_BOUNCES 5
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
+t_vec		get_light(t_data *data, t_hit *col, t_light *lights);
 void		render(t_data *data, uint32_t x, uint32_t y);
-void		draw_collision(t_hit *col);
+void		draw_collision(t_data *data, t_hit *col);
 void		trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
 float		sum(t_vec vector);
 void		update(t_ray *ray, t_token type, void *obj, float distance);

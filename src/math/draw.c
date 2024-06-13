@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/11 18:11:45 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/13 12:16:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col);
+	draw_collision(data, ray->col);
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 		data->pix[y][x].pix_clr = ray->col->colour;
 	else if (ray->col->hit == true)
 	{
-		data->pix[y][x].obj_clr = ray->col->colour;
+		data->pix[y][x].obj_clr = get_light(data, ray->col, data->lights);
 		data->pix[y][x].reflectivity = ray->col->reflectivity;
 		data->pix[y][x].absorption = ray->col->absorption;
 		data->pix[y][x].location = ray->col->location;
 		data->pix[y][x].surface_norm = ray->col->surface_norm;
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
-			data->ambient->colour, ray->col->absorption);
-		// data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
+			data->ambient, ray->col->absorption);
 	}
 }
 
