@@ -85,10 +85,11 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 			ray->origin = ray->col->location;
 			ray->col->colour.vec3 *= 0.9f;
 		}
-		data->pix[y][x].pix_clr.vec3 += ray->col->colour.vec3;
+		if (ray->col->type == LIGHT)
+			data->pix[y][x].samples.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
-	data->pix[y][x].pix_clr.vec3 /= (float)NUM_RAYS;
+	data->pix[y][x].pix_clr.vec3 = data->pix[y][x].samples.vec3 / (float)(NUM_RAYS * data->iterations);
 	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 	clamp(&data->pix[y][x].pix_clr);
 }

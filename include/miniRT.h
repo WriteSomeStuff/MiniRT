@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/11 17:40:36 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/14 10:47:51 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 720
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.00001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 50
+# define NUM_RAYS 10
 # define MAX_BOUNCES 25
 
 // void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);

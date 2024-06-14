@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/11 18:11:45 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/14 11:31:20 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			x++;
 		}
 		y += data->num_threads;
+		pthread_mutex_lock(&data->mutex);
+		if (data->go == false)
+		{
+			pthread_mutex_unlock(&data->mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&data->mutex);
 	}
 }
 
