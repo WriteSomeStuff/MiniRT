@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/14 11:31:33 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/17 14:48:13 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	turn_camera(t_data *data, keys_t key)
 		rotate(&data->cam->orientation, quat(degree_to_radian(15), vec(1, 0, 0)));
 	}
 	normalize_scene(data);
+	// reset pixel array
 	draw(data);
 }
 
