@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/14 11:31:20 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/17 15:02:50 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,3 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 		pthread_mutex_unlock(&data->mutex);
 	}
 }
-
-// void	test_multiple_renders(t_data *data, uint32_t x, uint32_t y)
-// {
-// 	uint32_t	i = 0;
-
-// 	while (i < 10)
-// 	{	render(data, 0, y);
-// 		add_arrays(data, 0, y);
-// 		i++;
-// 	}
-// 	while (y < data->window->height)
-// 	{
-// 		x = 0;
-// 		while (x < data->window->width)
-// 		{
-// 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].colour));
-// 			data->pix[y][x].colour.vec3 *= 0;
-// 			x++;
-// 		}
-// 		y += ts;
-// 	}
-// }

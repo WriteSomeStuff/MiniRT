@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/11 18:08:51 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/17 17:39:47 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static void	sphere(t_hit *col)
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
 	if (col->inside_obj == true)
+	{
+		// puts("HI");
 		col->surface_norm.vec3 *= -1;
+	}
 	clr = sphere_texture(sphere, col->surface_norm);
 	col->colour = reflection_result(clr, col->colour, 1);
 }

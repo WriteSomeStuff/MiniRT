@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/17 14:41:47 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/17 17:42:12 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 	tmp.x = 1.0f;
 	while (s->object != INVALID)
 	{
-		col->inside_obj = false;
 		to_sphere.vec3 = s->center.vec3 - ray->origin.vec3;
 		tmp.y = 2.0f * -dot(to_sphere, ray->direction);
 		tmp.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
@@ -33,8 +32,10 @@ void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 				{
 					update(ray, s->object, (void *)s, res[0]);
 					col->reflectivity = s->reflectivity;
-					if (res[1] < 0)
+					if (res[1] <= 0)
 						col->inside_obj = true;
+					else
+						col->inside_obj = false;
 				}
 			}
 		}

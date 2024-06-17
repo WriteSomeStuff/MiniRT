@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/07 12:11:39 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/17 17:58:21 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->base, c->orientation);
-	hits[0] = distance;
 	if (denom != 0.0f)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
@@ -31,6 +30,7 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 				col->reflectivity = c->reflectivity;
 				col->surface_norm.vec3 = c->orientation.vec3 * -1;
 				col->caps = true;
+				hits[0] = distance;
 			}
 		}
 	}
@@ -43,7 +43,6 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->top, c->orientation);
-	hits[1] = distance;
 	if (denom != 0.0f)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
@@ -53,8 +52,9 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 			{
 				update(ray, CYLINDER, (void *)c, distance);
 				col->reflectivity = c->reflectivity;
-				col->surface_norm.vec3 = c->orientation.vec3 * -1;
+				col->surface_norm.vec3 = c->orientation.vec3;
 				col->caps = true;
+				hits[1] = distance;
 			}
 		}
 	}
