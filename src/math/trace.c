@@ -91,6 +91,6 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		rays++;
 	}
 	data->pix[y][x].pix_clr.vec3 = data->pix[y][x].samples.vec3 / (float)(NUM_RAYS * data->iterations);
-	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 	clamp(&data->pix[y][x].pix_clr);
+	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 }
