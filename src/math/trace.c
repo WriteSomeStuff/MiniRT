@@ -48,7 +48,7 @@ static void	setup(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	ray->col->type = INVALID;
 }
 
-static void	bounce(t_data *data, t_ray *ray, uint32_t id)
+static void	diffuse_bounce(t_data *data, t_ray *ray, uint32_t id)
 {
 	ray->direction = random_vector(data, id);
 	ray->direction.vec3 += ray->col->surface_norm.vec3;
@@ -59,17 +59,30 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	draw_collision(ray->col);
 }
 
-// static void	specular()
-// {
-
-// }
+static void	specular_bounce(t_data *data, t_ray *ray)
+{
+	ray->direction = reflect(ray->direction, ray->col->surface_norm);
+	find_closest_object(data, ray->col, ray);
+	draw_collision(ray->col);
+}
 
 void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	uint32_t	bounces;
 	uint32_t	rays;
+	// t_vec		tmp_clr;
 
 	rays = 0;
+	bounces = 0;
+	while(bounces < MAX_BOUNCES && sum(ray->col->colour) && ray->col->type != LIGHT)
+	{
+		setup(data, ray, x, y);
+		specular_bounce(data, ray);
+		bounces++;
+		ray->origin = ray->col->location;
+	}
+	if (ray->col->type == LIGHT)
+		data->pix[y][x].samples.vec3 += ray->col->colour.vec3;
 	bounces = 0;
 	while (rays < NUM_RAYS)
 	{
@@ -77,7 +90,7 @@ void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 		bounces = 0;
 		while (bounces < MAX_BOUNCES && sum(ray->col->colour) > THRESHHOLD && ray->col->type != LIGHT)
 		{
-			bounce(data, ray, y % data->num_threads);
+			diffuse_bounce(data, ray, y % data->num_threads);
 			bounces++;
 			ray->origin = ray->col->location;
 			// ray->col->colour.vec3 *= 0.9f;
