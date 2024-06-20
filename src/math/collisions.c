@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/18 18:23:12 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/20 12:20:16 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	cylinder(t_hit *col, float absorption, float reflectivity)
 	float		product;
 	t_vec		to_center;
 	t_vec		to_new;
+	t_vec		diffuse;
+	t_vec		specular;
 
 	(void)absorption;
 	(void)reflectivity;
@@ -33,7 +35,9 @@ static void	cylinder(t_hit *col, float absorption, float reflectivity)
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = cylinder_texture(cyl, &col->location);
-	col->colour = reflection_result(clr, col->colour, 1);
+	diffuse = reflection_result(clr, col->colour, absorption);
+	specular.vec3 = col->colour.vec3 * reflectivity;
+	col->colour.vec3 = diffuse.vec3 + specular.vec3;
 }
 
 static void	plane(t_hit *col, float absorption, float reflectivity)

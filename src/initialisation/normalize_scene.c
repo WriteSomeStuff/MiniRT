@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/18 13:11:35 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/06/20 19:47:21 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	normalize_scene(t_data *data)
 
 	data->selected = -1;
 	translate_objects(data, data->cam->viewpoint);
-	// printf("angle: %f\n", radian_to_degree(angle(vec(0, 0, 1), data->cam->orientation) == 180));
 	if ((int)radian_to_degree(angle(vec(0, 0, 1), data->cam->orientation) == 180))
 		turn = vec(0, 1, 0);
 	else
@@ -60,9 +59,6 @@ void	normalize_scene(t_data *data)
 		turn = cross(data->cam->orientation, vec(0, 0, 1));
 		turn = normalize_vector(turn);
 	}
-	// print_vector(data->cam->orientation);
-	// print_vector(turn);
-	// exit(0);
 	rotation = quat(angle(vec(0, 0, 1), data->cam->orientation), turn);
 	if (rotation.real == 0)
 		return ;

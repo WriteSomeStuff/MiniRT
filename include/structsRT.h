@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/14 11:12:23 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/20 21:25:36 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ struct s_data
 	pthread_t		*threads;
 	uint32_t		iterations;
 	uint32_t		num_threads;
+	uint32_t		threads_absorbed;
 	uint32_t		seed[16];
 	bool			go;
 	t_input			*input;
