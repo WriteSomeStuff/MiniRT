@@ -6,22 +6,49 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/06 11:32:27 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/20 21:41:28 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/* static void	img_to_win(t_data *data)
+void	rt_close(void *param)
 {
-	for (uint32_t y = 0; y < data->window->height; y++)
+	t_data *data;
+
+	data = (t_data *)param;
+	pthread_mutex_lock(&data->mutex);
+	data->go = false;
+	pthread_mutex_unlock(&data->mutex);
+	wait_for_threads(data);
+	exit_success(data);
+}
+
+void	rt_resize(int32_t x, int32_t y, void *param)
+{
+	t_data *data;
+
+	data = (t_data *)param;
+	if (mlx_is_mouse_down(data->mlx, MLX_MOUSE_BUTTON_LEFT) == false)
 	{
-		for (uint32_t x = 0; x < data->window->width; x++)
-		{
-			mlx_image_to_window(data->mlx, data->highlight, x, y);
-		}
+		pthread_mutex_lock(&data->mutex);
+		data->go = false;
+		pthread_mutex_unlock(&data->mutex);
+		wait_for_threads(data);
+		if (x > WINDOW_MAX_WIDTH)
+			x = WINDOW_MAX_WIDTH;
+		if (y > WINDOW_MAX_WIDTH)
+			y = WINDOW_MAX_WIDTH;
+		mlx_set_window_size(data->mlx, x, y);
+		data->window->width = (uint32_t)x;
+		data->window->height = (uint32_t)y;
+		data->window->aspect_ratio = (float)y / x;
+		mlx_resize_image(data->scene, x, y);
+		mlx_resize_image(data->highlight, x, y);
+		cast_rays(data);
+		redraw(data);
 	}
-} */
+}
 
 void	rt_scroll(double xdelta, double ydelta, void *param)
 {

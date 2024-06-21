@@ -48,7 +48,7 @@ static void	setup(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	ray->col->type = INVALID;
 }
 
-static void	bounce(t_data *data, t_ray *ray, uint32_t id)
+static void	diffuse_bounce(t_data *data, t_ray *ray, uint32_t id)
 {
 	ray->direction = random_vector(data, id);
 	ray->direction.vec3 += ray->col->surface_norm.vec3;
@@ -56,36 +56,87 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	if (dot(ray->direction, ray->col->surface_norm) < 0)
 		ray->direction.vec3 *= -1;
 	find_closest_object(data, ray->col, ray);
-	draw_collision(data, ray->col);
+	draw_collision(ray->col, ray->col->absorption, ray->col->reflectivity);
 }
 
-// static void	specular()
-// {
+float	max(float a, float b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
-// }
+static t_vec3	specular_bounce(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+{
+	uint32_t	bounces;
+	const float		shininess = 2;
+	float		shiny;
 
+	bounces = 0;
+	shiny = ray->col->reflectivity;
+	while (bounces < MAX_BOUNCES)
+	{
+		setup(data, ray, x, y);
+		ray->direction = reflect(ray->direction, ray->col->surface_norm);
+		find_closest_object(data, ray->col, ray);
+		draw_collision(ray->col, ray->col->absorption, ray->col->reflectivity);
+		bounces++;
+		if (ray->col->hit == false || ray->col->type == LIGHT || bounces == MAX_BOUNCES)
+			break ;
+		ray->origin = ray->col->location;
+	}
+	if (ray->col->type == LIGHT)
+	{
+		t_vec to_light;
+		t_sphere *sphere;
+
+		sphere = (t_sphere *)ray->col->obj;
+		to_light.vec3 = sphere->center.vec3 - ray->col->location.vec3;
+		to_light = normalize_vector(to_light);
+
+		shiny *= pow(max(dot(ray->direction, to_light), 0.0f), shininess);
+		return (ray->col->colour.vec3 * shiny);
+	}
+	return (vec(0, 0, 0).vec3);
+}
+
+// specular = pow(dot(ligtdir, viewdir), shininess);
 void	trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
 	uint32_t	bounces;
 	uint32_t	rays;
+	t_vec		tmp_clr;
 
 	rays = 0;
+	tmp_clr.vec3 = specular_bounce(data, ray, x, y);
 	while (rays < NUM_RAYS)
 	{
+		ray->col->colour = vec(1, 1, 1);
 		setup(data, ray, x, y);
 		bounces = 0;
 		while (bounces < MAX_BOUNCES && sum(ray->col->colour) > THRESHHOLD && ray->col->type != LIGHT)
 		{
-			bounce(data, ray, y % data->num_threads);
+			diffuse_bounce(data, ray, y % data->num_threads);
 			bounces++;
 			ray->origin = ray->col->location;
 			// ray->col->colour.vec3 *= 0.9f;
 		}
+		// if (y % data->num_threads == 0)
+		// 	printf("%u\n", bounces);
 		if (ray->col->type == LIGHT)
 			data->pix[y][x].samples.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
-	data->pix[y][x].pix_clr.vec3 = data->pix[y][x].samples.vec3 / (float)(NUM_RAYS * data->iterations);
+	data->pix[y][x].pix_clr.vec3 = (data->pix[y][x].samples.vec3 / (float)(NUM_RAYS * data->iterations)) * ray->col->absorption;
+	// if (x == data->window->height / 1.5 && (int)data->pix[y][x].reflectivity == 1 && y % data->num_threads == 0 && ray->col->type == LIGHT)
+	// {
+	// 	puts("diffuse:");
+	// 	print_vector(data->pix[y][x].samples);
+	// 	puts("speculoso:");
+	// 	print_vector(tmp_clr);
+	// 	printf("bounces: %u\n", bounces);
+	// }
+	data->pix[y][x].pix_clr.vec3 += tmp_clr.vec3;
 	clamp(&data->pix[y][x].pix_clr);
 	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
 }

@@ -6,11 +6,24 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/14 11:27:50 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/20 21:43:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	wait_for_threads(t_data *data)
+{
+	while (FOREVER)
+	{
+		pthread_mutex_lock(&data->mutex);
+		if (data->threads_absorbed == data->num_threads)
+			break ;
+		pthread_mutex_unlock(&data->mutex);
+		usleep(1000);
+	}
+	pthread_mutex_unlock(&data->mutex);
+}
 
 static void	*prepare_rendering(void *d)
 {
@@ -70,9 +83,10 @@ static void	*create_threads(void *d)
 	while (FOREVER)
 	{
 		i = 0;
-		printf("Samples: %d\n", data->iterations * NUM_RAYS);
+		data->threads_absorbed = 0;
+		if (data->iterations > 0 && data->iterations % 10 == 0)
+			printf("Samples: %d\n", data->iterations * NUM_RAYS);
 		data->iterations++;
-		// start = get_time();
 		pthread_mutex_lock(&data->mutex);
 		while (i < data->num_threads)
 		{
@@ -84,8 +98,6 @@ static void	*create_threads(void *d)
 			i++;
 		}
 		join_threads(data, data->threads, i);
-		// end = get_time();
-		// printf("runtime: %.2f sec\n", (float)(end - start) / 1000000.0f);
 		pthread_mutex_lock(&data->mutex);
 		if (data->go == false)
 			break ;

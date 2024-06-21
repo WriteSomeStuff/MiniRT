@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/21 19:26:01 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/21 19:30:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,26 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1280
+# define HEIGHT 720
+# define WINDOW_MIN_WIDTH 100
+# define WINDOW_MIN_HEIGHT 100
+# define WINDOW_MAX_WIDTH 2560
+# define WINDOW_MAX_HEIGHT 1440
 # define PI 3.1415927f
 # define FOREVER 1
 # define OFFSET 0.0001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 20
-# define MAX_BOUNCES 5
+# define NUM_RAYS 10
+# define MAX_BOUNCES 25
 
-// void		test_multiple_renders(t_data *data, uint32_t x, uint32_t y);
-t_vec		get_light(t_data *data, t_hit *col, t_light *lights);
+float		max(float a, float b);
+void		wait_for_threads(t_data *data);
 void		render(t_data *data, uint32_t x, uint32_t y);
-void		draw_collision(t_data *data, t_hit *col);
+void		redraw(t_data *data);
+void		rt_resize(int32_t x, int32_t y, void *param);
+void		rt_close(void *param);
+void		draw_collision(t_hit *col, float absorption, float reflectivity);
 void		trace(t_data *data, t_ray *ray, uint32_t x, uint32_t y);
 float		sum(t_vec vector);
 void		update(t_ray *ray, t_token type, void *obj, float distance);

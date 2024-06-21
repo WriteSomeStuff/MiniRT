@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/19 16:25:08 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/29 12:01:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/20 20:48:00 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,16 @@ void	rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p)
 	t_data		*data;
 	int32_t		x;
 	int32_t		y;
+	// int32_t		width;
+	// int32_t		height;
 
 	(void)m;
 	data = (t_data *)p;
 	if (btn == MLX_MOUSE_BUTTON_LEFT && act == MLX_RELEASE)
 	{
 		mlx_get_mouse_pos(data->mlx, &x, &y);
+		
+		// printf("x: %u, y: %u\n", x, y);
 		highlight_object(data, data->pix[y][x].obj_num);
 		mlx_image_to_window(data->mlx, data->highlight, 0, 0);
 	}

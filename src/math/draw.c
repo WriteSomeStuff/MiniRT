@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/21 19:27:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/21 19:32:05 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,19 @@
 
 static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 {
+	t_vec	to_center;
+	t_sphere	*tmp;
+
 	find_closest_object(data, ray->col, ray);
-	draw_collision(data, ray->col);
+	draw_collision(ray->col, ray->col->absorption, ray->col->reflectivity);
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
-		data->pix[y][x].pix_clr = ray->col->colour;
+	{
+		tmp = (t_sphere *)ray->col->obj;
+		to_center.vec3 = tmp->center.vec3 - ray->col->location.vec3;
+		to_center = norm_vec(to_center);
+		data->pix[y][x].pix_clr.vec3 = ray->col->colour.vec3 * dot(ray->direction, to_center);
+	}
 	else if (ray->col->hit == true)
 	{
 		data->pix[y][x].obj_clr = get_light(data, ray->col, data->lights);
@@ -62,14 +70,18 @@ void	render(t_data *data, uint32_t x, uint32_t y)
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
 			data->pix[y][x].pix_clr.vec3 *= 0;
 			x++;
+			pthread_mutex_lock(&data->mutex);
+			if (data->go == false)
+			{
+				data->threads_absorbed++;
+				pthread_mutex_unlock(&data->mutex);
+				return ;
+			}
+			pthread_mutex_unlock(&data->mutex);
 		}
 		y += data->num_threads;
-		pthread_mutex_lock(&data->mutex);
-		if (data->go == false)
-		{
-			pthread_mutex_unlock(&data->mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&data->mutex);
 	}
+	pthread_mutex_lock(&data->mutex);
+	data->threads_absorbed++;
+	pthread_mutex_unlock(&data->mutex);
 }
