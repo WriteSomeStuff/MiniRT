@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/13 12:14:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/21 19:26:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ struct s_pixel
 	t_vec			ray_direction;
 	t_vec			ambient;
 	t_vec			obj_clr;
+	t_vec			samples;
 	t_vec			pix_clr;
 	t_vec			location;
 	t_vec			surface_norm;
@@ -211,9 +212,11 @@ struct s_data
 {
 	char			*line;
 	mlx_t			*mlx;
+	mlx_image_t		*counter;
 	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
 	pthread_t		*threads;
+	uint32_t		iterations;
 	uint32_t		num_threads;
 	uint32_t		seed[16];
 	bool			go;

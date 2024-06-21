@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/13 12:15:56 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/21 19:26:01 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.00001f
+# define OFFSET 0.0001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 20
 # define MAX_BOUNCES 5
