@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/19 16:25:08 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/20 20:48:00 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/26 17:46:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	un_highlight(t_data *data)
 {
-	uint32_t	x;
-	uint32_t	y;
+	int32_t	x;
+	int32_t	y;
 
 	data->selected = -1;
 	y = 0;
@@ -31,7 +31,7 @@ static void	un_highlight(t_data *data)
 	}
 }
 
-static bool	check_object(t_data *data, int16_t num, uint32_t x, uint32_t y)
+static bool	check_object(t_data *data, int16_t num, int32_t x, int32_t y)
 {
 	bool	draw_pixel;
 
@@ -52,8 +52,8 @@ static bool	check_object(t_data *data, int16_t num, uint32_t x, uint32_t y)
 
 static void	highlight_object(t_data *data, int16_t num)
 {
-	uint32_t	x;
-	uint32_t	y;
+	int32_t	x;
+	int32_t	y;
 
 	y = 0;
 	if (data->selected != -1 || num == -1)

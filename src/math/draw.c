@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/21 19:32:05 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/26 18:32:39 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "miniRT.h"
 #include "pthread.h"
 
-static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
 	t_vec	to_center;
 	t_sphere	*tmp;
@@ -31,17 +31,18 @@ static void	initial_hit(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	}
 	else if (ray->col->hit == true)
 	{
-		data->pix[y][x].obj_clr = get_light(data, ray->col, data->lights);
+		data->pix[y][x].obj_clr = ray->col->colour;
 		data->pix[y][x].reflectivity = ray->col->reflectivity;
 		data->pix[y][x].absorption = ray->col->absorption;
 		data->pix[y][x].location = ray->col->location;
 		data->pix[y][x].surface_norm = ray->col->surface_norm;
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
 			data->ambient, ray->col->absorption);
+		// data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
 	}
 }
 
-static void	reset_ray(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
+static void	reset_ray(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
 	ft_bzero(ray->col, sizeof(t_hit));
 	ray->origin = data->cam->viewpoint;
@@ -50,7 +51,7 @@ static void	reset_ray(t_data *data, t_ray *ray, uint32_t x, uint32_t y)
 	ray->col->colour = vec(1, 1, 1);
 }
 
-void	render(t_data *data, uint32_t x, uint32_t y)
+void	render(t_data *data, int32_t x, int32_t y)
 {
 	t_ray		ray;
 	t_hit		col;

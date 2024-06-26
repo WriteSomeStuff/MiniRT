@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/21 19:31:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/26 18:27:22 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ struct s_hit
 	t_token	type;
 	int16_t	obj_num;
 	float	distance;
-	float	total_traveled;
 	float	reflectivity;
 	float	absorption;
 	void	*obj;
@@ -154,12 +153,6 @@ struct s_cylinder
 	uint32_t		amb_colour;
 	uint16_t		instance;
 	mlx_texture_t	*tex;
-};
-
-struct s_light
-{
-	t_vec	location;
-	t_vec	colour;
 };
 
 struct s_plane
@@ -203,8 +196,8 @@ struct s_sphere
 
 struct s_window
 {
-	uint32_t	width;
-	uint32_t	height;
+	int32_t		width;
+	int32_t		height;
 	float		aspect_ratio;
 };
 
@@ -225,7 +218,6 @@ struct s_data
 	t_vec			ambient;
 	t_camera		*cam;
 	t_cylinder		*cyls;
-	t_light			*lights;
 	t_plane			*planes;
 	t_sphere		*spheres;
 	t_window		*window;
@@ -234,7 +226,6 @@ struct s_data
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
-	int32_t			light_count;
 	int32_t			plane_count;
 	int32_t			sphere_count;
 	pthread_mutex_t	mutex;

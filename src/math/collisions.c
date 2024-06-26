@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/21 19:31:44 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/26 17:17:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	cylinder(t_hit *col, float absorption, float reflectivity)
 {
 	t_cylinder	*cyl;
+	t_vec		clr;
 	float		product;
 	t_vec		to_center;
 	t_vec		to_new;
@@ -47,6 +48,7 @@ static void	plane(t_hit *col, float absorption, float reflectivity)
 	t_vec		specular;
 
 	plane = (t_plane *)col->obj;
+	clr = plane_texture(plane, col->location);
 	col->obj_num = plane->instance;
 	diffuse = reflection_result(clr, col->colour, absorption);
 	specular.vec3 = col->colour.vec3 * reflectivity;
@@ -66,6 +68,11 @@ static void	sphere(t_hit *col, float absorption, float reflectivity)
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = sphere_texture(sphere, col->surface_norm);
+	if (sphere->object == LIGHT)
+	{
+		col->colour = reflection_result(clr, col->colour, 1);
+		return ;
+	}
 	diffuse = reflection_result(clr, col->colour, absorption);
 	specular.vec3 = col->colour.vec3 * reflectivity;
 	col->colour.vec3 = diffuse.vec3 + specular.vec3;

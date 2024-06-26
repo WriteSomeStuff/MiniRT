@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/05 16:50:55 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/26 17:48:15 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 // 	return (true);
 // }
 
-t_vec	checkerboard_tex(uint32_t x, uint32_t y)
+t_vec	checkerboard_tex(int32_t x, int32_t y)
 {
 	if (x % 20 < 10 && y % 20 >= 10)
 		return (vec(0, 0, 0));
@@ -40,7 +40,7 @@ t_vec	checkerboard_tex(uint32_t x, uint32_t y)
 
 static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 {
-	t_vec		clr;
+	t_vec	clr;
 
 	if (x >= t->width || y >= t->height)
 	{
@@ -64,7 +64,7 @@ t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
 	set_vector(&dir, &cyl->center, surface);
 	x = cyl->tex->width / 2 + ((dir.x / 2) * (cyl->tex->width / 2));
 	y = cyl->tex->height - (cyl->tex->height / 2 + (dir.y * (cyl->tex->height / 2)));
-	return (pixel_to_clrvec(cyl->tex, (int)x, (int)y));
+	return (pixel_to_clrvec(cyl->tex, (uint32_t)x, (uint32_t)y));
 }
 
 t_vec	plane_texture(t_plane *plane, t_vec loc)
@@ -97,7 +97,7 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	}
 	else
 		y = fmod(y, plane->tex->height);
-	// return (checkerboard_tex((uint32_t)x, (uint32_t)y));
+	// return (checkerboard_tex((int32_t)x, (int32_t)y));
 	return (pixel_to_clrvec(plane->tex, (uint32_t)x, (uint32_t)y));
 }
 
@@ -110,6 +110,6 @@ t_vec	sphere_texture(t_sphere *sphere, t_vec loc)
 		return (sphere->colour);
 	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2));
 	y = sphere->tex->height - (sphere->tex->height / 2 + (loc.y * (sphere->tex->height / 2)));
-	// return (checkerboard_tex((uint32_t)(x * 20), (uint32_t)(y * 20)));
-	return (pixel_to_clrvec(sphere->tex, (int)x, (int)y));
+	// return (checkerboard_tex((int32_t)(x * 20), (int32_t)(y * 20)));
+	return (pixel_to_clrvec(sphere->tex, (uint32_t)x, (uint32_t)y));
 }

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/20 21:43:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/26 15:46:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	wait_for_threads(t_data *data)
 	while (FOREVER)
 	{
 		pthread_mutex_lock(&data->mutex);
+		// printf("absorbed: %u/%u\n", data->threads_absorbed, data->num_threads);
 		if (data->threads_absorbed == data->num_threads)
+		{
 			break ;
+		}
 		pthread_mutex_unlock(&data->mutex);
 		usleep(1000);
 	}
@@ -75,7 +78,6 @@ static long	get_time(void)
 static void	*create_threads(void *d)
 {
 	uint32_t	i;
-	// long		start, end;
 	t_data		*data;
 
 	data = (t_data *)d;
@@ -86,8 +88,8 @@ static void	*create_threads(void *d)
 		data->threads_absorbed = 0;
 		if (data->iterations > 0 && data->iterations % 10 == 0)
 			printf("Samples: %d\n", data->iterations * NUM_RAYS);
-		data->iterations++;
 		pthread_mutex_lock(&data->mutex);
+		data->iterations++;
 		while (i < data->num_threads)
 		{
 			if (pthread_create(&data->threads[i], NULL, &prepare_rendering, data) == -1)

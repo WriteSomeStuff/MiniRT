@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/20 21:37:09 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/21 20:08:25 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 	
 } */
 
-static void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height)
+void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height)
 {
 	uint32_t	x;
 	uint32_t	y;

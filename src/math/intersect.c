@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/21 19:32:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/18 18:24:47 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ void find_closest_object(t_data *data, t_hit *col, t_ray *ray)
 	intersect_cylinders(col, ray, data->cyls);
 	intersect_planes(col, ray, data->planes);
 	intersect_spheres(col, ray, data->spheres);
-	col->total_traveled += col->distance;
 	col->absorption = 1 - col->reflectivity;
 }

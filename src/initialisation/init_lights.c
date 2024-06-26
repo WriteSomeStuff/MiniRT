@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/13 11:42:42 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/26 18:31:00 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,18 @@ void	init_light(t_data *data, char **info)
 {
 	int		i;
 
-	i = data->light_count;
-	check_split(data, info, 3);
+	i = data->sphere_count;
+	check_split(data, info, 4);
 	verify_info(data, info);
-	data->lights[i].location = create_vector(data, info[0]);
-	data->lights[i].colour = create_vector(data, info[2]);
-	data->lights[i].colour.vec3 *= a_to_float(data, info[1]);
-	check_rgb_values(data, &data->lights[i].colour.vec3);
-	rgb_to_floats(&data->lights[i].colour);
-	data->light_count++;
+	data->spheres[i].center = create_vector(data, info[0]);
+	data->spheres[i].colour = create_vector(data, info[2]);
+	data->spheres[i].colour.vec3 *= a_to_float(data, info[1]);
+	// data->spheres[i].colour.vec3 *= 5;
+	if (info[3] != NULL)
+		data->spheres[i].radius = a_to_float(data, info[3]) / 2.0f;
+	data->spheres[i].object = LIGHT;
+	data->spheres[i].instance = object_count(data);
+	check_rgb_values(data, &data->spheres[i].colour.vec3);
+	rgb_to_floats(&data->spheres[i].colour);
+	data->sphere_count++;
 }
