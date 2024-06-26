@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/26 18:27:22 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/26 18:40:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@
 typedef float	t_vec3 __attribute__ ((vector_size(16)));
 typedef float	t_vec4 __attribute__ ((vector_size(16)));
 
+typedef union u_vec			t_vec;
+typedef union u_quat		t_quat;
+typedef union u_magic		t_magic;
 typedef struct s_input		t_input;
-typedef union s_vec			t_vec;
-typedef union s_quat		t_quat;
 typedef struct s_texture	t_texture;
-typedef struct s_pixel		t_pixel;
-typedef union s_magic		t_magic;
 typedef struct s_hit		t_hit;
 typedef struct s_ray		t_ray;
 typedef struct s_camera		t_camera;
 typedef struct s_cylinder	t_cylinder;
-typedef struct s_light		t_light;
 typedef struct s_plane		t_plane;
+typedef struct s_pixel		t_pixel;
 typedef struct s_sphere		t_sphere;
 typedef struct s_window		t_window;
 typedef struct s_data		t_data;
@@ -46,14 +45,7 @@ typedef enum s_token
 	INVALID
 }	t_token;
 
-struct s_input
-{
-	char			**info;
-	t_token			token;
-	struct s_input	*next;
-};
-
-union s_vec
+union u_vec
 {
 	t_vec3	vec3;
 	struct
@@ -76,7 +68,7 @@ union s_vec
 	};
 };
 
-union s_quat
+union u_quat
 {
 	t_vec4	vec4;
 	struct
@@ -95,17 +87,24 @@ union s_quat
 	};
 };
 
+union u_magic
+{
+	int32_t	i;
+	float	y;
+};
+
+struct s_input
+{
+	char			**info;
+	t_token			token;
+	struct s_input	*next;
+};
+
 struct s_texture
 {
 	uint32_t	width;
 	uint32_t	height;
 	uint8_t		*pixels;
-};
-
-union s_magic
-{
-	int32_t	i;
-	float	y;
 };
 
 struct s_hit
