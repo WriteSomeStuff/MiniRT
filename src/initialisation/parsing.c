@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/26 18:31:58 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/28 19:33:40 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static bool	is_empty_str(char *str)
 
 static t_token	determine_object(char *str)
 {
-	if (ft_strncmp(str, "A ", 2) == 0)
+	if (ft_strncmp(str, "A ", 2) == 0 || ft_strncmp(str, "A\t", 2) == 0)
 		return (AMBIENT);
-	if (ft_strncmp(str, "C ", 2) == 0)
+	if (ft_strncmp(str, "C ", 2) == 0 || ft_strncmp(str, "C\t", 2) == 0)
 		return (CAMERA);
-	if (ft_strncmp(str, "cy ", 3) == 0)
+	if (ft_strncmp(str, "cy ", 3) == 0 || ft_strncmp(str, "cy\t", 3) == 0)
 		return (CYLINDER);
-	if (ft_strncmp(str, "L ", 2) == 0)
+	if (ft_strncmp(str, "L ", 2) == 0 || ft_strncmp(str, "L\t", 2) == 0)
 		return (LIGHT);
-	if (ft_strncmp(str, "pl ", 3) == 0)
+	if (ft_strncmp(str, "pl ", 3) == 0 || ft_strncmp(str, "pl\t", 3) == 0)
 		return (PLANE);
-	if (ft_strncmp(str, "sp ", 3) == 0)
+	if (ft_strncmp(str, "sp ", 3) == 0 || ft_strncmp(str, "sp\t", 3) == 0)
 		return (SPHERE);
 	else
 		return (INVALID);

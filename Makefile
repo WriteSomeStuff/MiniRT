@@ -6,14 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/06/21 19:30:14 by vvan-der      ########   odam.nl          #
+#    Updated: 2024/06/28 19:08:54 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast  -pthread $(HEADERS) -g #-fsanitize=thread  # -flto
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=thread  # 
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 
