@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:32:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/28 20:33:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void		intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
 void		intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
-uint32_t	ambient_colour(const t_vec obj_colour, const t_vec ambient);
 t_vec		reflection_result(const t_vec c1, const t_vec c2, float fraction);
 t_vec		combine_colours(const t_vec c1, const t_vec c2);
 uint32_t	percentage_to_rgba(const t_vec f);

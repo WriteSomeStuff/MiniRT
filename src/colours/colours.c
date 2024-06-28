@@ -6,16 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 16:13:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/05/24 16:39:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/28 20:33:26 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-uint32_t	ambient_colour(const t_vec obj_colour, const t_vec ambient)
-{
-	return (percentage_to_rgba(reflection_result(obj_colour, ambient, 1)));
-}
 
 t_vec	reflection_result(const t_vec c1, const t_vec c2, float fraction)
 {
