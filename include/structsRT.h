@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/28 19:14:02 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/28 20:32:25 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ struct s_cylinder
 	float			height;
 	t_vec			colour;
 	t_token			object;
-	uint32_t		amb_colour;
 	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
@@ -162,7 +161,6 @@ struct s_plane
 	t_vec			colour;
 	float			reflectivity;
 	t_token			object;
-	uint32_t		amb_colour;
 	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
@@ -184,7 +182,6 @@ struct s_pixel
 
 struct s_sphere
 {
-	uint32_t		amb_colour;
 	t_vec			center;
 	float			radius;
 	float			reflectivity;

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/05/26 12:50:59 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/28 20:32:38 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_objects(t_data *data, t_input *input)
 		data->f[input->token](data, input->info);
 		input = input->next;
 	}
-	obj_ambiance(data, data->cyls, data->planes, data->spheres);
 	data->cyls[data->cyl_count].object = INVALID;
 	data->planes[data->plane_count].object = INVALID;
 	data->spheres[data->sphere_count].object = INVALID;

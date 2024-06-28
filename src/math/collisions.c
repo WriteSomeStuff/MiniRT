@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 19:50:48 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/28 20:25:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	plane(t_hit *col, t_vec incoming, float absorption, float reflectivi
 {
 	t_plane	*plane;
 	t_vec	clr;
-	t_vec		diffuse;
-	t_vec		specular;
+	t_vec	diffuse;
+	t_vec	specular;
 
 	(void)incoming;
 	plane = (t_plane *)col->obj;
@@ -74,6 +74,8 @@ static void	sphere(t_hit *col, t_vec incoming, float absorption, float reflectiv
 	if (sphere->object == LIGHT)
 	{
 		col->colour = reflection_result(clr, col->colour, 1);
+		col->surface_norm.vec3 *= -1;
+		col->colour.vec3 *= dot(incoming, col->surface_norm);
 		return ;
 	}
 	specular.vec3 = col->colour.vec3 * reflectivity;

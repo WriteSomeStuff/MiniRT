@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/28 19:56:23 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/28 20:32:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define OFFSET 0.001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
-# define MAX_BOUNCES 5
+# define MAX_BOUNCES 25
 
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
@@ -80,7 +80,6 @@ void		rt_select(mouse_key_t btn, action_t act, modifier_key_t m, void *p);
 /*	------------------------------------------------------------------	*/
 void		check_rgb_values(t_data *data, const t_vec3 *vec);
 void		init_ambient(t_data *data, char **info);
-void		obj_ambiance(t_data *d, t_cylinder *c, t_plane *p, t_sphere *s);
 void		init_light(t_data *data, char **info);
 
 int16_t		object_count(t_data *data);

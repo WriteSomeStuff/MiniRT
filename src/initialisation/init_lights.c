@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/26 18:31:00 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/06/28 20:32:13 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,32 +37,6 @@ void	init_ambient(t_data *data, char **info)
 	check_rgb_values(data, &data->ambient.vec3);
 	rgb_to_floats(&data->ambient);
 	data->ambient.vec3 *= luminosity;
-}
-
-void	obj_ambiance(t_data *d, t_cylinder *c, t_plane *p, t_sphere *s)
-{
-	t_input	*in;
-
-	in = d->input;
-	while (in != NULL)
-	{
-		if (in->token == CYLINDER)
-		{
-			c->amb_colour = ambient_colour(c->colour, d->ambient);
-			c++;
-		}
-		else if (in->token == PLANE)
-		{
-			p->amb_colour = ambient_colour(p->colour, d->ambient);
-			p++;
-		}
-		else if (in->token == SPHERE)
-		{
-			s->amb_colour = ambient_colour(s->colour, d->ambient);
-			s++;
-		}
-		in = in->next;
-	}
 }
 
 void	init_light(t_data *data, char **info)
