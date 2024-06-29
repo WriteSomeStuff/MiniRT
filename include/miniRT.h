@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:33:30 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 15:00:25 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@
 # include <sys/time.h>
 # include <sys/stat.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define WINDOW_MIN_WIDTH 100
 # define WINDOW_MIN_HEIGHT 100
 # define WINDOW_MAX_WIDTH 2560
 # define WINDOW_MAX_HEIGHT 1440
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.001f
+# define OFFSET 0.0001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
-# define MAX_BOUNCES 25
+# define MAX_BOUNCES 10
 
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
@@ -54,6 +54,7 @@ float		hit_flat_surface(float *distance, t_ray *ray, t_vec point, t_vec orientat
 bool		analyze_intersection(float *a, float *b);
 
 void		intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c);
+void		intersect_discs(t_hit *col, t_ray *ray, const t_disc *d);
 void		intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
 void		intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
 /*	Colours	*/
@@ -85,6 +86,7 @@ int16_t		object_count(t_data *data);
 void		init_objects(t_data *data, t_input *input);
 void		init_camera(t_data *data, char **info);
 void		init_cylinder(t_data *data, char **info);
+void		init_disc(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 

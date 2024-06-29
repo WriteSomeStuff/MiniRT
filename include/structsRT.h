@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/28 20:32:25 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 14:56:29 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_hit		t_hit;
 typedef struct s_ray		t_ray;
 typedef struct s_camera		t_camera;
 typedef struct s_cylinder	t_cylinder;
+typedef struct s_disc		t_disc;
 typedef struct s_plane		t_plane;
 typedef struct s_pixel		t_pixel;
 typedef struct s_sphere		t_sphere;
@@ -37,6 +38,7 @@ typedef struct s_data		t_data;
 typedef enum s_token
 {
 	CYLINDER,
+	DISC,
 	PLANE,
 	SPHERE,
 	LIGHT,
@@ -144,6 +146,7 @@ struct s_cylinder
 	t_vec			base;
 	t_vec			top;
 	t_vec			orientation;
+	t_vec			rev_norm;
 	float			reflectivity;
 	float			radius;
 	float			height;
@@ -151,6 +154,19 @@ struct s_cylinder
 	t_token			object;
 	uint16_t		instance;
 	mlx_texture_t	*tex;
+};
+
+struct s_disc
+{
+	t_vec			center;
+	t_vec			orientation;
+	t_vec			rev_norm;
+	float			reflectivity;
+	float			radius;
+	float			hole_radius;
+	t_vec			colour;
+	t_token			object;
+	uint16_t		instance;
 };
 
 struct s_plane
@@ -215,6 +231,7 @@ struct s_data
 	t_vec			ambient;
 	t_camera		*cam;
 	t_cylinder		*cyls;
+	t_disc			*discs;
 	t_plane			*planes;
 	t_sphere		*spheres;
 	t_window		*window;
@@ -223,10 +240,11 @@ struct s_data
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cyl_count;
+	int32_t			disc_count;
 	int32_t			plane_count;
 	int32_t			sphere_count;
 	pthread_mutex_t	mutex;
-	void			(*f[6])(t_data *, char **);
+	void			(*f[INVALID])(t_data *, char **);
 };
 
 #endif

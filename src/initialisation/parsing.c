@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 19:33:40 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 14:51:01 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static t_token	determine_object(char *str)
 		return (CAMERA);
 	if (ft_strncmp(str, "cy ", 3) == 0 || ft_strncmp(str, "cy\t", 3) == 0)
 		return (CYLINDER);
+	if (ft_strncmp(str, "d ", 2) == 0 || ft_strncmp(str, "d\t", 2) == 0)
+		return (DISC);
 	if (ft_strncmp(str, "L ", 2) == 0 || ft_strncmp(str, "L\t", 2) == 0)
 		return (LIGHT);
 	if (ft_strncmp(str, "pl ", 3) == 0 || ft_strncmp(str, "pl\t", 3) == 0)
@@ -56,6 +58,7 @@ static void	alloc_objects(t_data *data, t_input *input)
 		exit_error(data, ": incompatible file input");
 	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));
 	data->cyls = rt_calloc(data, (obj[CYLINDER] + 1) * sizeof(t_cylinder));
+	data->discs = rt_calloc(data, (obj[DISC] + 1) * sizeof(t_disc));
 	data->planes = rt_calloc(data, (obj[PLANE] + 1) * sizeof(t_plane));
 	data->spheres = rt_calloc(data, (obj[SPHERE] + obj[LIGHT] + 1) * sizeof(t_sphere));
 	init_objects(data, input);
@@ -66,6 +69,7 @@ static void	assign_function_pointers(t_data *data)
 	data->f[AMBIENT] = &init_ambient;
 	data->f[CAMERA] = &init_camera;
 	data->f[CYLINDER] = &init_cylinder;
+	data->f[DISC] = &init_disc;
 	data->f[LIGHT] = &init_light;
 	data->f[PLANE] = &init_plane;
 	data->f[SPHERE] = &init_sphere;

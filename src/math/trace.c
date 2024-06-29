@@ -83,6 +83,7 @@ void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)
 			bounce(data, ray, y % data->num_threads);
 			bounces++;
 			ray->origin = ray->col->location;
+			// ray->col->colour.vec3 *= 0.95f;
 		}
 		if (ray->col->type == LIGHT)
 		{

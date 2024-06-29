@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:32:38 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 15:41:27 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static mlx_texture_t	*load_texture(t_data *data, char *path)
 
 int16_t	object_count(t_data *data)
 {
-	return (data->cyl_count + data->plane_count + data->sphere_count);
+	return (data->cyl_count + data->plane_count + data->sphere_count + data->disc_count);
 }
 
 void	init_objects(t_data *data, t_input *input)
@@ -35,6 +35,7 @@ void	init_objects(t_data *data, t_input *input)
 		input = input->next;
 	}
 	data->cyls[data->cyl_count].object = INVALID;
+	data->discs[data->disc_count].object = INVALID;
 	data->planes[data->plane_count].object = INVALID;
 	data->spheres[data->sphere_count].object = INVALID;
 }
@@ -80,6 +81,30 @@ void	init_cylinder(t_data *data, char **info)
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
 	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
 	data->cyl_count++;
+}
+
+void	init_disc(t_data *data, char **info)
+{
+	int	i;
+
+	i = data->disc_count;
+	check_split(data, info, 6);
+	verify_info(data, info);
+	data->discs[i].center = create_vector(data, info[0]);
+	data->discs[i].orientation = create_vector(data, info[1]);
+	data->discs[i].hole_radius = a_to_float(data, info[2]) / 2;
+	data->discs[i].radius = a_to_float(data, info[3]) / 2;
+	data->discs[i].colour = create_vector(data, info[4]);
+	data->discs[i].reflectivity = a_to_float(data, &info[5][2]);
+	if (data->discs[i].reflectivity < 0 || data->discs[i].reflectivity > 1)
+		exit_error(data, ": invalid reflectivity value");
+	data->discs[i].object = DISC;
+	data->discs[i].instance = object_count(data);
+	check_rgb_values(data, &data->discs[i].colour.vec3);
+	rgb_to_floats(&data->discs[i].colour);
+	data->discs[i].orientation = normalize_vector(data->discs[i].orientation);
+	data->discs[i].rev_norm.vec3 = data->discs[i].orientation.vec3 * -1;
+	data->disc_count++;
 }
 
 void	init_plane(t_data *data, char **info)

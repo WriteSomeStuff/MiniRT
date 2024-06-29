@@ -6,14 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/06/28 19:08:54 by vincent       ########   odam.nl          #
+#    Updated: 2024/06/29 15:37:16 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=thread  # 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address  # 
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 
@@ -37,6 +37,7 @@ CFILES	=	alloc.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
 			hit_cylinder.c \
+			hit_disc.c \
 			hit_plane.c \
 			hit_sphere.c \
 			hit_torus.c \

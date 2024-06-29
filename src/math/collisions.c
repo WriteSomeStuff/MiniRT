@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:25:53 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 15:50:32 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ static void	cylinder(t_hit *col, t_vec incoming, float absorption, float reflect
 	col->colour.vec3 = diffuse.vec3 + specular.vec3;
 }
 
+static void	disc(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+{
+	t_disc	*disc;
+	t_vec	clr;
+	t_vec	diffuse;
+	t_vec	specular;
+
+	(void)incoming;
+	disc = (t_disc *)col->obj;
+	clr = disc->colour;
+	col->obj_num = disc->instance;
+	diffuse = reflection_result(clr, col->colour, absorption);
+	specular.vec3 = col->colour.vec3 * reflectivity;
+	col->colour.vec3 = diffuse.vec3 + specular.vec3;
+}
+
 static void	plane(t_hit *col, t_vec incoming, float absorption, float reflectivity)
 {
 	t_plane	*plane;
@@ -64,7 +80,6 @@ static void	sphere(t_hit *col, t_vec incoming, float absorption, float reflectiv
 	t_vec		diffuse;
 	t_vec		specular;
 
-	(void)incoming;
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
@@ -85,7 +100,7 @@ static void	sphere(t_hit *col, t_vec incoming, float absorption, float reflectiv
 
 void	draw_collision(t_hit *col, t_vec incoming, float absorption, float reflectivity)
 {
-	static void	(*ptr[4])(t_hit *, t_vec, float, float) = {&cylinder, &plane, &sphere, &sphere};
+	static void	(*ptr[5])(t_hit *, t_vec, float, float) = {&cylinder, &disc, &plane, &sphere, &sphere};
 
 	if (col->hit == false)
 	{
