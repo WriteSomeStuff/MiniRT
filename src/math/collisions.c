@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 15:50:32 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 19:34:36 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	cylinder(t_hit *col, t_vec incoming, float absorption, float reflect
 	t_vec		diffuse;
 	t_vec		specular;
 
-	(void)absorption;
-	(void)reflectivity;
 	(void)incoming;
 	cyl = (t_cylinder *)col->obj;
 	if (col->caps == false)

@@ -57,13 +57,15 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	specular_direction = reflect(ray->direction, ray->col->surface_norm);
 	specular_direction.vec3 *= ray->col->reflectivity;
 	diffuse_direction = random_vector(data, id);
-	diffuse_direction.vec3 += ray->col->surface_norm.vec3;
-	diffuse_direction = norm_vec(diffuse_direction);
 	if (dot(diffuse_direction, ray->col->surface_norm) < 0)
 		diffuse_direction.vec3 *= -1;
+	diffuse_direction.vec3 += ray->col->surface_norm.vec3;
+	diffuse_direction = normalize_vector(diffuse_direction);
 	diffuse_direction.vec3 *= ray->col->absorption;
 	ray->direction.vec3 = diffuse_direction.vec3 + specular_direction.vec3;
-	ray->direction = norm_vec(ray->direction);
+	ray->direction = normalize_vector(ray->direction);
+	if (dot(ray->direction, ray->col->surface_norm) < 0)
+		ray->direction.vec3 *= -1;
 	find_closest_object(data, ray->col, ray);
 	draw_collision(ray->col, ray->direction, ray->col->absorption, ray->col->reflectivity);
 }
@@ -73,6 +75,8 @@ void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	uint32_t	bounces;
 	uint32_t	rays;
 
+	if (ray->col->hit == false || ray->col->type == LIGHT)
+		return ;
 	rays = 0;
 	while (rays < NUM_RAYS)
 	{
@@ -83,7 +87,7 @@ void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)
 			bounce(data, ray, y % data->num_threads);
 			bounces++;
 			ray->origin = ray->col->location;
-			// ray->col->colour.vec3 *= 0.95f;
+			// ray->col->colour.vec3 *= 0.99f;
 		}
 		if (ray->col->type == LIGHT)
 		{

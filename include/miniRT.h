@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/29 15:00:25 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 20:00:42 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 # define WINDOW_MAX_HEIGHT 1440
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.0001f
+# define OFFSET 0.00001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
-# define MAX_BOUNCES 10
+# define MAX_BOUNCES 25
 
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);

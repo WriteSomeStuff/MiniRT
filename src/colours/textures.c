@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 23:15:03 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 19:45:49 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_vec	plane_texture(t_plane *plane, t_vec loc)
 	if (plane->tex == NULL)
 		return (plane->colour);
 	ang = angle(plane->orientation, vec(0, 0, 1));
-	dir = norm_vec(cross(plane->orientation, vec(0, 0, 1)));
+	dir = normalize_vector(cross(plane->orientation, vec(0, 0, 1)));
 	rotate(&loc, quat(ang, dir));
 	x = (plane->location.x - loc.x) * plane->tex->width / 5;
 	y = (plane->location.y - loc.y) * plane->tex->height / 5;

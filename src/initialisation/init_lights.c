@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:32:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 18:42:07 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	check_rgb_values(t_data *data, const t_vec3 *vec)
 	}
 }
 
-// Luminosity is calculated and added into the colour, maybe delete variable?
 void	init_ambient(t_data *data, char **info)
 {
 	float	luminosity;
@@ -49,7 +48,6 @@ void	init_light(t_data *data, char **info)
 	data->spheres[i].center = create_vector(data, info[0]);
 	data->spheres[i].colour = create_vector(data, info[2]);
 	data->spheres[i].colour.vec3 *= a_to_float(data, info[1]);
-	// data->spheres[i].colour.vec3 *= 5;
 	if (info[3] != NULL)
 		data->spheres[i].radius = a_to_float(data, info[3]) / 2.0f;
 	data->spheres[i].object = LIGHT;

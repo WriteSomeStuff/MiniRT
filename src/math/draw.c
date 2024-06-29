@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 19:27:36 by vincent       ########   odam.nl         */
+/*   Updated: 2024/06/29 18:35:44 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,15 @@ static void	reset_ray(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	ray->col->colour = vec(1, 1, 1);
 }
 
+static bool	keep_going(t_data *data)
+{
+	bool	tmp;
+	pthread_mutex_lock(&data->mutex);
+	tmp = data->go;
+	pthread_mutex_unlock(&data->mutex);
+	return (tmp);
+}
+
 void	render(t_data *data, int32_t x, int32_t y)
 {
 	t_ray		ray;
@@ -65,21 +74,11 @@ void	render(t_data *data, int32_t x, int32_t y)
 		{
 			reset_ray(data, &ray, x, y);
 			initial_hit(data, &ray, x, y);
-			if (col.hit == true && col.type != LIGHT)
-			{
-				trace(data, &ray, x, y);
-			}
+			trace(data, &ray, x, y);
 			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
-			data->pix[y][x].pix_clr.vec3 *= 0;
 			x++;
-			pthread_mutex_lock(&data->mutex);
-			if (data->go == false)
-			{
-				data->threads_absorbed++;
-				pthread_mutex_unlock(&data->mutex);
-				return ;
-			}
-			pthread_mutex_unlock(&data->mutex);
+			if (keep_going(data) == false)
+				break ;
 		}
 		y += data->num_threads;
 	}
