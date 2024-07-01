@@ -12,6 +12,7 @@
 
 #include "miniRT.h"
 
+
 float	sum(t_vec vector)
 {
 	return (vector.x + vector.y + vector.z);
@@ -39,9 +40,9 @@ void	gamma_adjust(t_vec *colour)
 
 static void	setup(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
-	ray->col->absorption = data->pix[y][x].absorption;
+	ray->col->diffuse = data->pix[y][x].diffuse;
 	ray->direction = data->pix[y][x].incoming;
-	ray->col->reflectivity = data->pix[y][x].reflectivity;
+	ray->col->specular = data->pix[y][x].specular;
 	ray->col->colour = data->pix[y][x].obj_clr;
 	ray->origin = data->pix[y][x].location;
 	ray->col->surface_norm = data->pix[y][x].surface_norm;
@@ -55,19 +56,24 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	t_vec	specular_direction;
 
 	specular_direction = reflect(ray->direction, ray->col->surface_norm);
-	specular_direction.vec3 *= ray->col->reflectivity;
-	diffuse_direction = random_vector(data, id);
-	if (dot(diffuse_direction, ray->col->surface_norm) < 0)
-		diffuse_direction.vec3 *= -1;
-	diffuse_direction.vec3 += ray->col->surface_norm.vec3;
-	diffuse_direction = normalize_vector(diffuse_direction);
-	diffuse_direction.vec3 *= ray->col->absorption;
-	ray->direction.vec3 = diffuse_direction.vec3 + specular_direction.vec3;
-	ray->direction = normalize_vector(ray->direction);
-	if (dot(ray->direction, ray->col->surface_norm) < 0)
-		ray->direction.vec3 *= -1;
-	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col, ray->direction, ray->col->absorption, ray->col->reflectivity);
+	if (ray->col->glossy_bounce == true)
+	{
+		ray->direction = specular_direction;
+	}
+	else
+	{
+		specular_direction.vec3 *= ray->col->specular;
+		diffuse_direction = random_vector(data, id);
+		if (dot(diffuse_direction, ray->col->surface_norm) < 0)
+			diffuse_direction.vec3 *= -1;
+		diffuse_direction.vec3 += ray->col->surface_norm.vec3;
+		diffuse_direction = normalize_vector(diffuse_direction);
+		diffuse_direction.vec3 *= ray->col->diffuse;
+		ray->direction.vec3 = diffuse_direction.vec3 + specular_direction.vec3;
+		ray->direction = normalize_vector(ray->direction);
+	}
+	find_closest_object(data, ray->col, ray, id);
+	draw_collision(ray->col, ray->direction, ray->col->diffuse, ray->col->specular);
 }
 
 void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)

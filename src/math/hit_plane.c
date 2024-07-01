@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:24 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/11 18:21:38 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/01 12:14:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	intersect_planes(t_hit *col, t_ray *ray, const t_plane *p)
 		if (denom != 0.0f && distance > 0 && distance < col->distance)
 		{
 			update(ray, PLANE, (void *)p, distance);
-			col->reflectivity = p->reflectivity;
+			col->specular = p->specular;
+			col->glossiness = p->glossiness;
 			if (denom > 0)
 				col->surface_norm = p->rev_norm;
 			else

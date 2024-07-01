@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/29 14:56:29 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 13:54:45 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,13 @@ struct s_hit
 	bool	hit;
 	bool	inside_obj;
 	bool	caps;
+	bool	glossy_bounce;
 	t_token	type;
 	int16_t	obj_num;
 	float	distance;
-	float	reflectivity;
-	float	absorption;
+	float	glossiness;
+	float	specular;
+	float	diffuse;
 	void	*obj;
 	t_vec	location;
 	t_vec	colour;
@@ -147,7 +149,8 @@ struct s_cylinder
 	t_vec			top;
 	t_vec			orientation;
 	t_vec			rev_norm;
-	float			reflectivity;
+	float			glossiness;
+	float			specular;
 	float			radius;
 	float			height;
 	t_vec			colour;
@@ -161,7 +164,8 @@ struct s_disc
 	t_vec			center;
 	t_vec			orientation;
 	t_vec			rev_norm;
-	float			reflectivity;
+	float			glossiness;
+	float			specular;
 	float			radius;
 	float			hole_radius;
 	t_vec			colour;
@@ -175,7 +179,8 @@ struct s_plane
 	t_vec			orientation;
 	t_vec			rev_norm;
 	t_vec			colour;
-	float			reflectivity;
+	float			glossiness;
+	float			specular;
 	t_token			object;
 	uint16_t		instance;
 	mlx_texture_t	*tex;
@@ -191,8 +196,9 @@ struct s_pixel
 	t_vec			location;
 	t_vec			incoming;
 	t_vec			surface_norm;
-	float			reflectivity;
-	float			absorption;
+	float			glossiness;
+	float			specular;
+	float			diffuse;
 	int16_t			obj_num;
 };
 
@@ -200,7 +206,8 @@ struct s_sphere
 {
 	t_vec			center;
 	float			radius;
-	float			reflectivity;
+	float			glossiness;
+	float			specular;
 	t_vec			colour;
 	t_token			object;
 	uint16_t		instance;

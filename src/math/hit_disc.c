@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:24 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/29 15:44:09 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 17:45:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	intersect_discs(t_hit *col, t_ray *ray, const t_disc *d)
 			if (distance_to_center >= d->hole_radius && distance_to_center <= d->radius)
 			{
 				update(ray, DISC, (void *)d, distance);
-				col->reflectivity = d->reflectivity;
+				col->specular = d->specular;
+				col->glossiness = d->glossiness;
 				if (denom > 0)
 					col->surface_norm = d->rev_norm;
 				else

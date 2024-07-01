@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 18:35:44 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 13:57:02 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ float		max(float a, float b)
 
 static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
-	find_closest_object(data, ray->col, ray);
-	draw_collision(ray->col, ray->direction, ray->col->absorption, ray->col->reflectivity);
+	find_closest_object(data, ray->col, ray, y % data->num_threads);
+	draw_collision(ray->col, ray->direction, ray->col->diffuse, ray->col->specular);
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 	{
@@ -32,14 +32,14 @@ static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	else if (ray->col->hit == true)
 	{
 		data->pix[y][x].obj_clr = ray->col->colour;
-		data->pix[y][x].reflectivity = ray->col->reflectivity;
-		data->pix[y][x].absorption = ray->col->absorption;
+		data->pix[y][x].specular = ray->col->specular;
+		data->pix[y][x].diffuse = ray->col->diffuse;
 		data->pix[y][x].location = ray->col->location;
 		data->pix[y][x].incoming = ray->direction;
 		data->pix[y][x].surface_norm = ray->col->surface_norm;
 		data->pix[y][x].ambient = reflection_result(ray->col->colour, \
-			data->ambient, ray->col->absorption);
-		// data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->reflectivity;
+			data->ambient, ray->col->diffuse);
+		// data->pix[y][x].ambient.vec3 += data->ambient->colour.vec3 * ray->col->specular;
 	}
 }
 

@@ -6,21 +6,21 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:34:36 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 13:55:34 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	cylinder(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+static void	cylinder(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_cylinder	*cyl;
 	t_vec		clr;
 	float		product;
 	t_vec		to_center;
 	t_vec		to_new;
-	t_vec		diffuse;
-	t_vec		specular;
+	t_vec		diff;
+	t_vec		spec;
 
 	(void)incoming;
 	cyl = (t_cylinder *)col->obj;
@@ -34,49 +34,49 @@ static void	cylinder(t_hit *col, t_vec incoming, float absorption, float reflect
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = cylinder_texture(cyl, &col->location);
-	diffuse = reflection_result(clr, col->colour, absorption);
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	col->colour.vec3 = diffuse.vec3 + specular.vec3;
+	diff = reflection_result(clr, col->colour, diffuse);
+	spec.vec3 = col->colour.vec3 * specular;
+	col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
-static void	disc(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+static void	disc(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_disc	*disc;
 	t_vec	clr;
-	t_vec	diffuse;
-	t_vec	specular;
+	t_vec	diff;
+	t_vec	spec;
 
 	(void)incoming;
 	disc = (t_disc *)col->obj;
 	clr = disc->colour;
 	col->obj_num = disc->instance;
-	diffuse = reflection_result(clr, col->colour, absorption);
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	col->colour.vec3 = diffuse.vec3 + specular.vec3;
+	diff = reflection_result(clr, col->colour, diffuse);
+	spec.vec3 = col->colour.vec3 * specular;
+	col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
-static void	plane(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+static void	plane(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_plane	*plane;
 	t_vec	clr;
-	t_vec	diffuse;
-	t_vec	specular;
+	t_vec	diff;
+	t_vec	spec;
 
 	(void)incoming;
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, col->location);
 	col->obj_num = plane->instance;
-	diffuse = reflection_result(clr, col->colour, absorption);
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	col->colour.vec3 = diffuse.vec3 + specular.vec3;
+	diff = reflection_result(clr, col->colour, diffuse);
+	spec.vec3 = col->colour.vec3 * specular;
+	col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
-static void	sphere(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+static void	sphere(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_sphere	*sphere;
 	t_vec		clr;
-	t_vec		diffuse;
-	t_vec		specular;
+	t_vec		diff;
+	t_vec		spec;
 
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
@@ -91,12 +91,12 @@ static void	sphere(t_hit *col, t_vec incoming, float absorption, float reflectiv
 		col->colour.vec3 *= dot(incoming, col->surface_norm);
 		return ;
 	}
-	specular.vec3 = col->colour.vec3 * reflectivity;
-	diffuse = reflection_result(clr, col->colour, absorption);
-	col->colour.vec3 = diffuse.vec3 + specular.vec3;
+	spec.vec3 = col->colour.vec3 * specular;
+	diff = reflection_result(clr, col->colour, diffuse);
+	col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
-void	draw_collision(t_hit *col, t_vec incoming, float absorption, float reflectivity)
+void	draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	static void	(*ptr[5])(t_hit *, t_vec, float, float) = {&cylinder, &disc, &plane, &sphere, &sphere};
 
@@ -105,6 +105,8 @@ void	draw_collision(t_hit *col, t_vec incoming, float absorption, float reflecti
 		col->colour = vec(0, 0, 0);
 		return ;
 	}
-	ptr[col->type](col, incoming, absorption, reflectivity);
+	if (col->glossy_bounce == true)
+		return ;
+	ptr[col->type](col, incoming, diffuse, specular);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/06/17 17:58:21 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/01 12:14:19 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
-				col->reflectivity = c->reflectivity;
+				col->specular = c->specular;
+				col->glossiness = c->glossiness;
 				col->surface_norm.vec3 = c->orientation.vec3 * -1;
 				col->caps = true;
 				hits[0] = distance;
@@ -51,7 +52,8 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
-				col->reflectivity = c->reflectivity;
+				col->specular = c->specular;
+				col->glossiness = c->glossiness;
 				col->surface_norm.vec3 = c->orientation.vec3;
 				col->caps = true;
 				hits[1] = distance;
@@ -81,7 +83,8 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
 			if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
 			{
 				update(ray, CYLINDER, (void *)c, hits[2]);
-				col->reflectivity = c->reflectivity;
+				col->specular = c->specular;
+				col->glossiness = c->glossiness;
 				col->caps = false;
 			}
 		}

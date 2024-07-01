@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/29 20:00:42 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 17:19:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@
 # define WINDOW_MAX_HEIGHT 1440
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.00001f
+# define OFFSET 0.0001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25
 
+
+bool		is_glossy(t_data *data, uint32_t id, float glossiness);
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
 float		max(float a, float b);
@@ -46,7 +48,7 @@ void		render(t_data *data, int32_t x, int32_t y);
 void		redraw(t_data *data);
 void		rt_resize(int32_t x, int32_t y, void *param);
 void		rt_close(void *param);
-void		draw_collision(t_hit *col, t_vec incoming, float absorption, float reflectivity);
+void		draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular);
 void		trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
 float		sum(t_vec vector);
 void		update(t_ray *ray, t_token type, void *obj, float distance);
@@ -100,7 +102,7 @@ void		draw(t_data *data);
 
 /*	Math	*/
 /*	------------------------------------------------------------------	*/
-void		find_closest_object(t_data *data, t_hit *col, t_ray *ray);
+void		find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);

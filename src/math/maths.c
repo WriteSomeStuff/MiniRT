@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/08 17:28:37 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:51:37 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 16:34:46 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ bool	quadratic_equation(const t_vec *vec, float *low, float *high)
 	float	b_4ac;
 	float	tmp;
 
+	/*	Is this REALLY necessary?! REALLY!?	*/
 	if (fabs(vec->x) < OFFSET)
 		return (false);
 	b_4ac = vec->y * vec->y - 4 * vec->x * vec->z;

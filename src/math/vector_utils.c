@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:45:49 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/01 12:11:31 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,14 @@ t_vec	random_vector(t_data *data, uint32_t id)
 	tmp = &data->seed[id];
 	random = vec(norm_dist(tmp), norm_dist(tmp), norm_dist(tmp));
 	return (normalize_vector(random));
+}
+
+bool	is_glossy(t_data *data, uint32_t id, float glossiness)
+{
+	float	random;
+
+	random = prn(&data->seed[id]);
+	if (random <= glossiness)
+		return (true);
+	return (false);
 }

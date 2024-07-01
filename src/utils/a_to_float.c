@@ -43,7 +43,7 @@ static int	check_input(t_data *data, const char *str, float *c, int i)
 		{
 			i++;
 			if (str[i] == '\0' || ft_strlen(&str[i]) > 7)
-				exit_error(data, ": invalid input after decimal point");
+				exit_error(data, ": too much input after decimal point");
 			break ;
 		}
 	}

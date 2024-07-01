@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:51:55 by vincent       #+#    #+#                 */
-/*   Updated: 2024/05/24 14:12:19 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/01 11:49:14 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ static void	translate_cylinders(t_cylinder *c, t_vec t)
 		c->base.vec3 -= t.vec3;
 		c->top.vec3 -= t.vec3;
 		c++;
+	}
+}
+
+static void	translate_discs(t_disc *d, t_vec t)
+{
+	while (d->object != INVALID)
+	{
+		d->center.vec3 -= t.vec3;
+		d++;
 	}
 }
 
@@ -44,6 +53,7 @@ static void	translate_spheres(t_sphere *s, t_vec t)
 void	translate_objects(t_data *data, t_vec amount)
 {
 	translate_cylinders(data->cyls, amount);
+	translate_discs(data->discs, amount);
 	translate_planes(data->planes, amount);
 	translate_spheres(data->spheres, amount);
 	data->cam->viewpoint = vec(0, 0, 0);
