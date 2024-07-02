@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/01 13:55:34 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/02 18:58:50 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,48 @@ static void	plane(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_plane	*plane;
 	t_vec	clr;
-	t_vec	diff;
-	t_vec	spec;
+	// t_vec	diff;
+	// t_vec	spec;
 
 	(void)incoming;
+	(void)diffuse;
+	(void)specular;
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, col->location);
 	col->obj_num = plane->instance;
-	diff = reflection_result(clr, col->colour, diffuse);
-	spec.vec3 = col->colour.vec3 * specular;
-	col->colour.vec3 = diff.vec3 + spec.vec3;
+	if (col->glossy_bounce == false)
+		col->colour = reflection_result(clr, col->colour, 1);
+	// spec.vec3 = col->colour.vec3 * specular;
+	// col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
 static void	sphere(t_hit *col, t_vec incoming, float diffuse, float specular)
 {
 	t_sphere	*sphere;
 	t_vec		clr;
-	t_vec		diff;
-	t_vec		spec;
+	// t_vec		diff;
+	// t_vec		spec;
 
+	(void)diffuse;
+	(void)specular;
+	(void)incoming;
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
 	col->obj_num = sphere->instance;
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = sphere_texture(sphere, col->surface_norm);
-	if (sphere->object == LIGHT)
-	{
-		col->colour = reflection_result(clr, col->colour, 1);
-		col->surface_norm.vec3 *= -1;
-		col->colour.vec3 *= dot(incoming, col->surface_norm);
+	if (col->glossy_bounce == true)
 		return ;
-	}
-	spec.vec3 = col->colour.vec3 * specular;
-	diff = reflection_result(clr, col->colour, diffuse);
-	col->colour.vec3 = diff.vec3 + spec.vec3;
+	col->colour = reflection_result(clr, col->colour, 1);
+	// if (sphere->object == LIGHT)
+	// {
+	// 	col->surface_norm.vec3 *= -1;
+	// 	col->colour.vec3 *= dot(incoming, col->surface_norm);
+	// }
+	// spec.vec3 = col->colour.vec3 * specular;
+	// diff = reflection_result(clr, col->colour, diffuse);
+	// col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
 void	draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular)
@@ -105,8 +112,6 @@ void	draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular)
 		col->colour = vec(0, 0, 0);
 		return ;
 	}
-	if (col->glossy_bounce == true)
-		return ;
 	ptr[col->type](col, incoming, diffuse, specular);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }

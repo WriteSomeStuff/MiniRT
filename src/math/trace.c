@@ -56,21 +56,17 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	t_vec	specular_direction;
 
 	specular_direction = reflect(ray->direction, ray->col->surface_norm);
+	diffuse_direction = random_vector(data, id);
+	if (dot(diffuse_direction, ray->col->surface_norm) < 0)
+		diffuse_direction.vec3 *= -1;
+	diffuse_direction = normalize_vector(lerp(diffuse_direction, ray->col->surface_norm, 0.5f));
 	if (ray->col->glossy_bounce == true)
 	{
-		ray->direction = specular_direction;
+		ray->direction = normalize_vector(lerp(diffuse_direction, specular_direction, ray->col->specular));
 	}
 	else
 	{
-		specular_direction.vec3 *= ray->col->specular;
-		diffuse_direction = random_vector(data, id);
-		if (dot(diffuse_direction, ray->col->surface_norm) < 0)
-			diffuse_direction.vec3 *= -1;
-		diffuse_direction.vec3 += ray->col->surface_norm.vec3;
-		diffuse_direction = normalize_vector(diffuse_direction);
-		diffuse_direction.vec3 *= ray->col->diffuse;
-		ray->direction.vec3 = diffuse_direction.vec3 + specular_direction.vec3;
-		ray->direction = normalize_vector(ray->direction);
+		ray->direction = diffuse_direction;
 	}
 	find_closest_object(data, ray->col, ray, id);
 	draw_collision(ray->col, ray->direction, ray->col->diffuse, ray->col->specular);

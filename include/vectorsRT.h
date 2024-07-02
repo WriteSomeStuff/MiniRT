@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:46:31 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/02 16:42:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2);
 
 void		print_vector(t_vec vector);
 t_vec		create_vector(t_data *data, char *info);
+t_vec		lerp(t_vec vec1, t_vec vec2, float fraction);
 /*	------------------------------------------------------------------	*/
 
 /*	Quaternions	*/

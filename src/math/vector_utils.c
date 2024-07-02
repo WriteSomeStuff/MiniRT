@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/01 12:11:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/02 18:54:40 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,16 @@ bool	is_glossy(t_data *data, uint32_t id, float glossiness)
 	float	random;
 
 	random = prn(&data->seed[id]);
-	if (random <= glossiness)
+	if (glossiness >= random)
 		return (true);
+	// printf("random: %f glossiness: %f\n", random, glossiness);
 	return (false);
+}
+
+t_vec	lerp(t_vec vec1, t_vec vec2, float fraction)
+{
+	t_vec	res;
+
+	res.vec3 = vec1.vec3 * (1 - fraction) + vec2.vec3 * fraction;
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 13:15:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/02 18:41:57 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 				{
 					update(ray, s->object, (void *)s, res[0]);
 					col->specular = s->specular;
+					// if (s->object != LIGHT)
+					// 	printf("sphere's glossiness: %f\n", s->glossiness);
 					col->glossiness = s->glossiness;
 					if (res[1] <= 0.0f)
 						col->inside_obj = true;

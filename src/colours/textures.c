@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:45:49 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/02 11:45:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ t_vec	sphere_texture(t_sphere *sphere, t_vec loc)
 
 	if (sphere->tex == NULL)
 		return (sphere->colour);
-	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2));
-	y = sphere->tex->height - (sphere->tex->height / 2 + (loc.y * (sphere->tex->height / 2)));
+	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2)) - 1;
+	y = sphere->tex->height - (sphere->tex->height / 2 + (loc.y * (sphere->tex->height / 2))) - 1;
 	// return (checkerboard_tex((int32_t)(x * 20), (int32_t)(y * 20)));
 	return (pixel_to_clrvec(sphere->tex, (uint32_t)x, (uint32_t)y));
 }
