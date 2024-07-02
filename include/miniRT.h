@@ -38,7 +38,7 @@
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25
 
-
+t_vec		lerp(t_vec vec1, t_vec vec2, float fraction);
 bool		is_glossy(t_data *data, uint32_t id, float glossiness);
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);

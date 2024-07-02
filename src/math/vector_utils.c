@@ -75,7 +75,15 @@ bool	is_glossy(t_data *data, uint32_t id, float glossiness)
 	float	random;
 
 	random = prn(&data->seed[id]);
-	if (random <= glossiness)
+	if (random < glossiness)
 		return (true);
 	return (false);
+}
+
+t_vec	lerp(t_vec vec1, t_vec vec2, float fraction)
+{
+	t_vec	res;
+
+	res.vec3 = vec1.vec3 * (1 - fraction) + vec2.vec3 * fraction;
+	return (res);
 }
