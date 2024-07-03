@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/02 16:58:08 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 19:13:48 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id)
 	intersect_discs(col, ray, data->discs);
 	intersect_planes(col, ray, data->planes);
 	intersect_spheres(col, ray, data->spheres);
-	col->diffuse = 1 - col->specular;
 	if (col->type != LIGHT)
 		col->glossy_bounce = is_glossy(data, id, ray->col->glossiness);
 }

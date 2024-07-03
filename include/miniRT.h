@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/02 18:30:41 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 18:54:33 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		render(t_data *data, int32_t x, int32_t y);
 void		redraw(t_data *data);
 void		rt_resize(int32_t x, int32_t y, void *param);
 void		rt_close(void *param);
-void		draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular);
+void		draw_collision(t_hit *col, t_vec incoming);
 void		trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
 float		sum(t_vec vector);
 void		update(t_ray *ray, t_token type, void *obj, float distance);

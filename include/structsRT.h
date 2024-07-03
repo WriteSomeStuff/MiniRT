@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 13:54:45 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 19:14:38 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ struct s_hit
 	float	distance;
 	float	glossiness;
 	float	specular;
-	float	diffuse;
 	void	*obj;
 	t_vec	location;
 	t_vec	colour;
@@ -198,7 +197,6 @@ struct s_pixel
 	t_vec			surface_norm;
 	float			glossiness;
 	float			specular;
-	float			diffuse;
 	int16_t			obj_num;
 };
 

@@ -40,7 +40,7 @@ void	gamma_adjust(t_vec *colour)
 
 static void	setup(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
-	ray->col->diffuse = data->pix[y][x].diffuse;
+	ray->col->glossy_bounce = is_glossy(data, y % data->num_threads, data->pix[y][x].glossiness);
 	ray->direction = data->pix[y][x].incoming;
 	ray->col->specular = data->pix[y][x].specular;
 	ray->col->colour = data->pix[y][x].obj_clr;
@@ -55,13 +55,13 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	t_vec	diffuse_direction;
 	t_vec	specular_direction;
 
-	specular_direction = reflect(ray->direction, ray->col->surface_norm);
 	diffuse_direction = random_vector(data, id);
 	if (dot(diffuse_direction, ray->col->surface_norm) < 0)
 		diffuse_direction.vec3 *= -1;
 	diffuse_direction = normalize_vector(lerp(diffuse_direction, ray->col->surface_norm, 0.5f));
 	if (ray->col->glossy_bounce == true)
 	{
+		specular_direction = reflect(ray->direction, ray->col->surface_norm);
 		ray->direction = normalize_vector(lerp(diffuse_direction, specular_direction, ray->col->specular));
 	}
 	else
@@ -69,7 +69,7 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 		ray->direction = diffuse_direction;
 	}
 	find_closest_object(data, ray->col, ray, id);
-	draw_collision(ray->col, ray->direction, ray->col->diffuse, ray->col->specular);
+	draw_collision(ray->col, ray->direction);
 }
 
 void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)

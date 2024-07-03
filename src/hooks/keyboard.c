@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/01 12:14:31 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 19:14:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t 
 			pixels[y][x].surface_norm.vec3 *= 0;
 			pixels[y][x].obj_num = -1;
 			pixels[y][x].specular = 0;
-			pixels[y][x].diffuse = 0;
 			mlx_put_pixel(data->scene, x, y, 0xff);
 			x++;
 		}

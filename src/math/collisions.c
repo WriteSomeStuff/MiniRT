@@ -6,21 +6,19 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/02 18:58:50 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 18:53:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	cylinder(t_hit *col, t_vec incoming, float diffuse, float specular)
+static void	cylinder(t_hit *col, t_vec incoming)
 {
 	t_cylinder	*cyl;
 	t_vec		clr;
 	float		product;
 	t_vec		to_center;
 	t_vec		to_new;
-	t_vec		diff;
-	t_vec		spec;
 
 	(void)incoming;
 	cyl = (t_cylinder *)col->obj;
@@ -34,55 +32,41 @@ static void	cylinder(t_hit *col, t_vec incoming, float diffuse, float specular)
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = cylinder_texture(cyl, &col->location);
-	diff = reflection_result(clr, col->colour, diffuse);
-	spec.vec3 = col->colour.vec3 * specular;
-	col->colour.vec3 = diff.vec3 + spec.vec3;
+	if (col->glossy_bounce == false)
+		col->colour = reflection_result(clr, col->colour, 1);
 }
 
-static void	disc(t_hit *col, t_vec incoming, float diffuse, float specular)
+static void	disc(t_hit *col, t_vec incoming)
 {
 	t_disc	*disc;
 	t_vec	clr;
-	t_vec	diff;
-	t_vec	spec;
 
 	(void)incoming;
 	disc = (t_disc *)col->obj;
 	clr = disc->colour;
 	col->obj_num = disc->instance;
-	diff = reflection_result(clr, col->colour, diffuse);
-	spec.vec3 = col->colour.vec3 * specular;
-	col->colour.vec3 = diff.vec3 + spec.vec3;
+	if (col->glossy_bounce == false)
+		col->colour = reflection_result(clr, col->colour, 1);
 }
 
-static void	plane(t_hit *col, t_vec incoming, float diffuse, float specular)
+static void	plane(t_hit *col, t_vec incoming)
 {
 	t_plane	*plane;
 	t_vec	clr;
-	// t_vec	diff;
-	// t_vec	spec;
 
 	(void)incoming;
-	(void)diffuse;
-	(void)specular;
 	plane = (t_plane *)col->obj;
 	clr = plane_texture(plane, col->location);
 	col->obj_num = plane->instance;
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
-	// spec.vec3 = col->colour.vec3 * specular;
-	// col->colour.vec3 = diff.vec3 + spec.vec3;
 }
 
-static void	sphere(t_hit *col, t_vec incoming, float diffuse, float specular)
+static void	sphere(t_hit *col, t_vec incoming)
 {
 	t_sphere	*sphere;
 	t_vec		clr;
-	// t_vec		diff;
-	// t_vec		spec;
 
-	(void)diffuse;
-	(void)specular;
 	(void)incoming;
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
@@ -90,28 +74,19 @@ static void	sphere(t_hit *col, t_vec incoming, float diffuse, float specular)
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
 	clr = sphere_texture(sphere, col->surface_norm);
-	if (col->glossy_bounce == true)
-		return ;
-	col->colour = reflection_result(clr, col->colour, 1);
-	// if (sphere->object == LIGHT)
-	// {
-	// 	col->surface_norm.vec3 *= -1;
-	// 	col->colour.vec3 *= dot(incoming, col->surface_norm);
-	// }
-	// spec.vec3 = col->colour.vec3 * specular;
-	// diff = reflection_result(clr, col->colour, diffuse);
-	// col->colour.vec3 = diff.vec3 + spec.vec3;
+	if (col->glossy_bounce == false)
+		col->colour = reflection_result(clr, col->colour, 1);
 }
 
-void	draw_collision(t_hit *col, t_vec incoming, float diffuse, float specular)
+void	draw_collision(t_hit *col, t_vec incoming)
 {
-	static void	(*ptr[5])(t_hit *, t_vec, float, float) = {&cylinder, &disc, &plane, &sphere, &sphere};
+	static void	(*ptr[5])(t_hit *, t_vec) = {&cylinder, &disc, &plane, &sphere, &sphere};
 
 	if (col->hit == false)
 	{
 		col->colour = vec(0, 0, 0);
 		return ;
 	}
-	ptr[col->type](col, incoming, diffuse, specular);
+	ptr[col->type](col, incoming);
 	col->location.vec3 += OFFSET * col->surface_norm.vec3;
 }
