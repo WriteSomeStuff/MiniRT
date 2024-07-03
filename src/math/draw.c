@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/03 19:13:45 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/03 19:28:59 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 	{
-		data->pix[y][x].pix_clr = ray->col->colour;
+		data->pix[y][x].pix_clr.vec3 = ray->col->colour.vec3 * max(dot(ray->direction, inverted(ray->col->surface_norm)), 0.1f);
 		gamma_adjust(&data->pix[y][x].pix_clr);
 	}
 	else if (ray->col->hit == true)

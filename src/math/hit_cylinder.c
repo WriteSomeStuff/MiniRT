@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 12:14:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 19:41:50 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 				update(ray, CYLINDER, (void *)c, distance);
 				col->specular = c->specular;
 				col->glossiness = c->glossiness;
-				col->surface_norm.vec3 = c->orientation.vec3 * -1;
+				col->surface_norm = inverted(c->orientation);
 				col->caps = true;
 				hits[0] = distance;
 			}

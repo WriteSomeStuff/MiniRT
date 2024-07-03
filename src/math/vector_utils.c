@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/02 18:54:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/03 19:29:04 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ t_vec	vec(float x, float y, float z)
 	vec.y = y;
 	vec.z = z;
 	return (vec);
+}
+
+t_vec	inverted(t_vec vector)
+{
+	t_vec	inverted;
+	
+	inverted.vec3 = vector.vec3 * -1.0f;
+	return (inverted);
 }
 
 float	dot(const t_vec a, const t_vec b)
@@ -60,14 +68,17 @@ static float	norm_dist(uint32_t *id)
 	return (rho * cos(theta));
 }
 
-t_vec	random_vector(t_data *data, uint32_t id)
+t_vec	random_vector(t_data *data, uint32_t id, t_vec surface_normal)
 {
 	t_vec		random;
 	uint32_t	*tmp;
 
 	tmp = &data->seed[id];
 	random = vec(norm_dist(tmp), norm_dist(tmp), norm_dist(tmp));
-	return (normalize_vector(random));
+	random = normalize_vector(random);
+	if (dot(random, surface_normal) < 0)
+		random = inverted(random);
+	return (random);
 }
 
 bool	is_glossy(t_data *data, uint32_t id, float glossiness)
