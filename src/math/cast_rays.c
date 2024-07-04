@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:25:25 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/26 17:49:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/04 14:43:21 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	allocate_rays(t_data *data, int32_t width, int32_t height)
 	int32_t	i;
 
 	i = 0;
-	if (data->mlx->width == data->window->width && data->mlx->height == data->window->height && data->pix != NULL)
-		return ;
+	// if (data->mlx->width == data->window->width && data->mlx->height == data->window->height && data->pix != NULL)
+	// 	return ;
 	if (data->pix != NULL)
 	{
 		free_2d((void ***)&data->pix);

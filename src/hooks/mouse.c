@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/03 19:48:15 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/04 14:48:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,40 @@ void	rt_close(void *param)
 	exit_success(data);
 }
 
-void	rt_resize(int32_t x, int32_t y, void *param)
+void	rt_resize(void *param)
 {
 	t_data *data;
-	static int time = 0;
 
 	data = (t_data *)param;
-	// if (mlx_is_mouse_down(data->mlx, MLX_MOUSE_BUTTON_LEFT) == true)
+	// if (mlx_is_mouse_down(data->mlx, MLX_MOUSE_BUTTON_LEFT) == false)
 	// {
-	pthread_mutex_lock(&data->mutex);
-	data->go = false;
-	pthread_mutex_unlock(&data->mutex);
-	// for (int32_t x = 0; x < data->window->width; x++)
-	// {
-	// 	mlx_image_to_window(data->mlx, data->highlight, x, y);
-	// }
-	// time = mlx_get_time();
-	// if (mlx_get_time() - time > 0.1)
-	// {
-	// 	puts("TRIGGERED");
-		if ((data->window->width != x || data->window->height != y) && time == 0)
+	if (data->mlx->width != data->window->width || data->mlx->height != data->window->height)
+	{
+		pthread_mutex_lock(&data->mutex);
+		data->go = false;
+		pthread_mutex_unlock(&data->mutex);
+		wait_for_threads(data);
+		reset_pixel_array(data, data->pix, data->window->width, data->window->height);
+		data->window->width = data->mlx->width;
+		data->window->height = data->mlx->height;
+		if (data->mlx->width > WINDOW_MAX_WIDTH)
 		{
-			// time = 1;
-			if (x > WINDOW_MAX_WIDTH)
-				x = WINDOW_MAX_WIDTH;
-			if (y > WINDOW_MAX_WIDTH)
-				y = WINDOW_MAX_WIDTH;
-			wait_for_threads(data);
-			// puts("uuu");
-			data->window->width = x;
-			data->window->height = y;
-			data->window->aspect_ratio = (float)y / x;
-			mlx_set_window_size(data->mlx, x, y);
-			mlx_resize_image(data->scene, x, y);
-			mlx_resize_image(data->highlight, x, y);
-			printf("x: %d, y: %d\n", x, y);
-			// reset_pixel_array(data, data->pix, data->window->width, data->window->height);
-			cast_rays(data);
-			normalize_scene(data);
-			draw(data);
+			data->window->width = WINDOW_MAX_WIDTH;
+			mlx_set_window_size(data->mlx, data->window->width, data->window->height);
 		}
+		if (data->mlx->height > WINDOW_MAX_WIDTH)
+		{
+			data->window->height = WINDOW_MAX_WIDTH;
+			mlx_set_window_size(data->mlx, data->window->width, data->window->height);
+		}
+		data->window->aspect_ratio = (float)data->window->height / data->window->width;
+		printf("x: %d, y: %d\n", data->window->width, data->window->height);
+		cast_rays(data);
+		mlx_resize_image(data->scene, data->window->width, data->window->height);
+		mlx_resize_image(data->highlight, data->window->width, data->window->height);
+		normalize_scene(data);
+		draw(data);
+	}
 	// }
 }
 
