@@ -26,14 +26,17 @@ void	gamma_adjust(t_vec *colour)
 	colour->z = pow(colour->z, 1 / 2.2);
 	if (colour->x > 1.0f)
 	{
+		puts("x");
 		colour->vec3 /= colour->x;
 	}
 	if (colour->y > 1.0f)
 	{
+		puts("y");
 		colour->vec3 /= colour->y;
 	}
 	if (colour->z > 1.0f)
 	{
+		puts("z");
 		colour->vec3 /= colour->z;
 	}
 }
@@ -43,7 +46,7 @@ static void	setup(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	ray->col->glossy_bounce = is_glossy(data, y % data->num_threads, data->pix[y][x].glossiness);
 	ray->direction = data->pix[y][x].incoming;
 	ray->col->specular = data->pix[y][x].specular;
-	ray->col->colour = data->pix[y][x].obj_clr;
+	ray->col->colour = lerp(data->pix[y][x].obj_clr, vec(1, 1, 1), ray->col->glossy_bounce);
 	ray->origin = data->pix[y][x].location;
 	ray->col->surface_norm = data->pix[y][x].surface_norm;
 	ray->col->inside_obj = false;

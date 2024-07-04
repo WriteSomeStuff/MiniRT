@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/04 14:48:12 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/04 15:56:59 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	rt_resize(void *param)
 			mlx_set_window_size(data->mlx, data->window->width, data->window->height);
 		}
 		data->window->aspect_ratio = (float)data->window->height / data->window->width;
-		printf("x: %d, y: %d\n", data->window->width, data->window->height);
+		data->window->sizechanged = true;
+		// printf("x: %d, y: %d\n", data->window->width, data->window->height);
 		cast_rays(data);
 		mlx_resize_image(data->scene, data->window->width, data->window->height);
 		mlx_resize_image(data->highlight, data->window->width, data->window->height);
@@ -78,7 +79,6 @@ void	rt_scroll(double xdelta, double ydelta, void *param)
 	else
 		data->cam->fov += ydelta;
 	data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
-	cast_rays(data);
 	redraw(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/03 19:14:30 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/04 15:47:01 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	redraw(t_data *data)
 	pthread_mutex_unlock(&data->mutex);
 	wait_for_threads(data);
 	reset_pixel_array(data, data->pix, data->window->width, data->window->height);
+	cast_rays(data);
 	normalize_scene(data);
 	draw(data);
 }

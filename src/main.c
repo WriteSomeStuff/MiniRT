@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/04 14:42:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/04 15:38:53 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ void	initialise_window(t_data *data)
 	w->width = data->mlx->width;
 	w->height = data->mlx->height;
 	w->aspect_ratio = (float)data->mlx->height / data->mlx->width;
+	w->sizechanged = true;
 	data->window = w;
-	// mlx_set_cursor_mode(data->mlx, GLFW_STICKY_MOUSE_BUTTONS);
-	// mlx_set_window_limit(data->mlx, WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT, \
-	// 	WINDOW_MAX_WIDTH, WINDOW_MAX_HEIGHT);
 }
 
 int32_t	main(int32_t argc, char **argv)

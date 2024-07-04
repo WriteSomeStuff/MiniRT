@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/03 19:28:59 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/04 15:31:19 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	}
 	else if (ray->col->hit == true)
 	{
-		data->pix[y][x].obj_clr = ray->col->colour;
+		data->pix[y][x].obj_clr = ray->col->objclr;
 		data->pix[y][x].specular = ray->col->specular;
 		data->pix[y][x].glossiness = ray->col->glossiness;
 		data->pix[y][x].location = ray->col->location;
