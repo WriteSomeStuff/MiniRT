@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/04 14:41:37 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:51:34 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25
 
-
+t_vec		get_object_colour(t_hit *col);
 bool		is_glossy(t_data *data, uint32_t id, float glossiness);
 void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
@@ -66,9 +66,9 @@ t_vec		combine_colours(const t_vec c1, const t_vec c2);
 uint32_t	percentage_to_rgba(const t_vec f);
 // uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
 
-t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
-t_vec		plane_texture(t_plane *plane, t_vec loc);
-t_vec		sphere_texture(t_sphere *sphere, t_vec location);
+// t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
+// t_vec		plane_texture(t_plane *plane, t_vec loc);
+// t_vec		sphere_texture(t_sphere *sphere, t_vec location);
 /*	------------------------------------------------------------------	*/
 
 /*	Hooks	*/

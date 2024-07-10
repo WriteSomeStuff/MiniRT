@@ -24,21 +24,21 @@ void	gamma_adjust(t_vec *colour)
 	colour->x = pow(colour->x, 1 / 2.2);
 	colour->y = pow(colour->y, 1 / 2.2);
 	colour->z = pow(colour->z, 1 / 2.2);
-	if (colour->x > 1.0f)
-	{
-		puts("x");
-		colour->vec3 /= colour->x;
-	}
-	if (colour->y > 1.0f)
-	{
-		puts("y");
-		colour->vec3 /= colour->y;
-	}
-	if (colour->z > 1.0f)
-	{
-		puts("z");
-		colour->vec3 /= colour->z;
-	}
+	// if (colour->x > 1.0f)
+	// {
+	// 	puts("x");
+	// 	colour->vec3 /= colour->x;
+	// }
+	// if (colour->y > 1.0f)
+	// {
+	// 	puts("y");
+	// 	colour->vec3 /= colour->y;
+	// }
+	// if (colour->z > 1.0f)
+	// {
+	// 	puts("z");
+	// 	colour->vec3 /= colour->z;
+	// }
 }
 
 static void	setup(t_data *data, t_ray *ray, int32_t x, int32_t y)

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/03 19:28:59 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:49:16 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	cylinder(t_hit *col, t_vec incoming)
 	}
 	if (col->inside_obj == true)
 		col->surface_norm.vec3 *= -1;
-	clr = cylinder_texture(cyl, &col->location);
+	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
 }
@@ -56,7 +56,7 @@ static void	plane(t_hit *col, t_vec incoming)
 
 	(void)incoming;
 	plane = (t_plane *)col->obj;
-	clr = plane_texture(plane, col->location);
+	clr = get_object_colour(col);
 	col->obj_num = plane->instance;
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
@@ -73,7 +73,7 @@ static void	sphere(t_hit *col, t_vec incoming)
 	col->obj_num = sphere->instance;
 	if (col->inside_obj == true)
 		col->surface_norm = inverted(col->surface_norm);
-	clr = sphere_texture(sphere, col->surface_norm);
+	clr = get_object_colour(col);
 	if (col->type == LIGHT)
 	{
 		col->colour = reflection_result(clr, col->colour, 1);

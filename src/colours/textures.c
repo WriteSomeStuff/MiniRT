@@ -6,37 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/02 11:45:38 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/10 18:19:02 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-// void	translate(t_sphere *sphere, float *x, float *y)
-// {
-// 	(void)sphere;
-// 	*x = 100 + ((*x) * 100);
-// 	*y = 100 - ((*y) * 100);
-// 	printf("x: %f, y: %f\n", *x, *y);
-// }
-
-// bool	b_or_w(float x, float y, float modulus)
-// {
-// 	if ((fabs(fmod(x, modulus)) <= modulus / 2 && fabs(fmod(y, modulus)) <= modulus / 2) ||
-// 		(fabs(fmod(x, modulus)) > modulus / 2 && fabs(fmod(y, modulus)) > modulus / 2))
-// 		return (false);
-// 	return (true);
-// }
-
-t_vec	checkerboard_tex(int32_t x, int32_t y)
-{
-	if (x % 20 < 10 && y % 20 >= 10)
-		return (vec(0, 0, 0));
-	else if (x % 20 >= 10 && y % 20 < 10)
-		return (vec(0, 0, 0));
-	else
-		return (vec(1, 1, 1));	
-}
 
 static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 {
@@ -53,63 +27,77 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 	return (clr);
 }
 
-t_vec	cylinder_texture(t_cylinder *cyl, t_vec *surface)
+static t_vec	cylinder_texture(void *cylptr, t_vec location)
 {
-	t_vec	dir;
-	float	x;
-	float	y;
+	// t_vec	dir;
+	// float	x;
+	// float	y;
+	t_cylinder	*cyl;
 
+	cyl = (t_cylinder*)cylptr;
 	if (cyl->tex == NULL)
 		return (cyl->colour);
-	set_vector(&dir, &cyl->center, surface);
-	x = cyl->tex->width / 2 + ((dir.x / 2) * (cyl->tex->width / 2));
-	y = cyl->tex->height - (cyl->tex->height / 2 + (dir.y * (cyl->tex->height / 2)));
-	return (pixel_to_clrvec(cyl->tex, (uint32_t)x, (uint32_t)y));
+	else
+		return (location);
+	// set_vector(&dir, &cyl->center, surface);
+	// x = cyl->tex->width / 2 + ((dir.x / 2) * (cyl->tex->width / 2));
+	// y = cyl->tex->height - (cyl->tex->height / 2 + (dir.y * (cyl->tex->height / 2)));
+	// return (pixel_to_clrvec(cyl->tex, (uint32_t)x, (uint32_t)y));
 }
 
-t_vec	plane_texture(t_plane *plane, t_vec loc)
+static t_vec	plane_texture(void *planeptr, t_vec intersection)
 {
 	t_vec	dir;
-	float	ang;
 	float	x;
 	float	y;
+	const float	scalar = 100;
+	t_plane	*plane;
 
+	plane = (t_plane*)planeptr;
 	if (plane->tex == NULL)
 		return (plane->colour);
-	ang = angle(plane->orientation, vec(0, 0, 1));
-	dir = normalize_vector(cross(plane->orientation, vec(0, 0, 1)));
-	rotate(&loc, quat(ang, dir));
-	x = (plane->location.x - loc.x) * plane->tex->width / 5;
-	y = (plane->location.y - loc.y) * plane->tex->height / 5;
+	dir = normalize_vector(cross(vec(0, 0, 1), plane->orientation));
+	rotate(&intersection, quat(angle(plane->orientation, vec(0, 0, 1)), dir));
+	x = (intersection.x - plane->location.x) * scalar;
+	y = (intersection.y - plane->location.y) * scalar;
 	if (x < 0.0f)
 	{
 		x *= -1;
-		x = fmod(x, plane->tex->width);
-		x = plane->tex->width - x - 1;
+		x = fmodf(x, scalar);
+		x = scalar - x - 1;
 	}
 	else
-		x = fmod(x, plane->tex->width);
+		x = fmodf(x, scalar);
 	if (y < 0.0f)
 	{
 		y *= -1;
-		y = fmod(y, plane->tex->height);
-		y = plane->tex->height - y - 1;
+		y = fmodf(y, scalar);
+		y = scalar - y - 1;
 	}
 	else
-		y = fmod(y, plane->tex->height);
+		y = fmodf(y, scalar);
 	// return (checkerboard_tex((int32_t)x, (int32_t)y));
-	return (pixel_to_clrvec(plane->tex, (uint32_t)x, (uint32_t)y));
+	return (pixel_to_clrvec(plane->tex, (uint32_t)(x * plane->tex->width / scalar), (uint32_t)(y * plane->tex->height / scalar)));
 }
 
-t_vec	sphere_texture(t_sphere *sphere, t_vec loc)
+static t_vec	sphere_texture(void *sphereptr, t_vec loc)
 {
 	float	x;
 	float	y;
+	t_sphere	*sphere;
 
+	sphere = (t_sphere*)sphereptr;
 	if (sphere->tex == NULL)
 		return (sphere->colour);
 	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2)) - 1;
 	y = sphere->tex->height - (sphere->tex->height / 2 + (loc.y * (sphere->tex->height / 2))) - 1;
 	// return (checkerboard_tex((int32_t)(x * 20), (int32_t)(y * 20)));
 	return (pixel_to_clrvec(sphere->tex, (uint32_t)x, (uint32_t)y));
+}
+
+t_vec	get_object_colour(t_hit *col)
+{
+	static t_vec	(*ptr[5])(void *, t_vec) = {&cylinder_texture, NULL, &plane_texture, &sphere_texture, &sphere_texture};
+	
+	return (ptr[col->type](col->obj, col->location));
 }
