@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 18:19:02 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/12 17:39:47 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ static t_vec	plane_texture(void *planeptr, t_vec intersection)
 	t_plane	*plane;
 
 	plane = (t_plane*)planeptr;
-	if (plane->tex == NULL)
-		return (plane->colour);
+	// if (plane->tex == NULL)
+	return (plane->colour);
 	dir = normalize_vector(cross(vec(0, 0, 1), plane->orientation));
 	rotate(&intersection, quat(angle(plane->orientation, vec(0, 0, 1)), dir));
 	x = (intersection.x - plane->location.x) * scalar;
@@ -87,8 +87,8 @@ static t_vec	sphere_texture(void *sphereptr, t_vec loc)
 	t_sphere	*sphere;
 
 	sphere = (t_sphere*)sphereptr;
-	if (sphere->tex == NULL)
-		return (sphere->colour);
+	// if (sphere->tex == NULL)
+	return (sphere->colour);
 	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2)) - 1;
 	y = sphere->tex->height - (sphere->tex->height / 2 + (loc.y * (sphere->tex->height / 2))) - 1;
 	// return (checkerboard_tex((int32_t)(x * 20), (int32_t)(y * 20)));
