@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 17:49:16 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/16 17:38:17 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	cylinder(t_hit *col, t_vec incoming)
 		set_vector(&col->surface_norm, &to_new, &col->location);
 	}
 	if (col->inside_obj == true)
-		col->surface_norm.vec3 *= -1;
+		col->surface_norm = inverted(col->surface_norm);
 	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
