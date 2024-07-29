@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:25:25 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/26 17:49:40 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/04 15:55:02 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,8 @@ static void	allocate_rays(t_data *data, int32_t width, int32_t height)
 	int32_t	i;
 
 	i = 0;
-	if (data->mlx->width == data->window->width && data->mlx->height == data->window->height && data->pix != NULL)
-		return ;
-	if (data->pix != NULL)
-	{
-		free_2d((void ***)&data->pix);
-	}
+	data->window->sizechanged = false;
+	free_2d((void ***)&data->pix);
 	pixels = rt_malloc(data, (height + 1) * sizeof(t_pixel *));
 	while (i < height)
 	{
@@ -52,7 +48,8 @@ void	cast_rays(t_data *data)
 	int32_t	y;
 
 	y = 0;
-	allocate_rays(data, data->window->width, data->window->height);
+	if (data->window->sizechanged == true)
+		allocate_rays(data, data->window->width, data->window->height);
 	while (y < data->window->height)
 	{
 		x = 0;

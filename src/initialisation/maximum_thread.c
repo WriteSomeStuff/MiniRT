@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 17:41:25 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/04 16:00:23 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	wait_for_threads(t_data *data)
 		usleep(1000);
 	}
 	pthread_mutex_unlock(&data->mutex);
+	// data->iterations = 0;
 }
 
 static void	*prepare_rendering(void *d)
@@ -87,7 +88,7 @@ static void	*create_threads(void *d)
 		i = 0;
 		data->threads_absorbed = 0;
 		if (data->iterations > 0 && data->iterations % 10 == 0)
-		printf("Samples: %d\n", data->iterations * NUM_RAYS);
+			printf("Samples: %d\n", data->iterations * NUM_RAYS);
 		pthread_mutex_lock(&data->mutex);
 		data->iterations++;
 		while (i < data->num_threads)

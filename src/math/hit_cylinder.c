@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 12:14:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/16 18:01:18 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,23 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->base, c->orientation);
-	if (denom != 0.0f)
+	if (fabs(denom) > OFFSET)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->base) <= c->radius)
 		{
+			// if (distance < col->distance)
+			hits[0] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
 				col->specular = c->specular;
 				col->glossiness = c->glossiness;
-				col->surface_norm.vec3 = c->orientation.vec3 * -1;
+				if (denom > 0)
+					col->surface_norm = inverted(c->orientation);
+				else
+					col->surface_norm = c->orientation;
 				col->caps = true;
-				hits[0] = distance;
 			}
 		}
 	}
@@ -44,19 +48,23 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->top, c->orientation);
-	if (denom != 0.0f)
+	if (fabs(denom) > OFFSET)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->top) <= c->radius)
 		{
+			// if (distance < col->distance)
+			hits[1] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
 				col->specular = c->specular;
 				col->glossiness = c->glossiness;
-				col->surface_norm.vec3 = c->orientation.vec3;
+				if (denom > 0)
+					col->surface_norm = inverted(c->orientation);
+				else
+					col->surface_norm = c->orientation;
 				col->caps = true;
-				hits[1] = distance;
 			}
 		}
 	}
@@ -77,7 +85,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
 	tmp.z = dot(cyl_cross, cyl_cross) - pow(c->radius, 2);
 	if (quadratic_equation(&tmp, &hits[2], &hits[3]) == true)
 	{
-		if (analyze_intersection(&hits[2], &hits[3]) == true)
+		if (analyze_intersection(&hits[2], &hits[3]) == true && hits[2] < col->distance)
 		{
 			to_center.vec3 = ray->direction.vec3 * hits[2] + ray->origin.vec3 - c->center.vec3;
 			if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
