@@ -13,7 +13,7 @@
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g -fsanitize=address  # 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 

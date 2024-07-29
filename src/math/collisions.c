@@ -28,9 +28,9 @@ static void	cylinder(t_hit *col, t_vec incoming)
 		product = dot(to_center, cyl->orientation);
 		to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
 		set_vector(&col->surface_norm, &to_new, &col->location);
+		if (col->inside_obj == true)
+			col->surface_norm = inverted(col->surface_norm);
 	}
-	if (col->inside_obj == true)
-		col->surface_norm = inverted(col->surface_norm);
 	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);

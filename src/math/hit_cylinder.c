@@ -19,22 +19,22 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->base, c->orientation);
-	if (fabs(denom) < OFFSET)
+	if (fabs(denom) > OFFSET)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->base) <= c->radius)
 		{
-			if (distance < col->distance)
-				hits[0] = distance;
+			// if (distance < col->distance)
+			hits[0] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
 				col->specular = c->specular;
 				col->glossiness = c->glossiness;
 				if (denom > 0)
-					col->surface_norm = c->orientation;
-				else
 					col->surface_norm = inverted(c->orientation);
+				else
+					col->surface_norm = c->orientation;
 				col->caps = true;
 			}
 		}
@@ -48,13 +48,13 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	float	distance;
 
 	denom = hit_flat_surface(&distance, ray, c->top, c->orientation);
-	if (denom != 0.0f)
+	if (fabs(denom) > OFFSET)
 	{
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->top) <= c->radius)
 		{
-			if (distance < col->distance)
-				hits[1] = distance;
+			// if (distance < col->distance)
+			hits[1] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
 				update(ray, CYLINDER, (void *)c, distance);
@@ -85,7 +85,7 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
 	tmp.z = dot(cyl_cross, cyl_cross) - pow(c->radius, 2);
 	if (quadratic_equation(&tmp, &hits[2], &hits[3]) == true)
 	{
-		if (analyze_intersection(&hits[2], &hits[3]) == true)
+		if (analyze_intersection(&hits[2], &hits[3]) == true && hits[2] < col->distance)
 		{
 			to_center.vec3 = ray->direction.vec3 * hits[2] + ray->origin.vec3 - c->center.vec3;
 			if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
