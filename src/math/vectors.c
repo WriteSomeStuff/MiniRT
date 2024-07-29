@@ -6,31 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 11:09:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/29 19:46:17 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/29 18:06:42 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-float	vector_length(const t_vec a, const t_vec b)
-{
-	float	c;
-
-	c = pythagoras(a.x - b.x, a.y - b.y);
-	return (pythagoras(c, a.z - b.z));
-}
-
-t_vec	normalize_vector(const t_vec vector)
-{
-	float	len;
-	t_vec	norm;
-
-	len = vector_length(vec(0, 0, 0), vector);
-	if (len == 0)
-		return (vec(0, 0, 0));
-	norm.vec3 = vector.vec3 / len;
-	return (norm);
-}
 
 float	inv_sqrt(float num)
 {
@@ -48,7 +28,8 @@ t_vec	norm_vec(t_vec vec)
 	return (vec);
 }
 
-void	set_vector(t_vec *vector, const t_vec *location1, const t_vec *location2)
+void	set_vector(t_vec *vector, const t_vec *location1, \
+	const t_vec *location2)
 {
 	vector->vec3 = location2->vec3 - location1->vec3;
 	*vector = normalize_vector(*vector);

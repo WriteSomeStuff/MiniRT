@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/12 17:39:47 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/29 17:59:18 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static t_vec	plane_texture(void *planeptr, t_vec intersection)
 
 static t_vec	sphere_texture(void *sphereptr, t_vec loc)
 {
-	float	x;
-	float	y;
+	float		x;
+	float		y;
 	t_sphere	*sphere;
 
 	sphere = (t_sphere*)sphereptr;
@@ -98,6 +98,6 @@ static t_vec	sphere_texture(void *sphereptr, t_vec loc)
 t_vec	get_object_colour(t_hit *col)
 {
 	static t_vec	(*ptr[5])(void *, t_vec) = {&cylinder_texture, NULL, &plane_texture, &sphere_texture, &sphere_texture};
-	
+
 	return (ptr[col->type](col->obj, col->location));
 }

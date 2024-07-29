@@ -6,11 +6,18 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/19 16:13:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/28 20:33:26 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/29 18:02:15 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+void	gamma_adjust(t_vec *colour)
+{
+	colour->x = pow(colour->x, 1 / 2.2);
+	colour->y = pow(colour->y, 1 / 2.2);
+	colour->z = pow(colour->z, 1 / 2.2);
+}
 
 t_vec	reflection_result(const t_vec c1, const t_vec c2, float fraction)
 {

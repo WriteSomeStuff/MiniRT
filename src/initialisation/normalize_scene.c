@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/12 18:03:26 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/29 18:05:43 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,6 @@ static void	rotate_spheres(t_sphere *s, t_quat rotation)
 	}
 }
 
-bool isequal(t_vec vec1, t_vec vec2)
-{
-	if (vec1.x == vec2.x && vec1.y == vec2.y && vec1.z == vec2.z)
-	{
-		return (true);
-	}
-	return (false);
-}
-
 void	normalize_scene(t_data *data)
 {
 	t_vec	turn;
@@ -75,11 +66,8 @@ void	normalize_scene(t_data *data)
 	translate_objects(data, data->cam->viewpoint);
 	turn = cross(data->cam->orientation, vec(0, 0, 1));
 	ang = angle(vec(0, 0, 1), data->cam->orientation);
-	print_vector(turn);
-	print_vector(data->cam->orientation);
 	if (fabs(data->cam->orientation.z + 1.0f) < OFFSET)
 	{
-		puts("Hello my name is Kermit");
 		turn = vec(0, 1, 0);
 		ang = degree_to_radian(180);
 	}

@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/10 17:51:34 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/29 18:15:31 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,11 @@
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25
 
-t_vec		get_object_colour(t_hit *col);
-bool		is_glossy(t_data *data, uint32_t id, float glossiness);
-void		gamma_adjust(t_vec *colour);
 void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
 float		max(float a, float b);
 void		wait_for_threads(t_data *data);
 void		render(t_data *data, int32_t x, int32_t y);
 void		redraw(t_data *data);
-void		rt_resize(void *param);
 void		rt_close(void *param);
 void		draw_collision(t_hit *col, t_vec incoming);
 void		trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
@@ -59,16 +55,16 @@ void		intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c);
 void		intersect_discs(t_hit *col, t_ray *ray, const t_disc *d);
 void		intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
 void		intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
+
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
+void		gamma_adjust(t_vec *colour);
 t_vec		reflection_result(const t_vec c1, const t_vec c2, float fraction);
 t_vec		combine_colours(const t_vec c1, const t_vec c2);
 uint32_t	percentage_to_rgba(const t_vec f);
-// uint32_t	pixel_colour(t_data *data, t_vec clr, float product);
+void		rgb_to_floats(t_vec *rgb);
 
-// t_vec		cylinder_texture(t_cylinder *cyl, t_vec *surface);
-// t_vec		plane_texture(t_plane *plane, t_vec loc);
-// t_vec		sphere_texture(t_sphere *sphere, t_vec location);
+t_vec		get_object_colour(t_hit *col);
 /*	------------------------------------------------------------------	*/
 
 /*	Hooks	*/
@@ -92,7 +88,6 @@ void		init_disc(t_data *data, char **info);
 void		init_plane(t_data *data, char **info);
 void		init_sphere(t_data *data, char **info);
 
-// void		init_map(t_data *data);
 void		read_file(t_data *data, char *location);
 void		normalize_scene(t_data *data);
 void		translate_objects(t_data *data, t_vec amount);
@@ -127,7 +122,6 @@ int32_t		count_objects(t_input *lst, t_token token);
 
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void		print_2d_charray(char **array);
-void		rgb_to_floats(t_vec *rgb);
 void		check_split(t_data *data, char **info, int32_t num);
 bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);

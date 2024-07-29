@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/02 18:37:20 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/29 18:10:51 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static mlx_texture_t	*load_texture(t_data *data, char *path)
 
 int16_t	object_count(t_data *data)
 {
-	return (data->cyl_count + data->plane_count + data->sphere_count + data->disc_count);
+	return (data->cyl_count + data->plane_count + data->sphere_count \
+		+ data->disc_count);
 }
 
 void	init_objects(t_data *data, t_input *input)

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/04 15:47:01 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/29 18:08:38 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 	
 } */
 
-void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height)
+void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, \
+	uint32_t height)
 {
 	uint32_t	x;
 	uint32_t	y;
@@ -60,21 +61,17 @@ static void	move(t_data *data, t_vec translation)
 static void	turn_camera(t_data *data, keys_t key)
 {
 	if (key == MLX_KEY_LEFT)
-	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(-15), vec(0, 1, 0)));
-	}
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), \
+			vec(0, 1, 0)));
 	if (key == MLX_KEY_RIGHT)
-	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(15), vec(0, 1, 0)));
-	}
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), \
+			vec(0, 1, 0)));
 	if (key == MLX_KEY_UP)
-	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(-15), vec(1, 0, 0)));
-	}
+		rotate(&data->cam->orientation, quat(degree_to_radian(-15), \
+			vec(1, 0, 0)));
 	if (key == MLX_KEY_DOWN)
-	{
-		rotate(&data->cam->orientation, quat(degree_to_radian(15), vec(1, 0, 0)));
-	}
+		rotate(&data->cam->orientation, quat(degree_to_radian(15), \
+			vec(1, 0, 0)));
 	redraw(data);
 }
 
@@ -110,7 +107,8 @@ void	redraw(t_data *data)
 	data->go = false;
 	pthread_mutex_unlock(&data->mutex);
 	wait_for_threads(data);
-	reset_pixel_array(data, data->pix, data->window->width, data->window->height);
+	reset_pixel_array(data, data->pix, data->window->width, \
+		data->window->height);
 	cast_rays(data);
 	normalize_scene(data);
 	draw(data);

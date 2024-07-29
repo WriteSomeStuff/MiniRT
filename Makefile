@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/07/10 18:03:04 by vincent       ########   odam.nl          #
+#    Updated: 2024/07/29 18:01:48 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ CFILES	=	alloc.c \
 			translate_objects.c \
 			utils.c \
 			vectors.c \
+			vectors2.c \
 			vector_utils.c \
 
 TFILES	=	colour_tests.cpp \
