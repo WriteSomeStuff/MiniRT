@@ -6,23 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/29 18:08:38 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 11:57:44 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-/* void	handle_pressed_object(t_data * data)
-{
-	t_vec	t;
-	t_quat	turn;
-
-	t = cross(data->cam->orientation, vec(0, 0, 1));
-	print_vector(t);
-	t = normalize_vector(t);
-	turn = quat(angle(vec(0, 0, 1), data->cam->orientation), t.x, t.y, t.z);
-	
-} */
 
 void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, \
 	uint32_t height)
