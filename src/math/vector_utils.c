@@ -6,30 +6,12 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 18:11:09 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 13:26:23 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "time.h"
-
-t_vec	vec(float x, float y, float z)
-{
-	t_vec	vec;
-
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
-	return (vec);
-}
-
-t_vec	inverted(t_vec vector)
-{
-	t_vec	inverted;
-	
-	inverted.vec3 = vector.vec3 * -1.0f;
-	return (inverted);
-}
 
 float	dot(const t_vec a, const t_vec b)
 {
@@ -46,9 +28,9 @@ t_vec	cross(const t_vec a, const t_vec b)
 	return (cross);
 }
 
-/*	Generates a pseudo-random number without using too much computational power	*/
-
-static float	prn(uint32_t *id)
+// Generates a pseudo-random number without using too much
+// computational power.
+float	prn(uint32_t *id)
 {
 	uint32_t		result;
 
@@ -60,9 +42,9 @@ static float	prn(uint32_t *id)
 
 static float	norm_dist(uint32_t *id)
 {
-	float rho;
-	float theta;
-	
+	float	rho;
+	float	theta;
+
 	rho = sqrt(-2 * log(prn(id)));
 	theta = 2 * PI * prn(id);
 	return (rho * cos(theta));
@@ -79,23 +61,4 @@ t_vec	random_vector(t_data *data, uint32_t id, t_vec surface_normal)
 	if (dot(random, surface_normal) < 0)
 		random = inverted(random);
 	return (random);
-}
-
-bool	is_glossy(t_data *data, uint32_t id, float glossiness)
-{
-	float	random;
-
-	random = prn(&data->seed[id]);
-	if (glossiness >= random)
-		return (true);
-	// printf("random: %f glossiness: %f\n", random, glossiness);
-	return (false);
-}
-
-t_vec	lerp(t_vec vec1, t_vec vec2, float fraction)
-{
-	t_vec	res;
-
-	res.vec3 = vec1.vec3 * (1 - fraction) + vec2.vec3 * fraction;
-	return (res);
 }

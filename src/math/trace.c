@@ -37,6 +37,10 @@ static void	bounce(t_data *data, t_ray *ray, uint32_t id)
 	if (ray->col->glossy_bounce == true)
 	{
 		specular_direction = reflect(ray->direction, ray->col->surface_norm);
+		if (dot(specular_direction, ray->col->surface_norm) < 0)
+		{
+			specular_direction = inverted(specular_direction);
+		}
 		ray->direction = normalize_vector(lerp(diffuse_direction, \
 			specular_direction, ray->col->specular));
 	}
@@ -53,8 +57,6 @@ void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	uint32_t	bounces;
 	uint32_t	rays;
 
-	if (ray->col->hit == false || ray->col->type == LIGHT)
-		return ;
 	rays = 0;
 	while (rays < NUM_RAYS)
 	{
@@ -71,7 +73,9 @@ void	trace(t_data *data, t_ray *ray, int32_t x, int32_t y)
 			data->pix[y][x].samples.vec3 += ray->col->colour.vec3;
 		rays++;
 	}
-	data->pix[y][x].pix_clr.vec3 = (data->pix[y][x].samples.vec3 / (float)(NUM_RAYS * data->iterations));
+	data->pix[y][x].pix_clr.vec3 = (data->pix[y][x].samples.vec3 / \
+		(float)(NUM_RAYS * data->iterations));
 	gamma_adjust(&data->pix[y][x].pix_clr);
-	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, data->pix[y][x].ambient);
+	data->pix[y][x].pix_clr = combine_colours(data->pix[y][x].pix_clr, \
+		data->pix[y][x].ambient);
 }

@@ -6,22 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/01 13:19:55 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/30 12:29:31 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static bool	is_empty_str(char *str)
-{
-	while (*str != '\0')
-	{
-		if (is_white_space(*str) == false)
-			return (false);
-		str++;
-	}
-	return (true);
-}
 
 static t_token	determine_object(char *str)
 {
@@ -60,7 +49,8 @@ static void	alloc_objects(t_data *data, t_input *input)
 	data->cyls = rt_calloc(data, (obj[CYLINDER] + 1) * sizeof(t_cylinder));
 	data->discs = rt_calloc(data, (obj[DISC] + 1) * sizeof(t_disc));
 	data->planes = rt_calloc(data, (obj[PLANE] + 1) * sizeof(t_plane));
-	data->spheres = rt_calloc(data, (obj[SPHERE] + obj[LIGHT] + 1) * sizeof(t_sphere));
+	data->spheres = rt_calloc(data, (obj[SPHERE] + obj[LIGHT] + 1) \
+		* sizeof(t_sphere));
 	init_objects(data, input);
 }
 
@@ -75,14 +65,8 @@ static void	assign_function_pointers(t_data *data)
 	data->f[SPHERE] = &init_sphere;
 }
 
-void	read_file(t_data *data, char *location)
+static void	parse_line(t_data *data, t_input *input)
 {
-	t_input	*input;
-
-	input = NULL;
-	data->fd = open(location, O_RDONLY);
-	if (data->fd == -1)
-		exit_error(data, ": could not open file");
 	while (FOREVER)
 	{
 		data->line = get_next_line_rt(data, data->fd);
@@ -97,6 +81,17 @@ void	read_file(t_data *data, char *location)
 		}
 		free_and_null((void **)&data->line);
 	}
+}
+
+void	read_file(t_data *data, char *location)
+{
+	t_input	*input;
+
+	input = NULL;
+	data->fd = open(location, O_RDONLY);
+	if (data->fd == -1)
+		exit_error(data, ": could not open file");
+	parse_line(data, input);
 	close(data->fd);
 	assign_function_pointers(data);
 	alloc_objects(data, data->input);

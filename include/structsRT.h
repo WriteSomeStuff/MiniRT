@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/04 15:36:56 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 11:44:03 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "miniRT.h"
 # include <MLX42/MLX42.h>
 
-typedef float	t_vec3 __attribute__ ((vector_size(16)));
-typedef float	t_vec4 __attribute__ ((vector_size(16)));
-
+typedef float				t_vec3 __attribute__ ((vector_size(16)));
+typedef float				t_vec4 __attribute__ ((vector_size(16)));
 typedef union u_vec			t_vec;
 typedef union u_quat		t_quat;
 typedef union u_magic		t_magic;

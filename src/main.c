@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/29 18:15:44 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 11:35:37 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int32_t	main(int32_t argc, char **argv)
 	normalize_scene(&data);
 	cast_rays(&data);
 	draw(&data);
-
 	mlx_close_hook(data.mlx, &rt_close, &data);
 	mlx_key_hook(data.mlx, &rt_keys, &data);
 	mlx_mouse_hook(data.mlx, &rt_select, &data);

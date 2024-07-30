@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/29 18:05:43 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 12:26:02 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	rotate_spheres(t_sphere *s, t_quat rotation)
 	while (s->object != INVALID)
 	{
 		rotate(&s->center, rotation);
-		// rotate(&s->orientation, quat(theta ,t.x, t.y, t.z));
 		s++;
 	}
 }

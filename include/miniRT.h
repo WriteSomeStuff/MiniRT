@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/29 18:15:31 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:26:42 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "libft.h"
 # include "get_next_line_rt.h"
-# include <pthread.h>
 # include "structsRT.h"
 # include "vectorsRT.h"
-# include <MLX42/MLX42.h>
-# include <float.h>
+# include "MLX42/MLX42.h"
+# include <pthread.h>
+// # include <float.h>
 # include <math.h>
 # include <sys/types.h>
 # include <sys/time.h>
@@ -37,24 +37,29 @@
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25
+# define MAX_FLOAT 3.40282347e+38F
 
-void		reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, uint32_t height);
-float		max(float a, float b);
-void		wait_for_threads(t_data *data);
-void		render(t_data *data, int32_t x, int32_t y);
-void		redraw(t_data *data);
-void		rt_close(void *param);
-void		draw_collision(t_hit *col, t_vec incoming);
-void		trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
-float		sum(t_vec vector);
-void		update(t_ray *ray, t_token type, void *obj, float distance);
-float		hit_flat_surface(float *distance, t_ray *ray, t_vec point, t_vec orientation);
-bool		analyze_intersection(float *a, float *b);
+float			prn(uint32_t *id);
+bool			is_empty_str(char *str);
+mlx_texture_t	*load_texture(t_data *data, char *path);
+float			max(float a, float b);
+void			wait_for_threads(t_data *data);
+void			render(t_data *data, int32_t x, int32_t y);
+void			redraw(t_data *data);
+void			rt_close(void *param);
+void			draw_collision(t_hit *col, t_vec incoming);
+void			trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
+float			sum(t_vec vector);
+void			update(t_ray *ray, t_token type, void *obj, float distance);
+float			hit_flat_surface(float *distance, t_ray *ray, t_vec point, \
+	t_vec orientation);
+bool			analyze_intersection(float *a, float *b);
 
-void		intersect_cylinders(t_hit *col, t_ray *ray, const t_cylinder *c);
-void		intersect_discs(t_hit *col, t_ray *ray, const t_disc *d);
-void		intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
-void		intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
+void			intersect_cylinders(t_hit *col, t_ray *ray, \
+	const t_cylinder *c);
+void			intersect_discs(t_hit *col, t_ray *ray, const t_disc *d);
+void			intersect_planes(t_hit *col, t_ray *ray, const t_plane *p);
+void			intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s);
 
 /*	Colours	*/
 /*	------------------------------------------------------------------	*/
@@ -97,7 +102,8 @@ void		draw(t_data *data);
 
 /*	Math	*/
 /*	------------------------------------------------------------------	*/
-void		find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id);
+void		find_closest_object(t_data *data, t_hit *col, t_ray *ray, \
+	uint32_t id);
 
 float		degree_to_radian(const float degree);
 float		radian_to_degree(const float radian);
@@ -123,7 +129,6 @@ int32_t		count_objects(t_input *lst, t_token token);
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void		print_2d_charray(char **array);
 void		check_split(t_data *data, char **info, int32_t num);
-bool		is_white_space(char c);
 void		verify_info(t_data *data, char **info);
 /*	------------------------------------------------------------------	*/
 

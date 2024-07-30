@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:25:10 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/02 18:13:34 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:12:22 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 uint32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-t_vec	create_vector(t_data *data, char *info)
-{
-	t_vec	vector;
-	char	**vec;
-
-	vec = ft_split(info, ',');
-	if (vec == NULL)
-		exit_error(data, ": split failed");
-	vector.x = a_to_float(data, vec[0]);
-	vector.y = a_to_float(data, vec[1]);
-	vector.z = a_to_float(data, vec[2]);
-	free_2d((void ***)&vec);
-	return (vector);
 }
 
 void	check_split(t_data *data, char **info, int32_t num)
@@ -47,13 +32,6 @@ void	check_split(t_data *data, char **info, int32_t num)
 		i++;
 	if (info[i] != NULL)
 		exit_error(data, ": invalid input");
-}
-
-bool	is_white_space(char c)
-{
-	if (c == ' ' || (c >= '\t' && c <= '\r'))
-		return (true);
-	return (false);
 }
 
 static void	check_texture(t_data *data, char *str)
@@ -83,7 +61,8 @@ void	verify_info(t_data *data, char **info)
 	while (info[x] != NULL)
 	{
 		y = 0;
-		while (info[x][y] != '\0' && info[x][y] != 's' && info[x][y] != 't' && info[x][y] != 'g')
+		while (info[x][y] != '\0' && info[x][y] != 's' && info[x][y] != 't' && \
+			info[x][y] != 'g')
 		{
 			if (info[x][y] == '-' && ft_isdigit(info[x][y + 1]) == false)
 				exit_error(data, ": no digit after \"-\" sign");

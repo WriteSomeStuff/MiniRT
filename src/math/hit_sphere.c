@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/02 18:41:57 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:32:05 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,17 @@ void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 		to_sphere.vec3 = s->center.vec3 - ray->origin.vec3;
 		tmp.y = 2.0f * -dot(to_sphere, ray->direction);
 		tmp.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
-		if (quadratic_equation(&tmp, &res[0], &res[1]) == true)
+		if (quadratic_equation(&tmp, &res[0], &res[1]) == true && \
+			analyze_intersection(&res[0], &res[1]) == true && \
+			res[0] < col->distance)
 		{
-			if (analyze_intersection(&res[0], &res[1]) == true)
-			{
-				if (res[0] < col->distance)
-				{
-					update(ray, s->object, (void *)s, res[0]);
-					col->specular = s->specular;
-					// if (s->object != LIGHT)
-					// 	printf("sphere's glossiness: %f\n", s->glossiness);
-					col->glossiness = s->glossiness;
-					if (res[1] <= 0.0f)
-						col->inside_obj = true;
-					else
-						col->inside_obj = false;
-				}
-			}
+			update(ray, s->object, (void *)s, res[0]);
+			col->specular = s->specular;
+			col->glossiness = s->glossiness;
+			if (res[1] <= 0.0f)
+				col->inside_obj = true;
+			else
+				col->inside_obj = false;
 		}
 		s++;
 	}

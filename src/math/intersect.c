@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 18:03:37 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 11:49:37 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,16 @@ void	update(t_ray *ray, t_token type, void *obj, float distance)
 	ray->col->type = type;
 }
 
-void find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id)
+void	find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id)
 {
 	col->type = INVALID;
 	col->glossy_bounce = false;
 	col->hit = false;
-	col->distance = FLT_MAX;
+	col->distance = MAX_FLOAT;
 	intersect_cylinders(col, ray, data->cyls);
 	intersect_discs(col, ray, data->discs);
 	intersect_planes(col, ray, data->planes);
 	intersect_spheres(col, ray, data->spheres);
 	if (col->type != LIGHT)
 		col->glossy_bounce = is_glossy(data, id, ray->col->glossiness);
-	// col->objclr = get_object_colour(col);
 }

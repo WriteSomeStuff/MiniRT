@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/04 16:00:23 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 12:25:18 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	wait_for_threads(t_data *data)
 	while (FOREVER)
 	{
 		pthread_mutex_lock(&data->mutex);
-		// printf("absorbed: %u/%u\n", data->threads_absorbed, data->num_threads);
 		if (data->threads_absorbed == data->num_threads)
 		{
 			break ;
@@ -26,14 +25,13 @@ void	wait_for_threads(t_data *data)
 		usleep(1000);
 	}
 	pthread_mutex_unlock(&data->mutex);
-	// data->iterations = 0;
 }
 
-static void	*prepare_rendering(void *d)
+static void	*prep_rendering(void *d)
 {
 	uint32_t	i;
 	t_data		*data;
-	
+
 	i = 0;
 	data = (t_data *)d;
 	pthread_mutex_lock(&data->mutex);
@@ -59,6 +57,11 @@ static void	join_threads(t_data *data, pthread_t *threads, uint32_t num)
 {
 	if (num == data->num_threads)
 		data->go = true;
+	else
+	{
+		pthread_mutex_unlock(&data->mutex);
+		exit_error(data, "failed to create thread");
+	}
 	pthread_mutex_unlock(&data->mutex);
 	while (num > 0)
 	{
@@ -67,46 +70,33 @@ static void	join_threads(t_data *data, pthread_t *threads, uint32_t num)
 			exit_error(data, "thread failed to join");
 	}
 }
-/* 
-static long	get_time(void)
-{
-	struct timeval	time;
 
-	gettimeofday(&time, NULL);
-	return ((long)time.tv_sec * 1000000 + time.tv_usec);
-} */
-
-static void	*create_threads(void *d)
+static void	*create_threads(void *data)
 {
 	uint32_t	i;
-	t_data		*data;
+	t_data		*d;
 
-	data = (t_data *)d;
+	d = (t_data *)data;
 	pthread_detach(pthread_self());
 	while (FOREVER)
 	{
 		i = 0;
-		data->threads_absorbed = 0;
-		if (data->iterations > 0 && data->iterations % 10 == 0)
-			printf("Samples: %d\n", data->iterations * NUM_RAYS);
-		pthread_mutex_lock(&data->mutex);
-		data->iterations++;
-		while (i < data->num_threads)
+		d->threads_absorbed = 0;
+		pthread_mutex_lock(&d->mutex);
+		d->iterations++;
+		while (i < d->num_threads)
 		{
-			if (pthread_create(&data->threads[i], NULL, &prepare_rendering, data) == -1)
-			{
-				join_threads(data, data->threads, i);
-				exit_error(data, "failed to create thread");
-			}
+			if (pthread_create(&d->threads[i], NULL, &prep_rendering, d) == -1)
+				join_threads(d, d->threads, i);
 			i++;
 		}
-		join_threads(data, data->threads, i);
-		pthread_mutex_lock(&data->mutex);
-		if (data->go == false)
+		join_threads(d, d->threads, i);
+		pthread_mutex_lock(&d->mutex);
+		if (d->go == false)
 			break ;
-		pthread_mutex_unlock(&data->mutex);
+		pthread_mutex_unlock(&d->mutex);
 	}
-	pthread_mutex_unlock(&data->mutex);
+	pthread_mutex_unlock(&d->mutex);
 	return (NULL);
 }
 

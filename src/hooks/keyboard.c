@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 11:57:44 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 11:57:41 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, \
+static void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, \
 	uint32_t height)
 {
 	uint32_t	x;

@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/07/29 18:01:48 by cschabra      ########   odam.nl          #
+#    Updated: 2024/07/30 12:30:27 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ CFILES	=	alloc.c \
 			collisions.c \
 			colours.c \
 			clean_up.c \
-			DELETE_LATER.c \
 			draw.c \
 			exit.c \
 			free.c \
@@ -42,8 +41,8 @@ CFILES	=	alloc.c \
 			hit_sphere.c \
 			hit_torus.c \
 			keyboard.c \
-			init_lights.c \
 			init_objects.c \
+			init_objects2.c \
 			intersect.c \
 			list_adding.c \
 			list_navigation.c \
@@ -52,6 +51,7 @@ CFILES	=	alloc.c \
 			mouse.c \
 			normalize_scene.c \
 			parsing.c \
+			parsing_utils.c \
 			quaternions_utils.c \
 			quaternions.c \
 			reflect.c \

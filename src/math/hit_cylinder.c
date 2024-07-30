@@ -6,13 +6,14 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:22 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/16 18:01:18 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:29:19 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
+static void	hit_bot_cap(t_hit *col, t_ray *ray, \
+	const t_cylinder *c, float *hits)
 {
 	t_vec	intersection;
 	float	denom;
@@ -24,7 +25,6 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->base) <= c->radius)
 		{
-			// if (distance < col->distance)
 			hits[0] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
@@ -41,7 +41,8 @@ static void	hit_bot_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 	}
 }
 
-static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
+static void	hit_top_cap(t_hit *col, t_ray *ray, \
+	const t_cylinder *c, float *hits)
 {
 	t_vec	intersection;
 	float	denom;
@@ -53,7 +54,6 @@ static void	hit_top_cap(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits
 		intersection.vec3 = ray->direction.vec3 * distance + ray->origin.vec3;
 		if (vector_length(intersection, c->top) <= c->radius)
 		{
-			// if (distance < col->distance)
 			hits[1] = distance;
 			if (distance > 0 && distance < col->distance)
 			{
@@ -83,18 +83,18 @@ static void	hit_body(t_hit *col, t_ray *ray, const t_cylinder *c, float *hits)
 	tmp.x = dot(rc_cross, rc_cross);
 	tmp.y = 2.0f * dot(rc_cross, cyl_cross);
 	tmp.z = dot(cyl_cross, cyl_cross) - pow(c->radius, 2);
-	if (quadratic_equation(&tmp, &hits[2], &hits[3]) == true)
+	if (quadratic_equation(&tmp, &hits[2], &hits[3]) == true && \
+		analyze_intersection(&hits[2], &hits[3]) == true && \
+		hits[2] < col->distance)
 	{
-		if (analyze_intersection(&hits[2], &hits[3]) == true && hits[2] < col->distance)
+		to_center.vec3 = ray->direction.vec3 * hits[2] \
+			+ ray->origin.vec3 - c->center.vec3;
+		if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
 		{
-			to_center.vec3 = ray->direction.vec3 * hits[2] + ray->origin.vec3 - c->center.vec3;
-			if (fabs(dot(to_center, c->orientation)) <= c->height / 2)
-			{
-				update(ray, CYLINDER, (void *)c, hits[2]);
-				col->specular = c->specular;
-				col->glossiness = c->glossiness;
-				col->caps = false;
-			}
+			update(ray, CYLINDER, (void *)c, hits[2]);
+			col->specular = c->specular;
+			col->glossiness = c->glossiness;
+			col->caps = false;
 		}
 	}
 }

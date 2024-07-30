@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/29 17:52:17 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/29 17:52:30 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:22:10 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,12 @@ t_vec	normalize_vector(const t_vec vector)
 		return (vec(0, 0, 0));
 	norm.vec3 = vector.vec3 / len;
 	return (norm);
+}
+
+t_vec	lerp(t_vec vec1, t_vec vec2, float fraction)
+{
+	t_vec	res;
+
+	res.vec3 = vec1.vec3 * (1 - fraction) + vec2.vec3 * fraction;
+	return (res);
 }
