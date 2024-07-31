@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/30 12:25:18 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/31 17:03:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ void	wait_for_threads(t_data *data)
 	while (FOREVER)
 	{
 		pthread_mutex_lock(&data->mutex);
-		if (data->threads_absorbed == data->num_threads)
-		{
+		if (data->threads_absorbed == true)
 			break ;
-		}
 		pthread_mutex_unlock(&data->mutex);
 		usleep(1000);
 	}
@@ -69,6 +67,9 @@ static void	join_threads(t_data *data, pthread_t *threads, uint32_t num)
 		if (pthread_join(threads[num], NULL) == -1)
 			exit_error(data, "thread failed to join");
 	}
+	pthread_mutex_lock(&data->mutex);
+	data->threads_absorbed = true;
+	pthread_mutex_unlock(&data->mutex);
 }
 
 static void	*create_threads(void *data)
@@ -81,9 +82,9 @@ static void	*create_threads(void *data)
 	while (FOREVER)
 	{
 		i = 0;
-		d->threads_absorbed = 0;
 		pthread_mutex_lock(&d->mutex);
 		d->iterations++;
+		d->threads_absorbed = false;
 		while (i < d->num_threads)
 		{
 			if (pthread_create(&d->threads[i], NULL, &prep_rendering, d) == -1)

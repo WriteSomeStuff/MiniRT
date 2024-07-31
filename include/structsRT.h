@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/30 11:44:03 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/31 17:02:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTSRT_H
 
 # include "miniRT.h"
+# include "pthread.h"
 # include <MLX42/MLX42.h>
 
 typedef float				t_vec3 __attribute__ ((vector_size(16)));
@@ -230,7 +231,7 @@ struct s_data
 	pthread_t		*threads;
 	uint32_t		iterations;
 	uint32_t		num_threads;
-	uint32_t		threads_absorbed;
+	bool			threads_absorbed;
 	uint32_t		seed[16];
 	bool			go;
 	t_input			*input;

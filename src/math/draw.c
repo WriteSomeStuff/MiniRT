@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:25:39 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/07/31 16:49:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,8 @@ void	render(t_data *data, int32_t x, int32_t y)
 				percentage_to_rgba(data->pix[y][x].pix_clr));
 			x++;
 			if (keep_going(data) == false)
-				break ;
+				return ;
 		}
 		y += data->num_threads;
 	}
-	pthread_mutex_lock(&data->mutex);
-	data->threads_absorbed++;
-	pthread_mutex_unlock(&data->mutex);
 }
