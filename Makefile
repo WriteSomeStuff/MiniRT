@@ -6,14 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/07/15 18:45:37 by vincent       ########   odam.nl          #
+#    Updated: 2024/08/01 21:03:51 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address  # 
+CFLAGS	= -Wall -Wextra -Werror -Ofast -flto -pthread $(HEADERS) -g #-fsanitize=address
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 
@@ -30,20 +30,20 @@ CFILES	=	alloc.c \
 			collisions.c \
 			colours.c \
 			clean_up.c \
-			DELETE_LATER.c \
 			draw.c \
 			exit.c \
 			free.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
+			hit_cone.c \
 			hit_cylinder.c \
 			hit_disc.c \
 			hit_plane.c \
 			hit_sphere.c \
 			hit_torus.c \
 			keyboard.c \
-			init_lights.c \
 			init_objects.c \
+			init_objects2.c \
 			intersect.c \
 			list_adding.c \
 			list_navigation.c \
@@ -52,6 +52,7 @@ CFILES	=	alloc.c \
 			mouse.c \
 			normalize_scene.c \
 			parsing.c \
+			parsing_utils.c \
 			quaternions_utils.c \
 			quaternions.c \
 			reflect.c \
@@ -61,6 +62,7 @@ CFILES	=	alloc.c \
 			translate_objects.c \
 			utils.c \
 			vectors.c \
+			vectors2.c \
 			vector_utils.c \
 
 TFILES	=	colour_tests.cpp \

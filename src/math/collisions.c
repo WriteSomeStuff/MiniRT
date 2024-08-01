@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 17:49:16 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 13:13:41 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static void	cylinder(t_hit *col, t_vec incoming)
 		product = dot(to_center, cyl->orientation);
 		to_new.vec3 = cyl->center.vec3 + product * cyl->orientation.vec3;
 		set_vector(&col->surface_norm, &to_new, &col->location);
+		if (col->inside_obj == true)
+			col->surface_norm = inverted(col->surface_norm);
 	}
-	if (col->inside_obj == true)
-		col->surface_norm.vec3 *= -1;
 	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
@@ -77,7 +77,8 @@ static void	sphere(t_hit *col, t_vec incoming)
 	if (col->type == LIGHT)
 	{
 		col->colour = reflection_result(clr, col->colour, 1);
-		col->colour.vec3 *= max(dot(incoming, inverted(col->surface_norm)), 0.1f);
+		col->colour.vec3 *= max(dot(incoming, inverted(col->surface_norm)), \
+			0.1f);
 		return ;
 	}
 	if (col->glossy_bounce == false)
@@ -86,7 +87,8 @@ static void	sphere(t_hit *col, t_vec incoming)
 
 void	draw_collision(t_hit *col, t_vec incoming)
 {
-	static void	(*ptr[5])(t_hit *, t_vec) = {&cylinder, &disc, &plane, &sphere, &sphere};
+	static void	(*ptr[5])(t_hit *, t_vec) = {&cylinder, &disc, &plane, \
+		&sphere, &sphere};
 
 	if (col->hit == false)
 	{

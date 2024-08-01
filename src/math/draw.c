@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/10 17:50:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/31 16:49:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float		max(float a, float b)
+float	max(float a, float b)
 {
 	if (a > b)
 		return (a);
@@ -26,7 +26,8 @@ static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 	{
-		data->pix[y][x].pix_clr.vec3 = ray->col->colour.vec3 * max(dot(ray->direction, inverted(ray->col->surface_norm)), 0.1f);
+		data->pix[y][x].pix_clr.vec3 = ray->col->colour.vec3 * \
+			max(dot(ray->direction, inverted(ray->col->surface_norm)), 0.1f);
 		gamma_adjust(&data->pix[y][x].pix_clr);
 	}
 	else if (ray->col->hit == true)
@@ -54,6 +55,7 @@ static void	reset_ray(t_data *data, t_ray *ray, int32_t x, int32_t y)
 static bool	keep_going(t_data *data)
 {
 	bool	tmp;
+
 	pthread_mutex_lock(&data->mutex);
 	tmp = data->go;
 	pthread_mutex_unlock(&data->mutex);
@@ -73,15 +75,14 @@ void	render(t_data *data, int32_t x, int32_t y)
 		{
 			reset_ray(data, &ray, x, y);
 			initial_hit(data, &ray, x, y);
-			trace(data, &ray, x, y);
-			mlx_put_pixel(data->scene, x, y, percentage_to_rgba(data->pix[y][x].pix_clr));
+			if (col.hit == true && col.type != LIGHT)
+				trace(data, &ray, x, y);
+			mlx_put_pixel(data->scene, x, y, \
+				percentage_to_rgba(data->pix[y][x].pix_clr));
 			x++;
 			if (keep_going(data) == false)
-				break ;
+				return ;
 		}
 		y += data->num_threads;
 	}
-	pthread_mutex_lock(&data->mutex);
-	data->threads_absorbed++;
-	pthread_mutex_unlock(&data->mutex);
 }

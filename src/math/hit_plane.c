@@ -6,13 +6,14 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:24 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/01 12:14:19 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/07/30 13:16:46 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float	hit_flat_surface(float *distance, t_ray *ray, t_vec point, t_vec orientation)
+float	hit_flat_surface(float *distance, t_ray *ray, \
+	t_vec point, t_vec orientation)
 {
 	t_vec	to_plane;
 	float	denom;

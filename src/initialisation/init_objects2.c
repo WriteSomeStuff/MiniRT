@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/06/29 18:42:07 by vincent       ########   odam.nl         */
+/*   Updated: 2024/07/30 12:17:55 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,31 @@ void	init_light(t_data *data, char **info)
 	if (info[3] != NULL)
 		data->spheres[i].radius = a_to_float(data, info[3]) / 2.0f;
 	data->spheres[i].object = LIGHT;
+	data->spheres[i].instance = object_count(data);
+	check_rgb_values(data, &data->spheres[i].colour.vec3);
+	rgb_to_floats(&data->spheres[i].colour);
+	data->sphere_count++;
+}
+
+void	init_sphere(t_data *data, char **info)
+{
+	int	i;
+
+	i = data->sphere_count;
+	check_split(data, info, 5);
+	verify_info(data, info);
+	data->spheres[i].center = create_vector(data, info[0]);
+	data->spheres[i].radius = a_to_float(data, info[1]) / 2.0f;
+	data->spheres[i].colour = create_vector(data, info[2]);
+	data->spheres[i].glossiness = a_to_float(data, &info[3][2]);
+	if (data->spheres[i].glossiness < 0 || data->spheres[i].glossiness > 1)
+		exit_error(data, ": invalid glossiness value");
+	data->spheres[i].specular = a_to_float(data, &info[4][2]);
+	if (data->spheres[i].specular < 0 || data->spheres[i].specular > 1)
+		exit_error(data, ": invalid specular value");
+	if (info[5] != NULL)
+		data->spheres[i].tex = load_texture(data, &info[5][2]);
+	data->spheres[i].object = SPHERE;
 	data->spheres[i].instance = object_count(data);
 	check_rgb_values(data, &data->spheres[i].colour.vec3);
 	rgb_to_floats(&data->spheres[i].colour);
