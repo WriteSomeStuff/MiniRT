@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/31 17:02:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/01 14:14:18 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_texture	t_texture;
 typedef struct s_hit		t_hit;
 typedef struct s_ray		t_ray;
 typedef struct s_camera		t_camera;
+typedef struct s_cone		t_cone;
 typedef struct s_cylinder	t_cylinder;
 typedef struct s_disc		t_disc;
 typedef struct s_plane		t_plane;
@@ -37,6 +38,7 @@ typedef struct s_data		t_data;
 
 typedef enum s_token
 {
+	CONE,
 	CYLINDER,
 	DISC,
 	PLANE,
@@ -142,6 +144,18 @@ struct s_camera
 	float		fov_correction;
 };
 
+struct s_cone
+{
+	t_vec	apex;
+	t_vec	orientation;
+	float	height;
+	float	radius;
+	float	angle;
+	float	specular;
+	float	glossiness;
+	t_token	object;
+};
+
 struct s_cylinder
 {
 	t_vec			center;
@@ -237,6 +251,7 @@ struct s_data
 	t_input			*input;
 	t_vec			ambient;
 	t_camera		*cam;
+	t_cone			*cones;
 	t_cylinder		*cyls;
 	t_disc			*discs;
 	t_plane			*planes;

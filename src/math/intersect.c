@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 11:49:37 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/01 14:14:04 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	find_closest_object(t_data *data, t_hit *col, t_ray *ray, uint32_t id)
 	col->glossy_bounce = false;
 	col->hit = false;
 	col->distance = MAX_FLOAT;
+	intersect_cones(col, ray, data->cones);
 	intersect_cylinders(col, ray, data->cyls);
 	intersect_discs(col, ray, data->discs);
 	intersect_planes(col, ray, data->planes);

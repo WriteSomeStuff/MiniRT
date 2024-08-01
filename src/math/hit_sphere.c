@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/01 11:57:27 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/30 13:32:05 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/01 13:50:50 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	intersect_spheres(t_hit *col, t_ray *ray, const t_sphere *s)
 {
 	t_vec	to_sphere;
-	t_vec	tmp;
+	t_vec	quad_coeff;
 	float	res[2];
 
-	tmp.x = 1.0f;
+	quad_coeff.x = 1.0f;
 	while (s->object != INVALID)
 	{
 		to_sphere.vec3 = s->center.vec3 - ray->origin.vec3;
-		tmp.y = 2.0f * -dot(to_sphere, ray->direction);
-		tmp.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
-		if (quadratic_equation(&tmp, &res[0], &res[1]) == true && \
+		quad_coeff.y = 2.0f * -dot(to_sphere, ray->direction);
+		quad_coeff.z = dot(to_sphere, to_sphere) - pow(s->radius, 2);
+		if (quadratic_equation(&quad_coeff, &res[0], &res[1]) == true && \
 			analyze_intersection(&res[0], &res[1]) == true && \
 			res[0] < col->distance)
 		{

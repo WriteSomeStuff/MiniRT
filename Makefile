@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/07/30 12:30:27 by cschabra      ########   odam.nl          #
+#    Updated: 2024/08/01 14:15:09 by vincent       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CFILES	=	alloc.c \
 			free.c \
 			get_next_line_rt.c \
 			get_next_line_utils_rt.c \
+			hit_cone.c \
 			hit_cylinder.c \
 			hit_disc.c \
 			hit_plane.c \
