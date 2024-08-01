@@ -12,6 +12,17 @@
 
 #include "miniRT.h"
 
+static void	rotate_cones(t_cone *c, t_quat rotation)
+{
+	while (c->object != INVALID)
+	{
+		rotate(&c->apex, rotation);
+		rotate(&c->orientation, rotation);
+		// what else?
+		c++;
+	}
+}
+
 static void	rotate_cylinders(t_cylinder *c, t_quat rotation)
 {
 	while (c->object != INVALID)
@@ -74,6 +85,7 @@ void	normalize_scene(t_data *data)
 	rotation = quat(ang, turn);
 	if (rotation.real == 0)
 		return ;
+	rotate_cones(data->cones, rotation);
 	rotate_cylinders(data->cyls, rotation);
 	rotate_discs(data->discs, rotation);
 	rotate_planes(data->planes, rotation);

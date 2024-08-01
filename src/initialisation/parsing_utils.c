@@ -42,8 +42,8 @@ mlx_texture_t	*load_texture(t_data *data, char *path)
 
 int16_t	object_count(t_data *data)
 {
-	return (data->cyl_count + data->plane_count + data->sphere_count \
-		+ data->disc_count);
+	return (data->cone_count + data->cyl_count + data->plane_count + \
+		data->sphere_count + data->disc_count);
 }
 
 t_vec	create_vector(t_data *data, char *info)

@@ -46,6 +46,7 @@ static void	alloc_objects(t_data *data, t_input *input)
 	if (obj[AMBIENT] != 1 || obj[CAMERA] != 1 || obj[LIGHT] < 1)
 		exit_error(data, ": incompatible file input");
 	data->cam = rt_calloc(data, obj[CAMERA] * sizeof(t_camera));
+	data->cones = rt_calloc(data, (obj[CONE] + 1) * sizeof(t_cone));
 	data->cyls = rt_calloc(data, (obj[CYLINDER] + 1) * sizeof(t_cylinder));
 	data->discs = rt_calloc(data, (obj[DISC] + 1) * sizeof(t_disc));
 	data->planes = rt_calloc(data, (obj[PLANE] + 1) * sizeof(t_plane));
@@ -58,6 +59,7 @@ static void	assign_function_pointers(t_data *data)
 {
 	data->f[AMBIENT] = &init_ambient;
 	data->f[CAMERA] = &init_camera;
+	data->f[CONE] = &init_cone;
 	data->f[CYLINDER] = &init_cylinder;
 	data->f[DISC] = &init_disc;
 	data->f[LIGHT] = &init_light;

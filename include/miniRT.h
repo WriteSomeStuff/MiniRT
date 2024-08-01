@@ -89,6 +89,7 @@ void			init_light(t_data *data, char **info);
 int16_t			object_count(t_data *data);
 void			init_objects(t_data *data, t_input *input);
 void			init_camera(t_data *data, char **info);
+void			init_cone(t_data *data, char **info);
 void			init_cylinder(t_data *data, char **info);
 void			init_disc(t_data *data, char **info);
 void			init_plane(t_data *data, char **info);

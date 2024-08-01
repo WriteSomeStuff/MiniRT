@@ -12,6 +12,12 @@
 
 #include "miniRT.h"
 
+static void	free_cones(t_cone **cones, uint32_t amount)
+{
+	free(*cones);
+	*cones = NULL;
+}
+
 static void	free_cylinders(t_cylinder **cylinders, uint32_t amount)
 {
 	uint32_t	i;
@@ -61,6 +67,7 @@ void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
 	free(data->cam);
+	free_cones(&data->cones, data->cone_count);
 	free_cylinders(&data->cyls, data->cyl_count);
 	free_planes(&data->planes, data->plane_count);
 	free_spheres(&data->spheres, data->sphere_count);

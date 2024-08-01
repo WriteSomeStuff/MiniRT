@@ -19,6 +19,7 @@ void	init_objects(t_data *data, t_input *input)
 		data->f[input->token](data, input->info);
 		input = input->next;
 	}
+	data->cyls[data->cone_count].object = INVALID;
 	data->cyls[data->cyl_count].object = INVALID;
 	data->discs[data->disc_count].object = INVALID;
 	data->planes[data->plane_count].object = INVALID;
@@ -36,6 +37,36 @@ void	init_camera(t_data *data, char **info)
 	if (data->cam->fov <= 0)
 		exit_error(data, ": wrong FOV");
 	data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
+}
+
+void	init_cone(t_data *data, char **info)
+{
+	int		i;
+	t_cone	*cone;
+
+	i = data->cone_count;
+	cone = &data->cones[i];
+	check_split(data, info, 7);
+	verify_info(data, info);
+	data->cones[i].apex = create_vector(data, info[0]);
+	data->cones[i].apex = normalize_vector(data->cones[i].apex);
+	data->cones[i].orientation = create_vector(data, info[1]);
+	data->cones[i].orientation = normalize_vector(data->cones[i].orientation);
+	data->cones[i].height = a_to_float(data, info[2]);
+	data->cones[i].radius = a_to_float(data, info[3]);
+	data->cones[i].angle = atan(data->cones[i].radius / data->cones[i].height);
+	data->cones[i].colour = create_vector(data, info[4]);
+	data->cones[i].glossiness = a_to_float(data, &info[5][2]);
+	if (data->cones[i].glossiness < 0 || data->cones[i].glossiness > 1)
+		exit_error(data, ": invalid glossiness value");
+	data->cones[i].specular = a_to_float(data, &info[6][2]);
+	if (data->cones[i].specular < 0 || data->cones[i].specular > 1)
+		exit_error(data, ": invalid specular value");
+	data->cones[i].object = CONE;
+	data->cones[i].instance = object_count(data);
+	check_rgb_values(data, &data->cones[i].colour.vec3);
+	rgb_to_floats(&data->cones[i].colour);
+	data->cone_count++;
 }
 
 void	init_cylinder(t_data *data, char **info)

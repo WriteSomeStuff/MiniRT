@@ -146,14 +146,16 @@ struct s_camera
 
 struct s_cone
 {
-	t_vec	apex;
-	t_vec	orientation;
-	float	height;
-	float	radius;
-	float	angle;
-	float	specular;
-	float	glossiness;
-	t_token	object;
+	t_vec		apex;
+	t_vec		orientation;
+	float		height;
+	float		radius;
+	float		angle;
+	t_vec		colour;
+	float		specular;
+	float		glossiness;
+	t_token		object;
+	uint16_t	instance;
 };
 
 struct s_cylinder
@@ -261,6 +263,7 @@ struct s_data
 	t_vec			**directions;
 	int16_t			selected;
 	int32_t			fd;
+	int32_t			cone_count;
 	int32_t			cyl_count;
 	int32_t			disc_count;
 	int32_t			plane_count;
