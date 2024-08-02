@@ -14,13 +14,10 @@
 
 static void	rotate_cones(t_cone *c, t_quat rotation)
 {
-	puts("BB");
 	while (c->object != INVALID)
 	{
-		puts("AA");
 		rotate(&c->apex, rotation);
 		rotate(&c->orientation, rotation);
-		// what else?
 		c++;
 	}
 }

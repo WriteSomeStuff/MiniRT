@@ -269,6 +269,7 @@ struct s_data
 	int32_t			plane_count;
 	int32_t			sphere_count;
 	pthread_mutex_t	mutex;
+	pthread_mutex_t	go_lock;
 	void			(*f[INVALID])(t_data *, char **);
 };
 
