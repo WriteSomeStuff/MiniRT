@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/30 12:18:52 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:53:32 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_objects(t_data *data, t_input *input)
 		data->f[input->token](data, input->info);
 		input = input->next;
 	}
-	data->cyls[data->cone_count].object = INVALID;
+	data->cones[data->cone_count].object = INVALID;
 	data->cyls[data->cyl_count].object = INVALID;
 	data->discs[data->disc_count].object = INVALID;
 	data->planes[data->plane_count].object = INVALID;

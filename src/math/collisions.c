@@ -12,6 +12,13 @@
 
 #include "miniRT.h"
 
+static void	cone(t_hit *col, t_vec incoming)
+{
+	(void) incoming;
+	(void) col;
+	return ;
+}
+
 static void	cylinder(t_hit *col, t_vec incoming)
 {
 	t_cylinder	*cyl;
@@ -87,7 +94,7 @@ static void	sphere(t_hit *col, t_vec incoming)
 
 void	draw_collision(t_hit *col, t_vec incoming)
 {
-	static void	(*ptr[5])(t_hit *, t_vec) = {&cylinder, &disc, &plane, \
+	static void	(*ptr[6])(t_hit *, t_vec) = {&cone, &cylinder, &disc, &plane, \
 		&sphere, &sphere};
 
 	if (col->hit == false)

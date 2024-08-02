@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:52:06 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:49:02 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ float			hit_flat_surface(float *distance, t_ray *ray, t_vec point, \
 	t_vec orientation);
 bool			analyze_intersection(float *a, float *b);
 
+void			intersect_cones(t_hit *col, t_ray *ray, const t_cone *c);
 void			intersect_cylinders(t_hit *col, t_ray *ray, \
 	const t_cylinder *c);
 void			intersect_discs(t_hit *col, t_ray *ray, const t_disc *d);

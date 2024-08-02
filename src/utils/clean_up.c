@@ -6,13 +6,13 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/06/26 18:33:11 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:46:56 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static void	free_cones(t_cone **cones, uint32_t amount)
+static void	free_cones(t_cone **cones)
 {
 	free(*cones);
 	*cones = NULL;
@@ -67,7 +67,7 @@ void	clean_up(t_data *data)
 {
 	clear_list(&data->input);
 	free(data->cam);
-	free_cones(&data->cones, data->cone_count);
+	free_cones(&data->cones);
 	free_cylinders(&data->cyls, data->cyl_count);
 	free_planes(&data->planes, data->plane_count);
 	free_spheres(&data->spheres, data->sphere_count);

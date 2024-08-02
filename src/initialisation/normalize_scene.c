@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/30 12:26:02 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:55:08 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static void	rotate_cones(t_cone *c, t_quat rotation)
 {
+	puts("BB");
 	while (c->object != INVALID)
 	{
+		puts("AA");
 		rotate(&c->apex, rotation);
 		rotate(&c->orientation, rotation);
 		// what else?

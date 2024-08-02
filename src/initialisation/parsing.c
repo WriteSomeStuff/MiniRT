@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 12:29:31 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:51:28 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static t_token	determine_object(char *str)
 		return (AMBIENT);
 	if (ft_strncmp(str, "C ", 2) == 0 || ft_strncmp(str, "C\t", 2) == 0)
 		return (CAMERA);
+	if (ft_strncmp(str, "co ", 3) == 0 || ft_strncmp(str, "co\t", 3) == 0)
+		return (CONE);
 	if (ft_strncmp(str, "cy ", 3) == 0 || ft_strncmp(str, "cy\t", 3) == 0)
 		return (CYLINDER);
 	if (ft_strncmp(str, "d ", 2) == 0 || ft_strncmp(str, "d\t", 2) == 0)

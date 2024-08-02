@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/01 13:39:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/01 14:14:26 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/02 14:49:51 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static t_vec	get_quad_coeff(t_vec dir, t_vec origin, float tan2, const t_cone *c
 
 void	intersect_cones(t_hit *col, t_ray *ray, const t_cone *c)
 {
-	t_vec	to_cone;
+	// t_vec	to_cone;
 	t_vec	quad_coeff;
-	t_vec	intersection;
+	// t_vec	intersection;
 	t_vec	to_apex;
 	float	res[2];
 
@@ -42,7 +42,7 @@ void	intersect_cones(t_hit *col, t_ray *ray, const t_cone *c)
 		{
 			to_apex.vec3 = ray->direction.vec3 * res[0] \
 				+ ray->origin.vec3 - c->apex.vec3;
-			if (fabs(dot(to_apex, c->orientation) <= c->height))
+			if (fabs(dot(to_apex, c->orientation)) <= c->height)
 			{
 				update(ray, CONE, (void *)c, res[0]);
 				col->specular = c->specular;

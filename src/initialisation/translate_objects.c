@@ -6,11 +6,20 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:51:55 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/30 11:34:42 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:55:32 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static void	translate_cones(t_cone *c, t_vec t)
+{
+	while (c->object != INVALID)
+	{
+		c->apex.vec3 -= t.vec3;
+		c++;
+	}
+}
 
 static void	translate_cylinders(t_cylinder *c, t_vec t)
 {
@@ -52,6 +61,7 @@ static void	translate_spheres(t_sphere *s, t_vec t)
 
 void	translate_objects(t_data *data, t_vec amount)
 {
+	translate_cones(data->cones, amount);
 	translate_cylinders(data->cyls, amount);
 	translate_discs(data->discs, amount);
 	translate_planes(data->planes, amount);
