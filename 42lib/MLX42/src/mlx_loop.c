@@ -6,11 +6,12 @@
 /*   By: W2Wizard <main@w2wizard.dev>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/28 01:24:36 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2023/03/28 16:34:17 by W2Wizard      ########   odam.nl         */
+/*   Updated: 2024/07/15 18:45:23 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/MLX42_Int.h"
+#include <unistd.h>
 
 //= Private =//
 
@@ -114,5 +115,6 @@ void mlx_loop(mlx_t* mlx)
 
 		glfwSwapBuffers(mlx->window);
 		glfwPollEvents();
+		usleep(10000);
 	}
 }
