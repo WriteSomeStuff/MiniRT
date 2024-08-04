@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/01 13:39:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/01 14:14:26 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/01 14:29:14 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	intersect_cones(t_hit *col, t_ray *ray, const t_cone *c)
 				update(ray, CONE, (void *)c, res[0]);
 				col->specular = c->specular;
 				col->glossiness = c->glossiness;
+				if (res[1] <= 0.0f)
+					col->inside_obj = true;
+				else
+					col->inside_obj = false;
 			}
 		}
 		c++;

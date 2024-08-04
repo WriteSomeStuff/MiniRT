@@ -6,11 +6,44 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:13:41 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/01 14:43:25 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static t_vec	cone_normal(t_hit *col, t_cone *cone)
+{
+	t_vec	apex_to_point;
+	t_vec	projection;
+	float	projection_length;
+	
+	apex_to_point.vec3 = col->location.vec3 - cone->apex.vec3;
+	projection_length = dot(apex_to_point, cone->orientation);
+	projection.vec3 = cone->orientation.vec3 * projection_length;
+
+	t_vec radial;
+	
+	radial.vec3 = apex_to_point.vec3 - projection.vec3;
+
+	t_vec	normal;
+	normal.vec3 = radial.vec3 * (float)cos(cone->angle) + cone->orientation.vec3 * (float)sin(cone->angle);
+	return (normalize_vector(normal));
+}
+
+static void	cone(t_hit *col, t_vec incoming)
+{
+	t_cone	*cone;
+	t_vec	clr;
+
+	(void)incoming;
+	cone = (t_cone *)col->obj;
+	clr = cone->colour;
+	col->obj_num = cone->instance;
+	col->surface_norm = cone_normal(col, cone);
+	if (col->glossy_bounce == false)
+		col->colour = reflection_result(clr, col->colour, 1);
+}
 
 static void	cylinder(t_hit *col, t_vec incoming)
 {
@@ -87,7 +120,7 @@ static void	sphere(t_hit *col, t_vec incoming)
 
 void	draw_collision(t_hit *col, t_vec incoming)
 {
-	static void	(*ptr[5])(t_hit *, t_vec) = {&cylinder, &disc, &plane, \
+	static void	(*ptr[6])(t_hit *, t_vec) = {&cone, &cylinder, &disc, &plane, \
 		&sphere, &sphere};
 
 	if (col->hit == false)

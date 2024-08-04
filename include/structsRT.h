@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/01 14:14:18 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/01 14:19:12 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,14 +146,16 @@ struct s_camera
 
 struct s_cone
 {
-	t_vec	apex;
-	t_vec	orientation;
-	float	height;
-	float	radius;
-	float	angle;
-	float	specular;
-	float	glossiness;
-	t_token	object;
+	t_vec		apex;
+	t_vec		orientation;
+	float		height;
+	float		radius;
+	float		angle;
+	float		specular;
+	float		glossiness;
+	t_vec		colour;
+	t_token		object;
+	uint16_t	instance;
 };
 
 struct s_cylinder
