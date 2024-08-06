@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/01 14:14:18 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/06 14:20:23 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,9 @@ struct s_cone
 	float		height;
 	float		radius;
 	float		angle;
-	t_vec		colour;
 	float		specular;
 	float		glossiness;
+	t_vec		colour;
 	t_token		object;
 	uint16_t	instance;
 };
