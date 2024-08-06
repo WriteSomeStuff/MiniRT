@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/02 14:53:32 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/02 15:11:33 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	init_cone(t_data *data, char **info)
 	check_split(data, info, 7);
 	verify_info(data, info);
 	data->cones[i].apex = create_vector(data, info[0]);
-	data->cones[i].apex = normalize_vector(data->cones[i].apex);
 	data->cones[i].orientation = create_vector(data, info[1]);
 	data->cones[i].orientation = normalize_vector(data->cones[i].orientation);
 	data->cones[i].height = a_to_float(data, info[2]);
