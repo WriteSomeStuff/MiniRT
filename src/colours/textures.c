@@ -27,7 +27,16 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 	return (clr);
 }
 
-static t_vec	cylinder_texture(void *cylptr, t_vec location)
+static t_vec	cone_tex(void *coneptr, t_vec location)
+{
+	t_cone	*cone;
+
+	(void)location;
+	cone = (t_cone *)coneptr;
+	return (cone->colour);
+}
+
+static t_vec	cylinder_tex(void *cylptr, t_vec location)
 {
 	t_cylinder	*cyl;
 
@@ -36,7 +45,7 @@ static t_vec	cylinder_texture(void *cylptr, t_vec location)
 	return (cyl->colour);
 }
 
-static t_vec	plane_texture(void *planeptr, t_vec intersection)
+static t_vec	plane_tex(void *planeptr, t_vec intersection)
 {
 	t_plane	*plane;
 
@@ -45,7 +54,7 @@ static t_vec	plane_texture(void *planeptr, t_vec intersection)
 	return (plane->colour);
 }
 
-static t_vec	sphere_texture(void *sphereptr, t_vec loc)
+static t_vec	sphere_tex(void *sphereptr, t_vec loc)
 {
 	float		x;
 	float		y;
@@ -63,8 +72,8 @@ static t_vec	sphere_texture(void *sphereptr, t_vec loc)
 
 t_vec	get_object_colour(t_hit *col)
 {
-	static t_vec	(*ptr[5])(void *, t_vec) = {&cylinder_texture, NULL, \
-		&plane_texture, &sphere_texture, &sphere_texture};
+	static t_vec	(*ptr[6])(void *, t_vec) = {&cone_tex, &cylinder_tex, \
+		NULL, &plane_tex, &sphere_tex, &sphere_tex};
 
 	return (ptr[col->type](col->obj, col->location));
 }

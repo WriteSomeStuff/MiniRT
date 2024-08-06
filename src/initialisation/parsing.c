@@ -104,5 +104,7 @@ void	read_file(t_data *data, char *location)
 		data->num_threads = 16;
 	if (pthread_mutex_init(&data->mutex, NULL) == -1)
 		exit_error(data, "mutex failed to initialize");
+	if (pthread_mutex_init(&data->go_lock, NULL) == -1)
+		exit_error(data, "mutex failed to initialize");
 	data->threads = rt_calloc(data, data->num_threads * sizeof(pthread_t));
 }

@@ -79,6 +79,7 @@ static void	*create_threads(void *data)
 
 	d = (t_data *)data;
 	pthread_detach(pthread_self());
+	// pthread_mutex_lock(&d->go_lock);
 	while (FOREVER)
 	{
 		i = 0;
@@ -98,12 +99,14 @@ static void	*create_threads(void *data)
 		pthread_mutex_unlock(&d->mutex);
 	}
 	pthread_mutex_unlock(&d->mutex);
+	// pthread_mutex_unlock(&d->go_lock);
 	return (NULL);
 }
 
 void	draw(t_data *data)
 {
 	pthread_t	idle;
+
 
 	if (pthread_create(&idle, NULL, &create_threads, data) == -1)
 		exit_error(data, "thread failed to create");

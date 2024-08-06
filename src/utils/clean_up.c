@@ -77,7 +77,9 @@ void	clean_up(t_data *data)
 	free(data->threads);
 	close(data->fd);
 	pthread_mutex_init(&data->mutex, NULL);
+	pthread_mutex_init(&data->go_lock, NULL);
 	pthread_mutex_destroy(&data->mutex);
+	pthread_mutex_destroy(&data->go_lock);
 	mlx_close_window(data->mlx);
 	mlx_terminate(data->mlx);
 }
