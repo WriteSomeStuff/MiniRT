@@ -6,11 +6,16 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/31 17:03:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/08 18:20:53 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include "../../42lib/MLX42/include/MLX42/MLX42.h"
+#include "../../42lib/MLX42/include/MLX42/MLX42_Int.h"
+
+void mlx_render_images(mlx_t* mlx);
+void mlx_flush_batch(mlx_ctx_t* mlx);
 
 void	wait_for_threads(t_data *data)
 {
@@ -106,7 +111,6 @@ static void	*create_threads(void *data)
 void	draw(t_data *data)
 {
 	pthread_t	idle;
-
 
 	if (pthread_create(&idle, NULL, &create_threads, data) == -1)
 		exit_error(data, "thread failed to create");

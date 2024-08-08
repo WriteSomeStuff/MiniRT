@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/06 14:20:23 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/08 17:43:52 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,6 @@ struct s_window
 	int32_t		width;
 	int32_t		height;
 	float		aspect_ratio;
-	bool		sizechanged;
 };
 
 struct s_data

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/23 13:53:09 by vincent       #+#    #+#                 */
-/*   Updated: 2024/07/31 16:52:08 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/08 17:43:04 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	rt_scroll(double xdelta, double ydelta, void *param)
 {
 	t_data	*data;
 
-	data = (t_data *)param;
 	(void)xdelta;
+	data = (t_data *)param;
 	if (ydelta < 0)
 		ydelta = 10;
 	else

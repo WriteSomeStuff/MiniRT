@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/02 14:49:02 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/08 18:18:34 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define FOREVER 1
 # define OFFSET 0.0001f
 # define THRESHHOLD 0.1
-# define NUM_RAYS 10
+# define NUM_RAYS 1
 # define MAX_BOUNCES 25
 # define MAX_FLOAT 3.40282347e+38F
 
