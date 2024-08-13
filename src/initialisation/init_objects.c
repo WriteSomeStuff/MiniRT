@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   init_objects.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
+/*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/02 15:11:33 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/13 14:27:28 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ void	init_camera(t_data *data, char **info)
 void	init_cone(t_data *data, char **info)
 {
 	int		i;
-	t_cone	*cone;
 
 	i = data->cone_count;
-	cone = &data->cones[i];
 	check_split(data, info, 7);
 	verify_info(data, info);
 	data->cones[i].apex = create_vector(data, info[0]);
@@ -77,21 +75,21 @@ void	init_cylinder(t_data *data, char **info)
 	cyl = &data->cyls[i];
 	check_split(data, info, 7);
 	verify_info(data, info);
-	data->cyls[i].center = create_vector(data, info[0]);
-	data->cyls[i].orientation = normalize_vector(create_vector(data, info[1]));
-	data->cyls[i].radius = a_to_float(data, info[2]) / 2.0f;
-	data->cyls[i].height = a_to_float(data, info[3]);
-	data->cyls[i].colour = create_vector(data, info[4]);
-	data->cyls[i].glossiness = a_to_float(data, &info[5][2]);
-	if (data->cyls[i].glossiness < 0 || data->cyls[i].glossiness > 1)
+	cyl->center = create_vector(data, info[0]);
+	cyl->orientation = normalize_vector(create_vector(data, info[1]));
+	cyl->radius = a_to_float(data, info[2]) / 2.0f;
+	cyl->height = a_to_float(data, info[3]);
+	cyl->colour = create_vector(data, info[4]);
+	cyl->glossiness = a_to_float(data, &info[5][2]);
+	if (cyl->glossiness < 0 || cyl->glossiness > 1)
 		exit_error(data, ": invalid glossiness value");
-	data->cyls[i].specular = a_to_float(data, &info[6][2]);
-	if (data->cyls[i].specular < 0 || data->cyls[i].specular > 1)
+	cyl->specular = a_to_float(data, &info[6][2]);
+	if (cyl->specular < 0 || cyl->specular > 1)
 		exit_error(data, ": invalid specular value");
-	data->cyls[i].object = CYLINDER;
-	data->cyls[i].instance = object_count(data);
-	check_rgb_values(data, &data->cyls[i].colour.vec3);
-	rgb_to_floats(&data->cyls[i].colour);
+	cyl->object = CYLINDER;
+	cyl->instance = object_count(data);
+	check_rgb_values(data, &cyl->colour.vec3);
+	rgb_to_floats(&cyl->colour);
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
 	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
 	data->cyl_count++;

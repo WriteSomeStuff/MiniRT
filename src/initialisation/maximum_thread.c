@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   maximum_thread.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: vincent <vincent@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/08 18:20:53 by vvan-der      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   maximum_thread.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soepgroente <soepgroente@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/15 16:14:03 by vincent           #+#    #+#             */
+/*   Updated: 2024/08/10 23:52:33 by soepgroente      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "../../42lib/MLX42/include/MLX42/MLX42.h"
-#include "../../42lib/MLX42/include/MLX42/MLX42_Int.h"
-
-void mlx_render_images(mlx_t* mlx);
-void mlx_flush_batch(mlx_ctx_t* mlx);
 
 void	wait_for_threads(t_data *data)
 {
@@ -58,20 +53,20 @@ static void	*prep_rendering(void *d)
 
 static void	join_threads(t_data *data, pthread_t *threads, uint32_t num)
 {
-	if (num == data->num_threads)
-		data->go = true;
-	else
-	{
-		pthread_mutex_unlock(&data->mutex);
-		exit_error(data, "failed to create thread");
-	}
+	uint32_t	i;
+
+	i = 0;
+	if (num != data->num_threads)
+		data->go = false;
 	pthread_mutex_unlock(&data->mutex);
-	while (num > 0)
+	while (i < num)
 	{
-		num--;
-		if (pthread_join(threads[num], NULL) == -1)
+		if (pthread_join(threads[i], NULL) == -1)
 			exit_error(data, "thread failed to join");
+		i++;
 	}
+	if (num != data->num_threads)
+		exit_error(data, "failed to create thread");
 	pthread_mutex_lock(&data->mutex);
 	data->threads_absorbed = true;
 	pthread_mutex_unlock(&data->mutex);
@@ -112,6 +107,7 @@ void	draw(t_data *data)
 {
 	pthread_t	idle;
 
+	data->go = true;
 	if (pthread_create(&idle, NULL, &create_threads, data) == -1)
 		exit_error(data, "thread failed to create");
 }

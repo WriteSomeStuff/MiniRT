@@ -6,7 +6,7 @@
 /*   By: W2Wizard <main@w2wizard.dev>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/28 01:24:36 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2024/08/02 14:46:10 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/13 14:12:13 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void mlx_loop(mlx_t* mlx)
 		mlx_exec_loop_hooks(mlx);
 		mlx_render_images(mlx);
 		mlx_flush_batch(mlx->context);
-
 		glfwSwapBuffers(mlx->window);
 		glfwPollEvents();
 	}

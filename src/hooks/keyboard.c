@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   keyboard.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/08 17:57:26 by vvan-der      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   keyboard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soepgroente <soepgroente@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/21 17:25:12 by vvan-der          #+#    #+#             */
+/*   Updated: 2024/08/11 00:00:35 by soepgroente      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	turn_camera(t_data *data, keys_t key)
 	else if (key == MLX_KEY_DOWN)
 		rotate(&data->cam->orientation, quat(degree_to_radian(15), \
 			vec(1, 0, 0)));
+	redraw(data);
 }
 
 void	rt_keys(mlx_key_data_t keydata, void *param)
@@ -86,7 +87,6 @@ void	rt_keys(mlx_key_data_t keydata, void *param)
 		move(data, vec(-1, 0, 0));
 	if (keydata.key == MLX_KEY_D && keydata.action == MLX_RELEASE)
 		move(data, vec(1, 0, 0));
-	redraw(data);
 }
 
 void	redraw(t_data *data)
