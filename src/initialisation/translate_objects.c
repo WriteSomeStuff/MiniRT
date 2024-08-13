@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:51:55 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/02 14:55:32 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/13 16:41:38 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	translate_cones(t_cone *c, t_vec t)
 	while (c->object != INVALID)
 	{
 		c->apex.vec3 -= t.vec3;
+		c->base.vec3 -= t.vec3;
 		c++;
 	}
 }

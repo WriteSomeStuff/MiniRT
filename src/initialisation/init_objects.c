@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/13 14:27:28 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/13 16:47:24 by vvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,32 @@ void	init_camera(t_data *data, char **info)
 	data->cam->fov_correction = tan(degree_to_radian(data->cam->fov) / 2);
 }
 
-void	init_cone(t_data *data, char **info)
+void	init_cone(t_data *d, char **info)
 {
 	int		i;
 
-	i = data->cone_count;
-	check_split(data, info, 7);
-	verify_info(data, info);
-	data->cones[i].apex = create_vector(data, info[0]);
-	data->cones[i].orientation = create_vector(data, info[1]);
-	data->cones[i].orientation = normalize_vector(data->cones[i].orientation);
-	data->cones[i].height = a_to_float(data, info[2]);
-	data->cones[i].radius = a_to_float(data, info[3]);
-	data->cones[i].angle = atan(data->cones[i].radius / data->cones[i].height);
-	data->cones[i].colour = create_vector(data, info[4]);
-	data->cones[i].glossiness = a_to_float(data, &info[5][2]);
-	if (data->cones[i].glossiness < 0 || data->cones[i].glossiness > 1)
-		exit_error(data, ": invalid glossiness value");
-	data->cones[i].specular = a_to_float(data, &info[6][2]);
-	if (data->cones[i].specular < 0 || data->cones[i].specular > 1)
-		exit_error(data, ": invalid specular value");
-	data->cones[i].object = CONE;
-	data->cones[i].instance = object_count(data);
-	check_rgb_values(data, &data->cones[i].colour.vec3);
-	rgb_to_floats(&data->cones[i].colour);
-	data->cone_count++;
+	i = d->cone_count;
+	check_split(d, info, 7);
+	verify_info(d, info);
+	d->cones[i].base = create_vector(d, info[0]);
+	d->cones[i].orientation = normalize_vector(create_vector(d, info[1]));
+	d->cones[i].height = a_to_float(d, info[2]);
+	d->cones[i].radius = a_to_float(d, info[3]);
+	d->cones[i].apex.vec3 = d->cones[i].base.vec3 + \
+		d->cones[i].orientation.vec3 * d->cones[i].height;
+	d->cones[i].angle = atan(d->cones[i].radius / d->cones[i].height);
+	d->cones[i].colour = create_vector(d, info[4]);
+	d->cones[i].glossiness = a_to_float(d, &info[5][2]);
+	if (d->cones[i].glossiness < 0 || d->cones[i].glossiness > 1)
+		exit_error(d, ": invalid glossiness value");
+	d->cones[i].specular = a_to_float(d, &info[6][2]);
+	if (d->cones[i].specular < 0 || d->cones[i].specular > 1)
+		exit_error(d, ": invalid specular value");
+	d->cones[i].object = CONE;
+	d->cones[i].instance = object_count(d);
+	check_rgb_values(d, &d->cones[i].colour.vec3);
+	rgb_to_floats(&d->cones[i].colour);
+	d->cone_count++;
 }
 
 void	init_cylinder(t_data *data, char **info)
