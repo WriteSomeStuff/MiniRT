@@ -16,18 +16,16 @@ static t_vec	cone_normal(t_hit *col, t_cone *cone)
 {
 	t_vec	apex_to_point;
 	t_vec	projection;
+	t_vec	radial;
+	t_vec	normal;
 	float	projection_length;
-	
+
 	apex_to_point.vec3 = col->location.vec3 - cone->apex.vec3;
 	projection_length = dot(apex_to_point, cone->orientation);
 	projection.vec3 = cone->orientation.vec3 * projection_length;
-
-	t_vec radial;
-	
 	radial.vec3 = apex_to_point.vec3 - projection.vec3;
-
-	t_vec	normal;
-	normal.vec3 = radial.vec3 * (float)cos(cone->angle) + cone->orientation.vec3 * (float)sin(cone->angle);
+	normal.vec3 = radial.vec3 * (float)cos(cone->angle) + \
+		cone->orientation.vec3 * (float)sin(cone->angle);
 	return (normalize_vector(normal));
 }
 
@@ -38,9 +36,17 @@ static void	cone(t_hit *col, t_vec incoming)
 
 	(void)incoming;
 	cone = (t_cone *)col->obj;
-	clr = cone->colour;
 	col->obj_num = cone->instance;
-	col->surface_norm = cone_normal(col, cone);
+	if (col->caps == false)
+	{
+		col->surface_norm = cone_normal(col, cone);
+		if (col->inside_obj == true)
+		{
+			// puts("HI:D");
+			col->surface_norm = inverted(col->surface_norm);
+		}
+	}
+	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
 }
@@ -55,6 +61,7 @@ static void	cylinder(t_hit *col, t_vec incoming)
 
 	(void)incoming;
 	cyl = (t_cylinder *)col->obj;
+	col->obj_num = cyl->instance;
 	if (col->caps == false)
 	{
 		to_center.vec3 = col->location.vec3 - cyl->center.vec3;
