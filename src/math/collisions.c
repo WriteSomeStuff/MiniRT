@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/15 14:24:22 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/15 17:47:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	cone(t_hit *col, t_vec incoming)
 {
 	t_cone	*cone;
 	t_vec	clr;
-	static int i = 0;
 
 	(void)incoming;
 	cone = (t_cone *)col->obj;
@@ -42,11 +41,7 @@ static void	cone(t_hit *col, t_vec incoming)
 	{
 		col->surface_norm = cone_normal(col, cone);
 		if (col->inside_obj == true)
-		{
-			printf("clip? %d\n", i);
-			i++;
 			col->surface_norm = inverted(col->surface_norm);
-		}
 	}
 	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)

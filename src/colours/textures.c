@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:13:09 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/15 18:00:57 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 {
 	t_vec	clr;
 
-	if (x >= t->width || y >= t->height)
+	if (x > t->width || y > t->height)
 	{
 		printf("x: %u y: %u\n", x, y);
 	}
@@ -54,7 +54,7 @@ static t_vec	plane_tex(void *planeptr, t_vec intersection)
 	return (plane->colour);
 }
 
-static t_vec	sphere_tex(void *sphereptr, t_vec loc)
+static t_vec	sphere_tex(void *sphereptr, t_vec sn)
 {
 	float		x;
 	float		y;
@@ -62,10 +62,14 @@ static t_vec	sphere_tex(void *sphereptr, t_vec loc)
 
 	sphere = (t_sphere *)sphereptr;
 	if (sphere->tex == NULL)
+	{
 		return (sphere->colour);
-	x = sphere->tex->width / 2 + ((loc.x / 2) * (sphere->tex->width / 2)) - 1;
-	y = sphere->tex->height - (sphere->tex->height / \
-		2 + (loc.y * (sphere->tex->height / 2))) - 1;
+	}
+	rotate(&sn, quat(sphere->rotated, sphere->orientation));
+	x = atan2(sn.z, sn.x) / (2 * PI) + 0.5f;
+	y = acos(sn.y) / PI;
+	x *= sphere->tex->width - 1;
+	y *= sphere->tex->height - 1;
 	return (pixel_to_clrvec(sphere->tex, (uint32_t)x, (uint32_t)y));
 }
 	// return (checkerboard_tex((int32_t)(x * 20), (int32_t)(y * 20)));
@@ -75,5 +79,5 @@ t_vec	get_object_colour(t_hit *col)
 	static t_vec	(*ptr[6])(void *, t_vec) = {&cone_tex, &cylinder_tex, \
 		NULL, &plane_tex, &sphere_tex, &sphere_tex};
 
-	return (ptr[col->type](col->obj, col->location));
+	return (ptr[col->type](col->obj, col->surface_norm));
 }

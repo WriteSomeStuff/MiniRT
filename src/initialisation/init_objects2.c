@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_lights.c                                      :+:    :+:            */
+/*   init_objects2.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/30 12:17:55 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/15 18:00:27 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	init_sphere(t_data *data, char **info)
 	i = data->sphere_count;
 	check_split(data, info, 5);
 	verify_info(data, info);
+	data->spheres[i].orientation = vec(0, 1, 0);
+	data->spheres[i].rotated = 0;
 	data->spheres[i].center = create_vector(data, info[0]);
 	data->spheres[i].radius = a_to_float(data, info[1]) / 2.0f;
 	data->spheres[i].colour = create_vector(data, info[2]);

@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/13 16:41:32 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/15 17:59:39 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static void	rotate_spheres(t_sphere *s, t_quat rotation)
 	while (s->object != INVALID)
 	{
 		rotate(&s->center, rotation);
+		rotate(&s->orientation, rotation);
+		s->rotated += rotation.real;
 		s++;
 	}
 }

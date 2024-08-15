@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/13 16:40:59 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/15 18:00:06 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,8 @@ struct s_pixel
 struct s_sphere
 {
 	t_vec			center;
+	t_vec			orientation;
+	float			rotated;
 	float			radius;
 	float			glossiness;
 	float			specular;
