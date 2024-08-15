@@ -18,7 +18,6 @@ static void	setup(t_data *data, t_ray *ray, int32_t x, int32_t y)
 		data->pix[y][x].glossiness);
 	ray->direction = data->pix[y][x].incoming;
 	ray->col->specular = data->pix[y][x].specular;
-	// ray->col->colour = get_object_colour(ray->col);
 	ray->col->colour = lerp(data->pix[y][x].obj_clr, vec(1, 1, 1), \
 		ray->col->glossy_bounce);
 	ray->origin = data->pix[y][x].location;
