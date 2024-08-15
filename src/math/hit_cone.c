@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/01 13:39:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/13 17:34:52 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/15 14:08:44 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ void	intersect_cones(t_hit *col, t_ray *ray, const t_cone *c)
 		if ((t_cone *)ray->col->obj == c)
 		{
 			if (hits[0] < 0 || hits[1] < 0 || hits[2] < 0)
-			{
-				printf("0: %f\n1: %f\n2: %f\n", hits[0], hits[1], hits[2]);
 				col->inside_obj = true;
-			}
 			else
 				col->inside_obj = false;
 		}
