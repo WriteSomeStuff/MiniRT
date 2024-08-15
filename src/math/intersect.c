@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 16:29:46 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/01 14:27:13 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/15 14:23:30 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	analyze_intersection(float *a, float *b)
 {
 	float	tmp;
 
-	if (*b <= 0)
+	if (*b <= OFFSET)
 		return (false);
 	if (*a <= 0 && *b > 0)
 	{

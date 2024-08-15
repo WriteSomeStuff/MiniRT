@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/15 14:17:01 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/15 14:20:05 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define HEIGHT 1080
 # define PI 3.1415927f
 # define FOREVER 1
-# define OFFSET 0.0001f
+# define OFFSET 0.001f
 # define THRESHHOLD 0.1
 # define NUM_RAYS 10
 # define MAX_BOUNCES 25

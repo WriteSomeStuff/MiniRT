@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/01 13:39:31 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/15 14:08:44 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/15 14:22:03 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	hit_base(t_hit *col, t_ray *ray, const t_cone *c, float *hits)
 		if (vector_length(intersection, c->base) <= c->radius)
 		{
 			hits[0] = distance;
-			if (distance > 0 && distance < col->distance)
+			if (distance > OFFSET && distance < col->distance)
 			{
 				update(ray, CONE, (void *)c, distance);
 				col->specular = c->specular;
