@@ -6,12 +6,11 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/11 13:11:49 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:26:23 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/16 14:50:56 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "time.h"
 
 float	dot(const t_vec a, const t_vec b)
 {
