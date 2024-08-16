@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/15 19:07:52 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/16 12:16:43 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ static t_vec	cylinder_tex(void *cylptr, t_hit *col)
 {
 	(void)col;
 	return (((t_cylinder *)cylptr)->colour);
+}
+
+static t_vec	disc_tex(void *discptr, t_hit *col)
+{
+	(void)col;
+	return (((t_disc *)discptr)->colour);
 }
 
 static t_vec	plane_tex(void *planeptr, t_hit *col)
@@ -97,7 +103,7 @@ static t_vec	sphere_tex(void *sphereptr, t_hit *col)
 t_vec	get_object_colour(t_hit *col)
 {
 	static t_vec	(*ptr[6])(void *, t_hit *) = {&cone_tex, &cylinder_tex, \
-		NULL, &plane_tex, &sphere_tex, &sphere_tex};
+		&disc_tex, &plane_tex, &sphere_tex, &sphere_tex};
 
 	return (ptr[col->type](col->obj, col));
 }

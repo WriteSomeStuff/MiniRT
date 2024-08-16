@@ -36,6 +36,8 @@ static int	check_input(t_data *data, const char *str, float *c, int i)
 		*c *= -1;
 		i++;
 	}
+	if (ft_isdigit(str[i]) == false)
+		exit_error(data, ": invalid input number");
 	while (ft_isdigit(str[i]))
 	{
 		i++;

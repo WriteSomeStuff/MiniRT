@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/02 14:51:28 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/16 12:35:09 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	assign_function_pointers(t_data *data)
 	data->f[SPHERE] = &init_sphere;
 }
 
-static void	parse_line(t_data *data, t_input *input)
+static void	parse_lines(t_data *data, t_input *input)
 {
 	while (FOREVER)
 	{
@@ -95,7 +95,7 @@ void	read_file(t_data *data, char *location)
 	data->fd = open(location, O_RDONLY);
 	if (data->fd == -1)
 		exit_error(data, ": could not open file");
-	parse_line(data, input);
+	parse_lines(data, input);
 	close(data->fd);
 	assign_function_pointers(data);
 	alloc_objects(data, data->input);
