@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/15 14:20:05 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/16 13:15:09 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void			wait_for_threads(t_data *data);
 void			render(t_data *data, int32_t x, int32_t y);
 void			redraw(t_data *data);
 void			rt_close(void *param);
+
+void			cone(t_hit *col, t_vec incoming);
+
 void			draw_collision(t_hit *col, t_vec incoming);
 void			trace(t_data *data, t_ray *ray, int32_t x, int32_t y);
 float			sum(t_vec vector);
@@ -65,6 +68,10 @@ t_vec			reflection_result(const t_vec c1, const t_vec c2, \
 t_vec			combine_colours(const t_vec c1, const t_vec c2);
 uint32_t		percentage_to_rgba(const t_vec f);
 void			rgb_to_floats(t_vec *rgb);
+
+t_vec			cone_tex(void *coneptr, t_hit *col);
+t_vec			cylinder_tex(void *cylptr, t_hit *col);
+t_vec			disc_tex(void *discptr, t_hit *col);
 
 t_vec			get_object_colour(t_hit *col);
 /*	------------------------------------------------------------------	*/
@@ -93,8 +100,19 @@ void			init_plane(t_data *data, char **info);
 void			init_sphere(t_data *data, char **info);
 
 void			read_file(t_data *data, char *location);
+
+void			rotate_cones(t_cone *c, t_quat rotation);
+void			rotate_cylinders(t_cylinder *c, t_quat rotation);
+void			rotate_discs(t_disc *d, t_quat rotation);
+void			rotate_planes(t_plane *p, t_quat rotation);
+void			rotate_spheres(t_sphere *s, t_quat rotation);
+
 void			normalize_scene(t_data *data);
 void			translate_objects(t_data *data, t_vec amount);
+
+void			translate_cones(t_cone *c, t_vec t);
+void			translate_cylinders(t_cylinder *c, t_vec t);
+void			translate_discs(t_disc *d, t_vec t);
 
 void			draw(t_data *data);
 /*	------------------------------------------------------------------	*/

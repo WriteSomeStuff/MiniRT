@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 17:00:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/16 12:16:43 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/16 13:03:10 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ static t_vec	pixel_to_clrvec(mlx_texture_t *t, uint32_t x, uint32_t y)
 	return (clr);
 }
 
-static t_vec	cone_tex(void *coneptr, t_hit *col)
-{
-	(void)col;
-	return (((t_cone *)coneptr)->colour);
-}
-
-static t_vec	cylinder_tex(void *cylptr, t_hit *col)
-{
-	(void)col;
-	return (((t_cylinder *)cylptr)->colour);
-}
-
-static t_vec	disc_tex(void *discptr, t_hit *col)
-{
-	(void)col;
-	return (((t_disc *)discptr)->colour);
-}
-
 static t_vec	plane_tex(void *planeptr, t_hit *col)
 {
 	t_plane	*plane;
@@ -56,28 +38,19 @@ static t_vec	plane_tex(void *planeptr, t_hit *col)
 	if (plane->tex == NULL)
 		return (plane->colour);
 	location = col->location;
-	rotate(&location, quat(angle(plane->orientation, vec(0, 0, 1)), vec(0, 1, 0)));
+	rotate(&location, quat(angle(plane->orientation, \
+		vec(0, 0, 1)), vec(0, 1, 0)));
 	location.vec3 -= plane->location.vec3;
 	x = (location.x / 25) * plane->tex->width;
 	y = (location.y / 25) * plane->tex->height;
 	if (x < 0)
-	{
-		x *= -1;
-		x = fmod(x, plane->tex->width);
-		x = plane->tex->width - x - 1;
-	}
+		x = plane->tex->width - fmod(x * -1, plane->tex->width) - 1;
 	else
 		x = fmod(x, plane->tex->width);
 	if (y < 0)
-	{
-		y *= -1;
-		y = fmod(y, plane->tex->height);
-	}
+		y = fmod(y * -1, plane->tex->height);
 	else
-	{
-		y = fmod(y, plane->tex->height);
-		y = plane->tex->height - y - 1;
-	}
+		y = plane->tex->height - fmod(y, plane->tex->height) - 1;
 	return (pixel_to_clrvec(plane->tex, (uint32_t)x, (uint32_t)y));
 }
 

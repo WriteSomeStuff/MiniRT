@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/13 16:47:24 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/16 13:05:38 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,33 +94,6 @@ void	init_cylinder(t_data *data, char **info)
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
 	cyl->top.vec3 = cyl->center.vec3 + cyl->orientation.vec3 * cyl->height / 2;
 	data->cyl_count++;
-}
-
-void	init_disc(t_data *data, char **info)
-{
-	int	i;
-
-	i = data->disc_count;
-	check_split(data, info, 7);
-	verify_info(data, info);
-	data->discs[i].center = create_vector(data, info[0]);
-	data->discs[i].orientation = create_vector(data, info[1]);
-	data->discs[i].orientation = normalize_vector(data->discs[i].orientation);
-	data->discs[i].rev_norm.vec3 = data->discs[i].orientation.vec3 * -1;
-	data->discs[i].hole_radius = a_to_float(data, info[2]) / 2;
-	data->discs[i].radius = a_to_float(data, info[3]) / 2;
-	data->discs[i].colour = create_vector(data, info[4]);
-	data->discs[i].glossiness = a_to_float(data, &info[5][2]);
-	if (data->discs[i].glossiness < 0 || data->discs[i].glossiness > 1)
-		exit_error(data, ": invalid glossiness value");
-	data->discs[i].specular = a_to_float(data, &info[6][2]);
-	if (data->discs[i].specular < 0 || data->discs[i].specular > 1)
-		exit_error(data, ": invalid specular value");
-	data->discs[i].object = DISC;
-	data->discs[i].instance = object_count(data);
-	check_rgb_values(data, &data->discs[i].colour.vec3);
-	rgb_to_floats(&data->discs[i].colour);
-	data->disc_count++;
 }
 
 void	init_plane(t_data *data, char **info)

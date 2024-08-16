@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   maximum_thread.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: soepgroente <soepgroente@student.42.fr>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 16:14:03 by vincent           #+#    #+#             */
-/*   Updated: 2024/08/10 23:52:33 by soepgroente      ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   maximum_thread.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/15 16:14:03 by vincent       #+#    #+#                 */
+/*   Updated: 2024/08/16 13:06:27 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	*create_threads(void *data)
 
 	d = (t_data *)data;
 	pthread_detach(pthread_self());
-	// pthread_mutex_lock(&d->go_lock);
 	while (FOREVER)
 	{
 		i = 0;
@@ -99,7 +98,6 @@ static void	*create_threads(void *data)
 		pthread_mutex_unlock(&d->mutex);
 	}
 	pthread_mutex_unlock(&d->mutex);
-	// pthread_mutex_unlock(&d->go_lock);
 	return (NULL);
 }
 
