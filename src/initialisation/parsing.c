@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/16 12:35:09 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/16 15:22:38 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void	read_file(t_data *data, char *location)
 	if (data->num_threads > 16)
 		data->num_threads = 16;
 	if (pthread_mutex_init(&data->mutex, NULL) == -1)
-		exit_error(data, "mutex failed to initialize");
-	if (pthread_mutex_init(&data->go_lock, NULL) == -1)
 		exit_error(data, "mutex failed to initialize");
 	data->threads = rt_calloc(data, data->num_threads * sizeof(pthread_t));
 }

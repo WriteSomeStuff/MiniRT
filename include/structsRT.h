@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/15 18:00:06 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/16 15:22:54 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define STRUCTSRT_H
 
 # include "miniRT.h"
-# include "pthread.h"
 # include <MLX42/MLX42.h>
 
 typedef float				t_vec3 __attribute__ ((vector_size(16)));
@@ -104,13 +103,6 @@ struct s_input
 	struct s_input	*next;
 };
 
-struct s_texture
-{
-	uint32_t	width;
-	uint32_t	height;
-	uint8_t		*pixels;
-};
-
 struct s_hit
 {
 	bool	hit;
@@ -125,7 +117,6 @@ struct s_hit
 	void	*obj;
 	t_vec	location;
 	t_vec	colour;
-	t_vec	objclr;
 	t_vec	surface_norm;
 };
 
@@ -165,7 +156,6 @@ struct s_cylinder
 	t_vec			base;
 	t_vec			top;
 	t_vec			orientation;
-	t_vec			rev_norm;
 	float			glossiness;
 	float			specular;
 	float			radius;
@@ -173,7 +163,6 @@ struct s_cylinder
 	t_vec			colour;
 	t_token			object;
 	uint16_t		instance;
-	mlx_texture_t	*tex;
 };
 
 struct s_disc
@@ -243,7 +232,6 @@ struct s_data
 {
 	char			*line;
 	mlx_t			*mlx;
-	mlx_image_t		*counter;
 	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
 	pthread_t		*threads;
@@ -262,7 +250,6 @@ struct s_data
 	t_sphere		*spheres;
 	t_window		*window;
 	t_pixel			**pix;
-	t_vec			**directions;
 	int16_t			selected;
 	int32_t			fd;
 	int32_t			cone_count;
@@ -271,7 +258,6 @@ struct s_data
 	int32_t			plane_count;
 	int32_t			sphere_count;
 	pthread_mutex_t	mutex;
-	pthread_mutex_t	go_lock;
 	void			(*f[INVALID])(t_data *, char **);
 };
 

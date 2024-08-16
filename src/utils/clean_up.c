@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:42:06 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/02 14:46:56 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:22:44 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,8 @@ static void	free_cones(t_cone **cones)
 	*cones = NULL;
 }
 
-static void	free_cylinders(t_cylinder **cylinders, uint32_t amount)
+static void	free_cylinders(t_cylinder **cylinders)
 {
-	uint32_t	i;
-
-	i = 0;
-	while (i < amount)
-	{
-		if ((*cylinders)[i].tex != NULL)
-			mlx_delete_texture((*cylinders)[i].tex);
-		i++;
-	}
 	free(*cylinders);
 	*cylinders = NULL;
 }
@@ -68,7 +59,7 @@ void	clean_up(t_data *data)
 	clear_list(&data->input);
 	free(data->cam);
 	free_cones(&data->cones);
-	free_cylinders(&data->cyls, data->cyl_count);
+	free_cylinders(&data->cyls);
 	free_planes(&data->planes, data->plane_count);
 	free_spheres(&data->spheres, data->sphere_count);
 	free_2d((void ***)&data->pix);
@@ -77,9 +68,7 @@ void	clean_up(t_data *data)
 	free(data->threads);
 	close(data->fd);
 	pthread_mutex_init(&data->mutex, NULL);
-	pthread_mutex_init(&data->go_lock, NULL);
 	pthread_mutex_destroy(&data->mutex);
-	pthread_mutex_destroy(&data->go_lock);
 	mlx_close_window(data->mlx);
 	mlx_terminate(data->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:39:12 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:02:11 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/16 15:04:56 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "miniRT.h"
 # include "structsRT.h"
-# include <MLX42/MLX42.h>
 
 /*	3D vectors	*/
 /*	------------------------------------------------------------------	*/
@@ -39,7 +38,6 @@ bool		is_glossy(t_data *data, uint32_t id, float glossiness);
 
 /*	Quaternions	*/
 /*	------------------------------------------------------------------	*/
-void		print_quat(t_quat quat);
 t_quat		quat(float real, t_vec vec);
 t_vec		random_vector(t_data *data, uint32_t id, t_vec surface_normal);
 void		rotate(t_vec *point, t_quat rotation);
