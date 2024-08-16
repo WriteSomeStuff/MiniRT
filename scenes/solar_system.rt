@@ -1,21 +1,14 @@
-sp 2,0,0 0.6 200,200,200 g:0 s:0 t:textures/mercury.png
+sp 2,0,0		0.6								200,200,200				g:0 s:0 t:textures/mercury.png
+sp 2,0,5		0.95							255,198,173				g:0 s:0 t:textures/venus.png
+sp 7,0,0		1.000							70,130,180				g:0.3 s:0.3 t:textures/earth.png
+sp 10,0,0		0.8								255,69,0				g:0 s:0 t:textures/mars.png
+sp 15,0,-10		5								255,165,0				g:0 s:0 t:textures/jupiter.png
+sp 22,0,10		5								210,180,140				g:0 s:0 t:textures/saturn.png
+sp 31,0,5		3								173,216,230				g:0 s:0 t:textures/uranus.png
+sp 35,0,-2		3								100,149,237				g:0 s:0 t:textures/neptune.png
 
-sp 2,0,5 0.95 255,198,173 g:0 s:0 t:textures/venus.png
+d  22,0,10		1,-0.3,0.2		13		15		210,180,140				g:0.5 s:0.7
 
-sp 7,0,0 1.000 70,130,180 g:0.3 s:0.3 t:textures/earth.png
-
-sp 10,0,0 0.8 255,69,0 g:0 s:0 t:textures/mars.png
-
-sp 15,0,-10 5 255,165,0 g:0 s:0 t:textures/jupiter.png
-
-sp	22,0,10 5 210,180,140 g:0 s:0 t:textures/saturn.png
-d	22,0,10	1,-0.3,0.2		13	15		210,180,140	g:0.5	s:0.7
-
-sp 31,0,5 3 173,216,230 g:0 s:0 t:textures/uranus.png
-
-sp 35,0,-2 3 100,149,237 g:0 s:0 t:textures/neptune.png
-
-C   20,0,-35		0,0,1	70
-L	-10,0,-5 	1 	255,255,255		25	
-
-A   0.1				255,255,255
+C  20,0,-35		0,0,1			70
+L  -10,0,-5 	1								255,255,255		25	
+A  0.1											255,255,255
