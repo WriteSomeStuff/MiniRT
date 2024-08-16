@@ -6,7 +6,7 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/08/16 12:08:52 by vincent       ########   odam.nl          #
+#    Updated: 2024/08/16 13:22:30 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ CFILES	=	alloc.c \
 			a_to_float.c \
 			cast_rays.c \
 			collisions.c \
+			collisions2.c \
 			colours.c \
 			clean_up.c \
 			draw.c \
@@ -56,10 +57,13 @@ CFILES	=	alloc.c \
 			quaternions_utils.c \
 			quaternions.c \
 			reflect.c \
+			rotate_objects.c \
 			select.c \
 			textures.c \
+			textures2.c \
 			trace.c \
 			translate_objects.c \
+			translate_objects2.c \
 			utils.c \
 			vectors.c \
 			vectors2.c \
