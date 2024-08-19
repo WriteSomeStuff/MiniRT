@@ -1,5 +1,5 @@
-sp  -2.1,0,3	4					255,255,255				g:0 s:0
-sp  2.1,0,3		4					255,255,255				g:0 s:0
+sp  -2.1,0,3	4					255,255,255				g:0 s:0	t:textures/earth.png
+sp  2.1,0,3		4					255,255,255				g:0 s:0	t:textures/spherechecker.png
 
 pl  0,-3,0		0,-1,0				0,255,0      			g:1 s:1
 

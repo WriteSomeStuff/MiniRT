@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/19 17:06:59 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 23:15:24 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTSRT_H
 
 # include "miniRT.h"
+# include "pthread.h"
 # include <MLX42/MLX42.h>
 
 typedef float				t_vec3 __attribute__ ((vector_size(16)));

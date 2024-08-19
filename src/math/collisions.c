@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:58:09 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 23:16:16 by vincent       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ static void	disc(t_hit *col, t_vec incoming)
 
 static void	plane(t_hit *col, t_vec incoming)
 {
-	t_plane	*plane;
 	t_vec	clr;
 
 	(void)incoming;
-	plane = (t_plane *)col->obj;
 	clr = get_object_colour(col);
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
