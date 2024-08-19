@@ -6,13 +6,13 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:46:38 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/08 18:17:49 by vvan-der      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:12:08 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	initialise_window(t_data *data)
+static void	initialise_window(t_data *data)
 {
 	t_window	*w;
 
@@ -22,9 +22,6 @@ void	initialise_window(t_data *data)
 		exit_error(data, ": mlx failed to initialise");
 	data->scene = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (data->scene == NULL)
-		exit_error(data, ": image failed to load");
-	data->highlight = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (data->highlight == NULL)
 		exit_error(data, ": image failed to load");
 	if (mlx_image_to_window(data->mlx, data->scene, 0, 0) == -1)
 		exit_error(data, ": failed to load window");
@@ -51,9 +48,6 @@ int32_t	main(int32_t argc, char **argv)
 	draw(&data);
 	mlx_close_hook(data.mlx, &rt_close, &data);
 	mlx_key_hook(data.mlx, &rt_keys, &data);
-	mlx_mouse_hook(data.mlx, &rt_select, &data);
 	mlx_scroll_hook(data.mlx, &rt_scroll, &data);
 	mlx_loop(data.mlx);
-	clean_up(&data);
-	return (0);
 }

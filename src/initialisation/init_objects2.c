@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:02 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/16 13:05:56 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 16:56:20 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_rgb_values(t_data *data, const t_vec3 *vec)
 	i = 0;
 	while (i < 3)
 	{
-		if ((int32_t)(*vec)[i] < 0 || (int32_t)(*vec)[i] > 255)
+		if ((*vec)[i] < 0.0f || (*vec)[i] > 255.0f)
 			exit_error(data, ": incorrect RGB values");
 		i++;
 	}
@@ -51,7 +51,6 @@ void	init_light(t_data *data, char **info)
 	if (info[3] != NULL)
 		data->spheres[i].radius = a_to_float(data, info[3]) / 2.0f;
 	data->spheres[i].object = LIGHT;
-	data->spheres[i].instance = object_count(data);
 	check_rgb_values(data, &data->spheres[i].colour.vec3);
 	rgb_to_floats(&data->spheres[i].colour);
 	data->sphere_count++;
@@ -78,7 +77,6 @@ void	init_disc(t_data *data, char **info)
 	if (data->discs[i].specular < 0 || data->discs[i].specular > 1)
 		exit_error(data, ": invalid specular value");
 	data->discs[i].object = DISC;
-	data->discs[i].instance = object_count(data);
 	check_rgb_values(data, &data->discs[i].colour.vec3);
 	rgb_to_floats(&data->discs[i].colour);
 	data->disc_count++;
@@ -105,7 +103,6 @@ void	init_sphere(t_data *data, char **info)
 	if (info[5] != NULL)
 		data->spheres[i].tex = load_texture(data, &info[5][2]);
 	data->spheres[i].object = SPHERE;
-	data->spheres[i].instance = object_count(data);
 	check_rgb_values(data, &data->spheres[i].colour.vec3);
 	rgb_to_floats(&data->spheres[i].colour);
 	data->sphere_count++;

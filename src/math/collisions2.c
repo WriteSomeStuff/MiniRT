@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:13:29 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/16 13:15:14 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:58:18 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	cone(t_hit *col, t_vec incoming)
 
 	(void)incoming;
 	cone = (t_cone *)col->obj;
-	col->obj_num = cone->instance;
 	if (col->caps == false)
 	{
 		col->surface_norm = cone_normal(col, cone);

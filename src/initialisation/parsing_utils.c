@@ -6,7 +6,7 @@
 /*   By: cschabra <cschabra@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 12:17:22 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/07/30 13:21:31 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:52:58 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,16 @@ mlx_texture_t	*load_texture(t_data *data, char *path)
 	return (tex);
 }
 
-int16_t	object_count(t_data *data)
-{
-	return (data->cone_count + data->cyl_count + data->plane_count + \
-		data->sphere_count + data->disc_count);
-}
-
 t_vec	create_vector(t_data *data, char *info)
 {
 	t_vec	vector;
 	char	**vec;
 
+	if (*info == ',')
+		exit_error(data, ": invalid input");
 	vec = ft_split(info, ',');
-	if (vec == NULL)
-		exit_error(data, ": split failed");
+	if (vec == NULL || !vec[0] || !vec[1] || !vec[2] || vec[3])
+		exit_error(data, ": split failed or invalid input");
 	vector.x = a_to_float(data, vec[0]);
 	vector.y = a_to_float(data, vec[1]);
 	vector.z = a_to_float(data, vec[2]);

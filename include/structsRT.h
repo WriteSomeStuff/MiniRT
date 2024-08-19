@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/27 16:56:26 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/16 15:22:54 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:06:59 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ struct s_hit
 	bool	caps;
 	bool	glossy_bounce;
 	t_token	type;
-	int16_t	obj_num;
 	float	distance;
 	float	glossiness;
 	float	specular;
@@ -147,7 +146,6 @@ struct s_cone
 	float		glossiness;
 	t_vec		colour;
 	t_token		object;
-	uint16_t	instance;
 };
 
 struct s_cylinder
@@ -162,7 +160,6 @@ struct s_cylinder
 	float			height;
 	t_vec			colour;
 	t_token			object;
-	uint16_t		instance;
 };
 
 struct s_disc
@@ -176,7 +173,6 @@ struct s_disc
 	float			hole_radius;
 	t_vec			colour;
 	t_token			object;
-	uint16_t		instance;
 };
 
 struct s_plane
@@ -188,7 +184,6 @@ struct s_plane
 	float			glossiness;
 	float			specular;
 	t_token			object;
-	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
 
@@ -204,7 +199,6 @@ struct s_pixel
 	t_vec			surface_norm;
 	float			glossiness;
 	float			specular;
-	int16_t			obj_num;
 };
 
 struct s_sphere
@@ -217,7 +211,6 @@ struct s_sphere
 	float			specular;
 	t_vec			colour;
 	t_token			object;
-	uint16_t		instance;
 	mlx_texture_t	*tex;
 };
 
@@ -232,7 +225,6 @@ struct s_data
 {
 	char			*line;
 	mlx_t			*mlx;
-	mlx_image_t		*highlight;
 	mlx_image_t		*scene;
 	pthread_t		*threads;
 	uint32_t		iterations;
@@ -250,7 +242,6 @@ struct s_data
 	t_sphere		*spheres;
 	t_window		*window;
 	t_pixel			**pix;
-	int16_t			selected;
 	int32_t			fd;
 	int32_t			cone_count;
 	int32_t			cyl_count;
@@ -258,6 +249,7 @@ struct s_data
 	int32_t			plane_count;
 	int32_t			sphere_count;
 	pthread_mutex_t	mutex;
+	bool			made_mutex;
 	void			(*f[INVALID])(t_data *, char **);
 };
 

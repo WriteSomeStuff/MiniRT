@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/26 16:50:47 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/16 13:14:01 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:58:09 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	cylinder(t_hit *col, t_vec incoming)
 
 	(void)incoming;
 	cyl = (t_cylinder *)col->obj;
-	col->obj_num = cyl->instance;
 	if (col->caps == false)
 	{
 		to_center.vec3 = col->location.vec3 - cyl->center.vec3;
@@ -45,7 +44,6 @@ static void	disc(t_hit *col, t_vec incoming)
 	(void)incoming;
 	disc = (t_disc *)col->obj;
 	clr = disc->colour;
-	col->obj_num = disc->instance;
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
 }
@@ -58,7 +56,6 @@ static void	plane(t_hit *col, t_vec incoming)
 	(void)incoming;
 	plane = (t_plane *)col->obj;
 	clr = get_object_colour(col);
-	col->obj_num = plane->instance;
 	if (col->glossy_bounce == false)
 		col->colour = reflection_result(clr, col->colour, 1);
 }
@@ -70,7 +67,6 @@ static void	sphere(t_hit *col, t_vec incoming)
 
 	sphere = (t_sphere *)col->obj;
 	set_vector(&col->surface_norm, &sphere->center, &col->location);
-	col->obj_num = sphere->instance;
 	if (col->inside_obj == true)
 		col->surface_norm = inverted(col->surface_norm);
 	clr = get_object_colour(col);

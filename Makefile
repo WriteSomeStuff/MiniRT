@@ -6,14 +6,14 @@
 #    By: cschabra <cschabra@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/10/05 17:27:05 by cschabra      #+#    #+#                  #
-#    Updated: 2024/08/16 13:22:30 by cschabra      ########   odam.nl          #
+#    Updated: 2024/08/19 15:06:03 by cschabra      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= miniRT
 T_EXEC	= tester
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -pthread $(HEADERS) -g -fsanitize=address  #-Ofast -flto
+CFLAGS	= -Wall -Wextra -Werror -pthread -Ofast -flto $(HEADERS) -g #-fsanitize=address #
 LFLAGS	= -lm -ldl -lglfw
 OS		= $(shell uname)
 
@@ -58,7 +58,6 @@ CFILES	=	alloc.c \
 			quaternions.c \
 			reflect.c \
 			rotate_objects.c \
-			select.c \
 			textures.c \
 			textures2.c \
 			trace.c \

@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/22 15:52:29 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:22:38 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:07:39 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	read_file(t_data *data, char *location)
 		exit_error(data, ": could not open file");
 	parse_lines(data, input);
 	close(data->fd);
+	data->fd = -1;
 	assign_function_pointers(data);
 	alloc_objects(data, data->input);
 	data->num_threads = sysconf(_SC_NPROCESSORS_ONLN);
@@ -104,5 +105,6 @@ void	read_file(t_data *data, char *location)
 		data->num_threads = 16;
 	if (pthread_mutex_init(&data->mutex, NULL) == -1)
 		exit_error(data, "mutex failed to initialize");
+	data->made_mutex = true;
 	data->threads = rt_calloc(data, data->num_threads * sizeof(pthread_t));
 }

@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 17:47:28 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:04:18 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:01:31 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ t_vec			get_object_colour(t_hit *col);
 /*	------------------------------------------------------------------	*/
 void			rt_keys(mlx_key_data_t keydata, void *param);
 void			rt_scroll(double xdelta, double ydelta, void *param);
-void			rt_select(mouse_key_t btn, action_t act, modifier_key_t m, \
-	void *p);
 void			rt_close(void *param);
 /*	------------------------------------------------------------------	*/
 
@@ -67,7 +65,6 @@ void			init_cylinder(t_data *data, char **info);
 void			init_disc(t_data *data, char **info);
 void			init_plane(t_data *data, char **info);
 void			init_sphere(t_data *data, char **info);
-int16_t			object_count(t_data *data);
 void			read_file(t_data *data, char *location);
 void			rotate_cones(t_cone *c, t_quat rotation);
 void			rotate_cylinders(t_cylinder *c, t_quat rotation);

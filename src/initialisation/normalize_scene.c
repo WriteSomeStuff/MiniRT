@@ -6,7 +6,7 @@
 /*   By: vincent <vincent@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/04 13:35:16 by vincent       #+#    #+#                 */
-/*   Updated: 2024/08/16 13:10:35 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:55:12 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	normalize_scene(t_data *data)
 	t_quat	rotation;
 	float	ang;
 
-	data->selected = -1;
 	translate_objects(data, data->cam->viewpoint);
 	turn = cross(data->cam->orientation, vec(0, 0, 1));
 	ang = angle(vec(0, 0, 1), data->cam->orientation);

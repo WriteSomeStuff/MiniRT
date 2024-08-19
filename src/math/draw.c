@@ -6,7 +6,7 @@
 /*   By: vvan-der <vvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/03/21 17:23:22 by vvan-der      #+#    #+#                 */
-/*   Updated: 2024/07/31 16:49:12 by vincent       ########   odam.nl         */
+/*   Updated: 2024/08/19 13:58:26 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	initial_hit(t_data *data, t_ray *ray, int32_t x, int32_t y)
 {
 	find_closest_object(data, ray->col, ray, y % data->num_threads);
 	draw_collision(ray->col, ray->direction);
-	data->pix[y][x].obj_num = ray->col->obj_num;
 	if (ray->col->type == LIGHT)
 	{
 		data->pix[y][x].pix_clr.vec3 = ray->col->colour.vec3 * \
@@ -48,7 +47,6 @@ static void	reset_ray(t_data *data, t_ray *ray, int32_t x, int32_t y)
 	ft_bzero(ray->col, sizeof(t_hit));
 	ray->origin = data->cam->viewpoint;
 	ray->direction = data->pix[y][x].ray_direction;
-	ray->col->obj_num = -1;
 	ray->col->colour = vec(1, 1, 1);
 }
 

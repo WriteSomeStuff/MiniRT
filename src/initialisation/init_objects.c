@@ -6,7 +6,7 @@
 /*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/02/28 16:08:04 by cschabra      #+#    #+#                 */
-/*   Updated: 2024/08/16 13:05:38 by cschabra      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:00:21 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	init_cone(t_data *d, char **info)
 	if (d->cones[i].specular < 0 || d->cones[i].specular > 1)
 		exit_error(d, ": invalid specular value");
 	d->cones[i].object = CONE;
-	d->cones[i].instance = object_count(d);
 	check_rgb_values(d, &d->cones[i].colour.vec3);
 	rgb_to_floats(&d->cones[i].colour);
 	d->cone_count++;
@@ -88,7 +87,6 @@ void	init_cylinder(t_data *data, char **info)
 	if (cyl->specular < 0 || cyl->specular > 1)
 		exit_error(data, ": invalid specular value");
 	cyl->object = CYLINDER;
-	cyl->instance = object_count(data);
 	check_rgb_values(data, &cyl->colour.vec3);
 	rgb_to_floats(&cyl->colour);
 	cyl->base.vec3 = cyl->center.vec3 - cyl->orientation.vec3 * cyl->height / 2;
@@ -117,7 +115,6 @@ void	init_plane(t_data *data, char **info)
 	if (info[5] != NULL)
 		data->planes[i].tex = load_texture(data, &info[5][2]);
 	data->planes[i].object = PLANE;
-	data->planes[i].instance = object_count(data);
 	check_rgb_values(data, &data->planes[i].colour.vec3);
 	rgb_to_floats(&data->planes[i].colour);
 	data->plane_count++;

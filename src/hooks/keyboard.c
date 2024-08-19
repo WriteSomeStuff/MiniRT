@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   keyboard.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: soepgroente <soepgroente@student.42.fr>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 17:25:12 by vvan-der          #+#    #+#             */
-/*   Updated: 2024/08/11 00:00:35 by soepgroente      ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   keyboard.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: soepgroente <soepgroente@student.42.fr>      +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/03/21 17:25:12 by vvan-der      #+#    #+#                 */
+/*   Updated: 2024/08/19 13:58:42 by cschabra      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	reset_pixel_array(t_data *data, t_pixel **pixels, uint32_t width, \
 			pixels[y][x].pix_clr.vec3 *= 0;
 			pixels[y][x].location.vec3 *= 0;
 			pixels[y][x].surface_norm.vec3 *= 0;
-			pixels[y][x].obj_num = -1;
 			pixels[y][x].specular = 0;
 			mlx_put_pixel(data->scene, x, y, 0xff);
 			x++;
